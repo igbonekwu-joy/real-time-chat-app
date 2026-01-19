@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 
@@ -18,6 +19,7 @@ class Register extends Component
     #[Rule('required|email|min:5|max:25|unique:users')]
     public $email;
 
+    #[Layout('layouts.auth')]
     public function register() {
         $this->validate();
 

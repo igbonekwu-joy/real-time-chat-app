@@ -13,5 +13,7 @@ Route::get('/login', Login::class)->name('login');
 Route::get('/register', Register::class)->name('register');
 
 Route::middleware('auth')->group(function () {
-    Route::get('friends', Dashboard::class)->name('dashboard');
+    Route::get('groups', Dashboard::class)->name('dashboard');
+
+    Route::get('chats', Dashboard::class)->name('chats');
 });

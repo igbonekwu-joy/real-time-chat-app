@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chat App</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
-        <title>Authentication</title>
-
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-        @livewireStyles
-    </head>
-    <body>
-        {{ $slot }}
-
-        @livewireScripts
-
-        <script src="https://cdn-script.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    </body>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body>
+    {{ $slot }}
+</body>
 </html>

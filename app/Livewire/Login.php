@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 
@@ -15,6 +16,7 @@ class Login extends Component
     #[Rule('required|string|min:5|max:25')]
     public $password;
 
+    #[Layout('layouts.auth')]
     public function login(Request $request) {
         $this->validate();
 
@@ -24,7 +26,7 @@ class Login extends Component
         ])) {
             $request->session()->regenerate();
 
-            $this->redirect('/friends', navigate: true);
+            $this->redirect('/groups', navigate: true);
         }
 
         $this->addError('invalid', 'Invalid login credentials');
