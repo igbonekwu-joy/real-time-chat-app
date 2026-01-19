@@ -13,6 +13,7 @@
             </div>
         @endif
         <form wire:submit="register" class="register-form">
+            @csrf
             <input type="text" placeholder="name" wire:model="name"/>
             @error('name')
                 <div class="error">{{ $message }}</div>
