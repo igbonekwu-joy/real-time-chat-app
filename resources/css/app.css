@@ -7,513 +7,201 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-body{
-    margin-top:20px;
-    background:rgb(141,194,111);
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+body {
+  padding-top: 0;
+  font-size: 12px;
+  color: #777;
+  background: #f9f9f9;
+  font-family: 'Open Sans',sans-serif;
+  margin-top:20px;
 }
 
-/*
-    =================================
-    CHAT ROOM
-    =================================
-*/
-
-.chat-room {
-    border-collapse: collapse;
-    border-spacing: 0;
-    display: table;
-    table-layout: fixed;
-    width: 100%;
-    position: relative;
+.bg-white {
+  background-color: #fff;
 }
 
-
-.chat-room aside {
-    display: table-cell;
-    float: none;
-    height: 100%;
-    padding: 0;
-    vertical-align: top;
+.friend-list {
+  list-style: none;
+margin-left: -40px;
 }
 
-.chat-room .kiri-side {
-    width: 25%;
-    background: #e5e8ef;
-    border-radius: 4px 0 0 4px;
-    -webkit-border-radius: 4px 0 0 4px;
-}
-.chat-room .tengah-side {
-    width: 50%;
-    background: #fff;
-    border-right: 1px solid #e5e8ef;
+.friend-list li {
+  border-bottom: 1px solid #eee;
 }
 
-.chat-room .kanan-side {
-    width: 25%;
-    background: #fff;
+.friend-list li a img {
+  float: left;
+  width: 45px;
+  height: 45px;
+  margin-right: 10px;
 }
 
-.chat-room .kiri-side .user-head {
-    background: rgb(141,194,111);
-    color: #FFFFFF;
-    min-height: 70px;
-    padding: 15px;
-}
-.chat-room .kanan-side .user-head {
-    background: rgb(141,194,111);
-    color: #FFFFFF;
-    min-height: 70px;
-    padding: 10px;
-    border-left: 1px solid rgb(141,194,111);
-    margin-left: -1px;
-    position: relative;
+ .friend-list li a {
+  position: relative;
+  display: block;
+  padding: 10px;
+  transition: all .2s ease;
+  -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -ms-transition: all .2s ease;
+  -o-transition: all .2s ease;
 }
 
-
-.chat-room .user-head i {
-    float: left;
-    font-size: 40px;
-    margin-right: 10px;
+.friend-list li.active a {
+  background-color: #f1f5fc;
 }
 
-.chat-room .user-head h3 {
-    margin: 6px 0 0 0;
-    font-weight: 100;
-    letter-spacing: 1px;
+.friend-list li a .friend-name,
+.friend-list li a .friend-name:hover {
+  color: #777;
 }
 
-.chat-room-head {
-    background: rgb(141,194,111);;
-    color: #FFFFFF;
-    min-height: 70px;
-    padding: 15px;
+.friend-list li a .last-message {
+  width: 65%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
-.chat-room-head h3 {
-    margin: 5px 0 0;
-    font-weight: 100;
-    letter-spacing: 1px;
-    display: inline-block;
+.friend-list li a .time {
+  position: absolute;
+  top: 10px;
+  right: 8px;
 }
 
-.chat-room-head .search-btn {
-    width: 20px;
-    -webkit-transition: all .3s ease;
-    -moz-transition: all .3s ease;
-    -ms-transition: all .3s ease;
-    -o-transition: all .3s ease;
-    transition: all .3s ease;
-    box-shadow: none;
-    background: rgb(198, 208, 193);
-    padding:0 5px 0 35px;
-    margin-top: 2px;
-    border: none;
-    color: #fff;
-    border-radius: 5px;
+small, .small {
+  font-size: 85%;
 }
 
-.chat-room-head .search-btn:focus {
-    width: 180px;
-    box-shadow: none;
-    -webkit-transition: all .3s ease;
-    -moz-transition: all .3s ease;
-    -ms-transition: all .3s ease;
-    -o-transition: all .3s ease;
-    transition: all .3s ease;
-    /*background: #01a6b2;*/
-    font-weight: 300;
-    color: #fff;
+.friend-list li a .chat-alert {
+  position: absolute;
+  right: 8px;
+  top: 27px;
+  font-size: 10px;
+  padding: 3px 5px;
 }
 
-.chat-room-head .search-btn:focus::-moz-placeholder {
-    color: #fff;
+.chat-message {
+  padding: 60px 20px 115px;
 }
 
-
-ul.chat-list li a {
-    color: #6a6a6a;
-    display: block;
-    padding: 15px;
-    font-weight: 300;
-    text-decoration: none;
-}
-ul.chat-list li a:hover, ul.chat-list li.active a {
-    color: #00a9b4;
-    background: #f2f4f7;
-}
-
-ul.chat-list li h4 {
-    padding: 17px 15px;
+.chat {
+    list-style: none;
     margin: 0;
-    font-size: 14px;
-    font-weight: 600;
-    border-bottom: 1px solid #D5D7DE;
 }
 
-ul.chat-list li h4 i {
-    padding-right: 5px;
+.chat-message{
+    background: #f9f9f9;
 }
 
-ul.chat-list li a span {
-    padding-left: 10px;
+.chat li img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50em;
+  -moz-border-radius: 50em;
+  -webkit-border-radius: 50em;
 }
 
-ul.chat-list li a i.fa-times {
-    color: #9fa3b0;
+img {
+  max-width: 100%;
 }
 
-ul.chat-list li.active {
-    color: #00a9b4;
-    background: #f2f4f7;
+.chat-body {
+  padding-bottom: 20px;
 }
 
-ul.chat-list {
-    border-bottom: 1px solid #d5d7de;
-    padding-left: 0;
-    list-style: none;
+.chat li.left .chat-body {
+  margin-left: 70px;
+  background-color: #fff;
 }
 
-ul.chat-user  {
-    margin-bottom: 200px;
+.chat li .chat-body {
+  position: relative;
+  font-size: 11px;
+  padding: 10px;
+  border: 1px solid #f1f5fc;
+  box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  -moz-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 
-ul.chat-user li {
-    border-bottom: none;
+.chat li .chat-body .header {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #f1f5fc;
 }
 
-ul.chat-user li a:hover{
-    background: none;
-    color: #6a6a6a;
+.chat li .chat-body p {
+  margin: 0;
 }
 
-.chat-room .kiri-side footer {
-    background: #d5d7de;
-    padding: 15px;
-    height: 70px;
-    width: 25%;
-    position: absolute;
-    bottom: 0;
+.chat li.left .chat-body:before {
+  position: absolute;
+  top: 10px;
+  left: -8px;
+  display: inline-block;
+  background: #fff;
+  width: 16px;
+  height: 16px;
+  border-top: 1px solid #f1f5fc;
+  border-left: 1px solid #f1f5fc;
+  content: '';
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
 }
 
-.chat-room .tengah-side footer {
-    background: #f6f6f6;
-    padding: 15px;
-    height: 70px;
-    width: 50%;
-    position: absolute;
-    bottom: 0;
-    border-right: 1px solid #E5E8EF;
+.chat li.right .chat-body:before {
+  position: absolute;
+  top: 10px;
+  right: -8px;
+  display: inline-block;
+  background: #fff;
+  width: 16px;
+  height: 16px;
+  border-top: 1px solid #f1f5fc;
+  border-right: 1px solid #f1f5fc;
+  content: '';
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
 }
 
-.chat-room .kanan-side footer {
-    background: #fff;
-    padding: 15px;
-    height: 70px;
-    width: 25%;
-    position: absolute;
-    bottom: 0;
-    border-top: 1px solid #E5E8EF;
+.chat li {
+  margin: 15px 0;
 }
 
-.chat-room .kiri-side footer .chat-avatar img {
-    width: 40px;
-    height: 40px;
-    border: 2px solid #fff;
-    float: left;
+.chat li.right .chat-body {
+  margin-right: 70px;
+  background-color: #fff;
 }
 
-.chat-room .kiri-side footer .user-status {
-    float: left;
-    margin: 10px;
+.chat-box {
+/*
+  position: fixed;
+  bottom: 0;
+  left: 444px;
+  right: 0;
+*/
+  padding: 15px;
+  border-top: 1px solid #eee;
+  transition: all .5s ease;
+  -webkit-transition: all .5s ease;
+  -moz-transition: all .5s ease;
+  -ms-transition: all .5s ease;
+  -o-transition: all .5s ease;
 }
 
-.chat-room .kiri-side footer .user-status i {
-    padding-right: 5px;
+.primary-font {
+  color: #3c8dbc;
 }
 
-.chat-room .left-side footer a.chat-dropdown {
-    background: #96979a;
-    border-radius: 2px;
-    color: #fff;
-    font-size: 10px;
-    margin-top: 10px;
-    padding: 3px 5px;
+a:hover, a:active, a:focus {
+  text-decoration: none;
+  outline: 0;
 }
-
-.room-desk {
-    display: inline-block;
-    margin-bottom: 30px;
-    width: 100%;
-    padding: 15px;
-}
-
-.room-desk h4 {
-    text-transform: uppercase;
-    font-weight: 300;
-    font-size: 16px;
-    margin: 5px 0 0 0;
-}
-
-.room-box {
-    border: 1px solid #f7f8fa;
-    background: #f7f8fa;
-    padding: 10px;
-    display: inline-block;
-    width: 100%;
-    margin-top: 10px;
-}
-
-.room-box h5 {
-    margin: 0 0 5px 0;
-    font-weight: 300;
-    font-size: 16px;
-}
-.room-box h5 a {
-    color: #00a9b4;
-}
-
-.chat-tools {
-    float: right;
-    padding: 3px;
-    width: 40px;
-    height: 35px;
-    line-height: 30px;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    text-align: center;
-    margin-top: 6px;
-    margin-left: 10px;
-}
-
-.chat-tools i {
-    font-size: 16px !important;
-    float: none !important;
-    margin-right: 0 !important;
-    color: #fff;
-}
-
-.btn-key {
-    background: #1abc9c;
-}
-
-.btn-key:hover {
-    background: #16a085;
-}
-
-.invite-row {
-    background: #E5E8EF;
-    padding: 6px 10px;
-    display: inline-block;
-    width: 100%;
-}
-
-.invite-row h4 {
-    font-size: 16px;
-    font-weight: 300;
-}
-
-ul.chat-available-user {
-    padding: 10px;
-    list-style: none;
-}
-
-ul.chat-available-user li {
-    margin-bottom: 15px;
-}
-
-ul.chat-available-user li a {
-    color: #6a6a6a;
-    text-decoration: none;
-}
-ul.chat-available-user li i {
-    padding-right: 5px;
-    font-size: 10px;
-}
-
-.group-rom {
-    width: 100%;
-    float: left;
-    border-bottom: 1px solid #eaebee;
-}
-
-.group-rom .first-part,
-.group-rom .second-part,
-.group-rom .third-part {
-    float: left;
-    padding: 15px;
-}
-
-.group-rom .first-part {
-    width: 25%;
-}
-
-.group-rom .first-part.odd {
-    background: #f7f8fa;
-    color: #6a6a6a;
-    font-weight: 600;
-}
-
-.group-rom .second-part{
-    width: 60%;
-}
-
-.group-rom .third-part{
-    width: 15%;
-    color: #d4d3d3;
-}
-
-
-a.guest-on {
-    color: #6a6a6a;
-    margin-top: 8px;
-    display: inline-block;
-}
-
-a.guest-on i {
-    background: #40cabe;
-    color: #fff;
-    padding: 4px;
-    border-radius: 3px;
-    -webkit-border-radius: 3px;
-    margin-right: 5px;
-}
-
-.chat-txt {
-    float: left;
-    width: 70%;
-    margin-right: 5px;
-}
-
-.lobby {
-    padding: 0 !important;
-}
-
-.mobile-nav-btn {
-    display: none;
-    background: transparent;
-    border: none;
-    color: #fff;
-    font-size: 22px;
-    margin-right: 10px;
-}
-
-.sidebar-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    z-index: 900;
-}
-
-@media (max-width: 1024px) {
-    .chat-room {
-        display: flex;
-        flex-direction: row;
-    }
-
-    /* Hide right sidebar */
-    .chat-room .kanan-side {
-        display: none;
-    }
-
-    .chat-room .kiri-side {
-        width: 30%;
-    }
-
-    .chat-room .tengah-side {
-        width: 70%;
-    }
-
-    /* Fix footers */
-    .chat-room aside footer {
-        position: relative;
-        width: 100%;
-    }
-}
-
-/* Phones */
-@media (max-width: 768px) {
-    /* Switch layout model completely */
-    .chat-room {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-    }
-
-    /* Hide BOTH sidebars */
-    .chat-room .kiri-side {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 80%;
-        max-width: 300px;
-        background: #e5e8ef;
-        z-index: 1001;
-
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-    }
-
-    /* When Livewire opens it */
-    .chat-room .kiri-side.sidebar-open {
-        transform: translateX(0);
-    }
-
-    /* Chat stays visible behind */
-    .chat-room .tengah-side {
-        width: 100% !important;
-    }
-
-    /* Right sidebar stays gone */
-    .chat-room .kanan-side {
-        display: none;
-    }
-
-    /* Chat takes full screen */
-    .chat-room .tengah-side {
-        width: 100% !important;
-        height: 100%;
-        border-right: none;
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* Message area scrolls */
-    .chat-room .tengah-side > div:not(footer):not(.chat-room-head) {
-        flex: 1;
-        overflow-y: auto;
-    }
-
-    /* Footer sticks to bottom naturally */
-    .chat-room .tengah-side footer {
-        position: sticky;
-        bottom: 0;
-        width: 100%;
-        background: #f6f6f6;
-    }
-
-    .mobile-nav-btn {
-        display: inline-block;
-    }
-
-    /* Sidebar base state */
-    .chat-room .kiri-side {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 80%;
-        max-width: 300px;
-        z-index: 1000;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        box-shadow: 4px 0 15px rgba(0,0,0,0.15);
-    }
-
-    /* When opened */
-    .chat-room .kiri-side.sidebar-open {
-        transform: translateX(0);
-    }
-}
-
-

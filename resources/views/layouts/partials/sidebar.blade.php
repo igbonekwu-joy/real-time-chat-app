@@ -1,4 +1,5 @@
-<aside class="kiri-side {{ $showSidebar ? 'sidebar-open' : '' }}">
+<aside class="kiri-side">
+    {{-- {{ $showSidebar ? 'sidebar-open' : '' }} --}}
     <div class="user-head">
         <i class="fa fa-comments-o"></i>
     </div>

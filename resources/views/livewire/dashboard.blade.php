@@ -1,152 +1,193 @@
-<div class="container bootstrap snippets bootdey.com">
+<section>
+  <div class="container py-5">
+
     <div class="row">
-        <div class="col-md-12">
-            <!-- start:chat room -->
-            <div class="box">
-                <div class="chat-room">
-                    @if($showSidebar)
-                        <div class="sidebar-backdrop" wire:click="toggleSidebar"></div>
-                    @endif
-                    <!-- start:aside kiri chat room -->
-                    @include('layouts.partials.sidebar')
-                    <!-- end:aside kiri chat room -->
 
-                    <!-- start:aside tengah chat room -->
-                    <aside class="tengah-side">
-                        <div class="chat-room-head">
-                            <button
-                                wire:click="toggleSidebar"
-                                class="mobile-nav-btn"
-                            >
-                                <i class="fa fa-bars"></i>
-                            </button>
+      <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
 
-                            <h3>Air Koler</h3>
-                            <form action="#" class="pull-right position">
-                                <input type="text" placeholder="Search" class="form-control search-btn ">
-                            </form>
-                        </div>
-                        <div class="group-rom">
-                            <div class="first-part odd">Jonathan Smith</div>
-                            <div class="second-part">Hello Cendy are you there?</div>
-                            <div class="third-part">12:30</div>
-                        </div>
-                        <div class="group-rom">
-                            <div class="first-part">Cendy Andrianto</div>
-                            <div class="second-part">Yoman Smith. Please proceed</div>
-                            <div class="third-part">12:31</div>
-                        </div>
-                        <div class="group-rom">
-                            <div class="first-part odd">Jonathan Smith</div>
-                            <div class="second-part">I want to share a file using chatroom</div>
-                            <div class="third-part">12:32</div>
-                        </div>
-                        <div class="group-rom">
-                            <div class="first-part">Cendy Andrianto</div>
-                            <div class="second-part">oh sure. please send</div>
-                            <div class="third-part">12:32</div>
-                        </div>
-                        <div class="group-rom">
-                            <div class="first-part odd">Jonathan Smith</div>
-                            <div class="second-part"><a href="##">search_scb_dialog.jpg</a> <span class="text-muted">46.8KB</span> <p>
-                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" class="img-responsive"></p></div>
-                            <div class="third-part">12:32</div>
-                        </div>
-                        <div class="group-rom">
-                            <div class="first-part">Cendy Andrianto</div>
-                            <div class="second-part">Fantastic job, love it :)</div>
-                            <div class="third-part">12:32</div>
-                        </div>
-                        <div class="group-rom">
-                            <div class="first-part odd">Jonathan Smith</div>
-                            <div class="second-part">Thanks</div>
-                            <div class="third-part">12:33</div>
-                        </div>
-                        <footer>
-                            <div class="chat-txt">
-                                <input type="text" class="form-control">
-                            </div>
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-white" data-original-title="" title=""><i class="fa fa-meh-o"></i></button>
-                                <button type="button" class="btn btn-white" data-original-title="" title=""><i class=" fa fa-paperclip"></i></button>
-                            </div>
-                            <button class="btn btn-danger" data-original-title="" title="">Send</button>
-                        </footer>
-                    </aside>
-                    <!-- end:aside tengah chat room -->
+        <h5 class="font-weight-bold mb-3 text-center text-lg-start">Member</h5>
 
-                    <!-- start:aside kanan chat room -->
-                    <aside class="kanan-side">
-                        <div class="user-head">
-                            <a href="##" class="chat-tools btn-success"><i class="fa fa-cog"></i> </a>
-                            <a href="##" class="chat-tools btn-key"><i class="fa fa-key"></i> </a>
-                        </div>
-                        <div class="invite-row">
-                            <h4 class="pull-left">People</h4>
-                        </div>
-                        <ul class="chat-available-user">
-                            <li>
-                                <a href="#chat-room.html">
-                                    <i class="fa fa-circle text-success"></i>
-                                    Jonathan Smith
-                                    <span class="text-muted">3h:22m</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#chat-room.html">
-                                    <i class="fa fa-circle text-success"></i>
-                                    Jhone Due
-                                    <span class="text-muted">1h:2m</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#chat-room.html">
-                                    <i class="fa fa-circle text-success"></i>
-                                    Cendy Andrianto
-                                    <span class="text-muted">2h:32m</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#chat-room.html">
-                                    <i class="fa fa-circle text-danger"></i>
-                                    Surya Nug
-                                    <span class="text-muted">3h:22m</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#chat-room.html">
-                                    <i class="fa fa-circle text-warning"></i>
-                                    Monke Lutfy
-                                    <span class="text-muted">1h:12m</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#chat-room.html">
-                                    <i class="fa fa-circle text-muted"></i>
-                                    Steve Jobs
-                                    <!--<span class="text-muted">3h:22m</span>-->
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#chat-room.html">
-                                    <i class="fa fa-circle text-muted"></i>
-                                    Jonathan Smith
-                                    <!--<span class="text-muted">3h:22m</span>-->
-                                </a>
-                            </li>
-                        </ul>
-                        <footer>
-                            <a href="##" class="guest-on">
-                                <i class="fa fa-check"></i>
-                                Guest Access On
-                            </a>
-                        </footer>
-                    </aside>
-                    <!-- end:aside kanan chat room -->
+        <div class="card">
+          <div class="card-body">
 
-                </div>
-            </div>
-            <!-- end:chat room -->
+            <ul class="list-unstyled mb-0">
+              <li class="p-2 border-bottom bg-body-tertiary">
+                <a href="#!" class="d-flex justify-content-between">
+                  <div class="d-flex flex-row">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
+                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
+                    <div class="pt-1">
+                      <p class="fw-bold mb-0">John Doe</p>
+                      <p class="small text-muted">Hello, Are you there?</p>
+                    </div>
+                  </div>
+                  <div class="pt-1">
+                    <p class="small text-muted mb-1">Just now</p>
+                    <span class="badge bg-danger float-end">1</span>
+                  </div>
+                </a>
+              </li>
+              <li class="p-2 border-bottom">
+                <a href="#!" class="d-flex justify-content-between">
+                  <div class="d-flex flex-row">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-1.webp" alt="avatar"
+                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
+                    <div class="pt-1">
+                      <p class="fw-bold mb-0">Danny Smith</p>
+                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
+                    </div>
+                  </div>
+                  <div class="pt-1">
+                    <p class="small text-muted mb-1">5 mins ago</p>
+                  </div>
+                </a>
+              </li>
+              <li class="p-2 border-bottom">
+                <a href="#!" class="d-flex justify-content-between">
+                  <div class="d-flex flex-row">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-2.webp" alt="avatar"
+                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
+                    <div class="pt-1">
+                      <p class="fw-bold mb-0">Alex Steward</p>
+                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
+                    </div>
+                  </div>
+                  <div class="pt-1">
+                    <p class="small text-muted mb-1">Yesterday</p>
+                  </div>
+                </a>
+              </li>
+              <li class="p-2 border-bottom">
+                <a href="#!" class="d-flex justify-content-between">
+                  <div class="d-flex flex-row">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-3.webp" alt="avatar"
+                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
+                    <div class="pt-1">
+                      <p class="fw-bold mb-0">Ashley Olsen</p>
+                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
+                    </div>
+                  </div>
+                  <div class="pt-1">
+                    <p class="small text-muted mb-1">Yesterday</p>
+                  </div>
+                </a>
+              </li>
+              <li class="p-2 border-bottom">
+                <a href="#!" class="d-flex justify-content-between">
+                  <div class="d-flex flex-row">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-4.webp" alt="avatar"
+                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
+                    <div class="pt-1">
+                      <p class="fw-bold mb-0">Kate Moss</p>
+                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
+                    </div>
+                  </div>
+                  <div class="pt-1">
+                    <p class="small text-muted mb-1">Yesterday</p>
+                  </div>
+                </a>
+              </li>
+              <li class="p-2 border-bottom">
+                <a href="#!" class="d-flex justify-content-between">
+                  <div class="d-flex flex-row">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
+                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
+                    <div class="pt-1">
+                      <p class="fw-bold mb-0">Lara Croft</p>
+                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
+                    </div>
+                  </div>
+                  <div class="pt-1">
+                    <p class="small text-muted mb-1">Yesterday</p>
+                  </div>
+                </a>
+              </li>
+              <li class="p-2">
+                <a href="#!" class="d-flex justify-content-between">
+                  <div class="d-flex flex-row">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
+                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
+                    <div class="pt-1">
+                      <p class="fw-bold mb-0">Brad Pitt</p>
+                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
+                    </div>
+                  </div>
+                  <div class="pt-1">
+                    <p class="small text-muted mb-1">5 mins ago</p>
+                    <span class="text-muted float-end"><i class="fas fa-check" aria-hidden="true"></i></span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+
+          </div>
         </div>
+
+      </div>
+
+      <div class="col-md-6 col-lg-7 col-xl-8">
+
+        <ul class="list-unstyled">
+          <li class="d-flex justify-content-between mb-4">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
+              class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
+            <div class="card">
+              <div class="card-header d-flex justify-content-between p-3">
+                <p class="fw-bold mb-0">Brad Pitt</p>
+                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 12 mins ago</p>
+              </div>
+              <div class="card-body">
+                <p class="mb-0">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                  labore et dolore magna aliqua.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="d-flex justify-content-between mb-4">
+            <div class="card w-100">
+              <div class="card-header d-flex justify-content-between p-3">
+                <p class="fw-bold mb-0">Lara Croft</p>
+                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 13 mins ago</p>
+              </div>
+              <div class="card-body">
+                <p class="mb-0">
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
+                  laudantium.
+                </p>
+              </div>
+            </div>
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
+              class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60">
+          </li>
+          <li class="d-flex justify-content-between mb-4">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
+              class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
+            <div class="card">
+              <div class="card-header d-flex justify-content-between p-3">
+                <p class="fw-bold mb-0">Brad Pitt</p>
+                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
+              </div>
+              <div class="card-body">
+                <p class="mb-0">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                  labore et dolore magna aliqua.
+                </p>
+              </div>
+            </div>
+          </li>
+          <li class="bg-white mb-3">
+            <div data-mdb-input-init class="form-outline">
+              <textarea class="form-control bg-body-tertiary" id="textAreaExample2" rows="4"></textarea>
+              <label class="form-label" for="textAreaExample2">Message</label>
+            </div>
+          </li>
+          <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-rounded float-end">Send</button>
+        </ul>
+
+      </div>
+
     </div>
-</div>
+
+  </div>
+</section>
