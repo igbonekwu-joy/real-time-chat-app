@@ -1,193 +1,388 @@
-<section>
-  <div class="container py-5">
-
-    <div class="row">
-
-      <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
-
-        <h5 class="font-weight-bold mb-3 text-center text-lg-start">Member</h5>
-
-        <div class="card">
-          <div class="card-body">
-
-            <ul class="list-unstyled mb-0">
-              <li class="p-2 border-bottom bg-body-tertiary">
-                <a href="#!" class="d-flex justify-content-between">
-                  <div class="d-flex flex-row">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-8.webp" alt="avatar"
-                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div class="pt-1">
-                      <p class="fw-bold mb-0">John Doe</p>
-                      <p class="small text-muted">Hello, Are you there?</p>
+<main>
+    <div class="layout">
+        <!-- Start of Navigation -->
+        @include('layouts.partials.sidebar')
+        <!-- End of Navigation -->
+        <!-- Start of Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="container">
+                <div class="col-md-12">
+                    <div class="tab-content">
+                        <!-- Start of Discussions -->
+                        <div id="discussions" class="tab-pane fade active show">
+                            <div class="search">
+                                <form class="form-inline position-relative">
+                                    <input type="search" class="form-control" id="conversations" placeholder="Search for groups...">
+                                    <button type="button" class="btn btn-link loop"><i class="material-icons">search</i></button>
+                                </form>
+                                <button class="btn create" data-toggle="modal" data-target="#startnewchat"><i class="material-icons">create</i></button>
+                            </div>
+                            <div class="list-group sort">
+                                <button class="btn filterDiscussionsBtn active show" data-toggle="list" data-filter="all">All</button>
+                                <button class="btn filterDiscussionsBtn" data-toggle="list" data-filter="read">Read</button>
+                                <button class="btn filterDiscussionsBtn" data-toggle="list" data-filter="unread">Unread</button>
+                            </div>
+                            <div class="discussions">
+                                <h1>Groups</h1>
+                                <div class="list-group" id="chats" role="tablist">
+                                    <a href="#list-chat" class="filterDiscussions all unread single active" id="list-chat-list" data-toggle="list" role="tab">
+                                        <img class="avatar-md" src="dist/img/avatars/avatar-female-1.jpg" data-toggle="tooltip" data-placement="top" title="Janette" alt="avatar">
+                                        <div class="data">
+                                            <h5>My Group</h5>
+                                            <p>group message...</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End of Discussions -->
                     </div>
-                  </div>
-                  <div class="pt-1">
-                    <p class="small text-muted mb-1">Just now</p>
-                    <span class="badge bg-danger float-end">1</span>
-                  </div>
-                </a>
-              </li>
-              <li class="p-2 border-bottom">
-                <a href="#!" class="d-flex justify-content-between">
-                  <div class="d-flex flex-row">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-1.webp" alt="avatar"
-                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div class="pt-1">
-                      <p class="fw-bold mb-0">Danny Smith</p>
-                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                    </div>
-                  </div>
-                  <div class="pt-1">
-                    <p class="small text-muted mb-1">5 mins ago</p>
-                  </div>
-                </a>
-              </li>
-              <li class="p-2 border-bottom">
-                <a href="#!" class="d-flex justify-content-between">
-                  <div class="d-flex flex-row">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-2.webp" alt="avatar"
-                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div class="pt-1">
-                      <p class="fw-bold mb-0">Alex Steward</p>
-                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                    </div>
-                  </div>
-                  <div class="pt-1">
-                    <p class="small text-muted mb-1">Yesterday</p>
-                  </div>
-                </a>
-              </li>
-              <li class="p-2 border-bottom">
-                <a href="#!" class="d-flex justify-content-between">
-                  <div class="d-flex flex-row">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-3.webp" alt="avatar"
-                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div class="pt-1">
-                      <p class="fw-bold mb-0">Ashley Olsen</p>
-                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                    </div>
-                  </div>
-                  <div class="pt-1">
-                    <p class="small text-muted mb-1">Yesterday</p>
-                  </div>
-                </a>
-              </li>
-              <li class="p-2 border-bottom">
-                <a href="#!" class="d-flex justify-content-between">
-                  <div class="d-flex flex-row">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-4.webp" alt="avatar"
-                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div class="pt-1">
-                      <p class="fw-bold mb-0">Kate Moss</p>
-                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                    </div>
-                  </div>
-                  <div class="pt-1">
-                    <p class="small text-muted mb-1">Yesterday</p>
-                  </div>
-                </a>
-              </li>
-              <li class="p-2 border-bottom">
-                <a href="#!" class="d-flex justify-content-between">
-                  <div class="d-flex flex-row">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
-                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div class="pt-1">
-                      <p class="fw-bold mb-0">Lara Croft</p>
-                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                    </div>
-                  </div>
-                  <div class="pt-1">
-                    <p class="small text-muted mb-1">Yesterday</p>
-                  </div>
-                </a>
-              </li>
-              <li class="p-2">
-                <a href="#!" class="d-flex justify-content-between">
-                  <div class="d-flex flex-row">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
-                      class="rounded-circle d-flex align-self-center me-3 shadow-1-strong" width="60">
-                    <div class="pt-1">
-                      <p class="fw-bold mb-0">Brad Pitt</p>
-                      <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                    </div>
-                  </div>
-                  <div class="pt-1">
-                    <p class="small text-muted mb-1">5 mins ago</p>
-                    <span class="text-muted float-end"><i class="fas fa-check" aria-hidden="true"></i></span>
-                  </div>
-                </a>
-              </li>
-            </ul>
-
-          </div>
+                </div>
+            </div>
         </div>
-
-      </div>
-
-      <div class="col-md-6 col-lg-7 col-xl-8">
-
-        <ul class="list-unstyled">
-          <li class="d-flex justify-content-between mb-4">
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
-              class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
-            <div class="card">
-              <div class="card-header d-flex justify-content-between p-3">
-                <p class="fw-bold mb-0">Brad Pitt</p>
-                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 12 mins ago</p>
-              </div>
-              <div class="card-body">
-                <p class="mb-0">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                  labore et dolore magna aliqua.
-                </p>
-              </div>
+        <!-- End of Sidebar -->
+        <!-- Start of Add Friends -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="requests">
+                    <div class="title">
+                        <h1>Add your friends</h1>
+                        <button type="button" class="btn" data-dismiss="modal" aria-label="Close"><i class="material-icons">close</i></button>
+                    </div>
+                    <div class="content">
+                        <form>
+                            <div class="form-group">
+                                <label for="user">Username:</label>
+                                <input type="text" class="form-control" id="user" placeholder="Add recipient..." required>
+                                <div class="user" id="contact">
+                                    <img class="avatar-sm" src="dist/img/avatars/avatar-female-5.jpg" alt="avatar">
+                                    <h5>Keith Morris</h5>
+                                    <button class="btn"><i class="material-icons">close</i></button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="welcome">Message:</label>
+                                <textarea class="text-control" id="welcome" placeholder="Send your welcome message...">Hi Keith, I'd like to add you as a contact.</textarea>
+                            </div>
+                            <button type="submit" class="btn button w-100">Send Friend Request</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-          </li>
-          <li class="d-flex justify-content-between mb-4">
-            <div class="card w-100">
-              <div class="card-header d-flex justify-content-between p-3">
-                <p class="fw-bold mb-0">Lara Croft</p>
-                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 13 mins ago</p>
-              </div>
-              <div class="card-body">
-                <p class="mb-0">
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-                  laudantium.
-                </p>
-              </div>
+        </div>
+        <!-- End of Add Friends -->
+        <!-- Start of Create Chat -->
+        <div class="modal fade" id="startnewchat" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="requests">
+                    <div class="title">
+                        <h1>Start new chat</h1>
+                        <button type="button" class="btn" data-dismiss="modal" aria-label="Close"><i class="material-icons">close</i></button>
+                    </div>
+                    <div class="content">
+                        <form>
+                            <div class="form-group">
+                                <label for="participant">Recipient:</label>
+                                <input type="text" class="form-control" id="participant" placeholder="Add recipient..." required>
+                                <div class="user" id="recipient">
+                                    <img class="avatar-sm" src="dist/img/avatars/avatar-female-5.jpg" alt="avatar">
+                                    <h5>Keith Morris</h5>
+                                    <button class="btn"><i class="material-icons">close</i></button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="topic">Topic:</label>
+                                <input type="text" class="form-control" id="topic" placeholder="What's the topic?" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message:</label>
+                                <textarea class="text-control" id="message" placeholder="Send your welcome message...">Hmm, are you friendly?</textarea>
+                            </div>
+                            <button type="submit" class="btn button w-100">Start New Chat</button>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-5.webp" alt="avatar"
-              class="rounded-circle d-flex align-self-start ms-3 shadow-1-strong" width="60">
-          </li>
-          <li class="d-flex justify-content-between mb-4">
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
-              class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
-            <div class="card">
-              <div class="card-header d-flex justify-content-between p-3">
-                <p class="fw-bold mb-0">Brad Pitt</p>
-                <p class="text-muted small mb-0"><i class="far fa-clock"></i> 10 mins ago</p>
-              </div>
-              <div class="card-body">
-                <p class="mb-0">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                  labore et dolore magna aliqua.
-                </p>
-              </div>
+        </div>
+        <!-- End of Create Chat -->
+        <div class="main">
+            <div class="tab-content" id="nav-tabContent">
+                <!-- Start of Babble -->
+                <div class="babble tab-pane fade active show" id="list-chat" role="tabpanel" aria-labelledby="list-chat-list">
+                    <!-- Start of Chat -->
+                    <div class="chat" id="chat1">
+                        <div class="no-message-container">
+                            <div class="no-message">
+                                <p>Welcome!. Share what's on your mind with other people</p>
+                            </div>
+                        </div>
+
+                        <div style="display: none;">
+                            <div class="top">
+                                <div class="container">
+                                    <div class="col-md-12">
+                                        <div class="inside">
+                                            <a href="#"><img class="avatar-md" src="dist/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar"></a>
+                                            <div class="status">
+                                                <i class="material-icons online">fiber_manual_record</i>
+                                            </div>
+                                            <div class="data">
+                                                <h5><a href="#">Keith Morris</a></h5>
+                                                <span>Active now</span>
+                                            </div>
+                                            <button class="btn connect d-md-block d-none" name="1"><i class="material-icons md-30">phone_in_talk</i></button>
+                                            <button class="btn connect d-md-block d-none" name="1"><i class="material-icons md-36">videocam</i></button>
+                                            <button class="btn d-md-block d-none"><i class="material-icons md-30">info</i></button>
+                                            <div class="dropdown">
+                                                <button class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="material-icons md-30">more_vert</i></button>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <button class="dropdown-item connect" name="1"><i class="material-icons">phone_in_talk</i>Voice Call</button>
+                                                    <button class="dropdown-item connect" name="1"><i class="material-icons">videocam</i>Video Call</button>
+                                                    <hr>
+                                                    <button class="dropdown-item"><i class="material-icons">clear</i>Clear History</button>
+                                                    <button class="dropdown-item"><i class="material-icons">block</i>Block Contact</button>
+                                                    <button class="dropdown-item"><i class="material-icons">delete</i>Delete Contact</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content" id="content">
+                                <div class="container">
+                                    <div class="col-md-12">
+                                        <div class="date">
+                                            <hr>
+                                            <span>Yesterday</span>
+                                            <hr>
+                                        </div>
+                                        <div class="message">
+                                            <img class="avatar-md" src="dist/img/avatars/avatar-female-5.jpg" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">
+                                            <div class="text-main">
+                                                <div class="text-group">
+                                                    <div class="text">
+                                                        <p>We've got some killer ideas kicking about already.</p>
+                                                    </div>
+                                                </div>
+                                                <span>09:46 AM</span>
+                                            </div>
+                                        </div>
+                                        <div class="message me">
+                                            <div class="text-main">
+                                                <div class="text-group me">
+                                                    <div class="text me">
+                                                        <p>Can't wait! How are we coming along with the client?</p>
+                                                    </div>
+                                                </div>
+                                                <span>11:32 AM</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="col-md-12">
+                                    <div class="bottom">
+                                        <form class="position-relative w-100">
+                                            <textarea class="form-control" placeholder="Start typing for reply..." rows="1"></textarea>
+                                            <button class="btn emoticons"><i class="material-icons">insert_emoticon</i></button>
+                                            <button type="submit" class="btn send"><i class="material-icons">send</i></button>
+                                        </form>
+                                        <label>
+                                            <input type="file">
+                                            <span class="btn attach d-sm-block d-none"><i class="material-icons">attach_file</i></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Chat -->
+                    <!-- Start of Call -->
+                    <div class="call" id="call1">
+                        <div class="content">
+                            <div class="container">
+                                <div class="col-md-12">
+                                    <div class="inside">
+                                        <div class="panel">
+                                            <div class="participant">
+                                                <img class="avatar-xxl" src="dist/img/avatars/avatar-female-5.jpg" alt="avatar">
+                                                <span>Connecting</span>
+                                            </div>
+                                            <div class="options">
+                                                <button class="btn option"><i class="material-icons md-30">mic</i></button>
+                                                <button class="btn option"><i class="material-icons md-30">videocam</i></button>
+                                                <button class="btn option call-end"><i class="material-icons md-30">call_end</i></button>
+                                                <button class="btn option"><i class="material-icons md-30">person_add</i></button>
+                                                <button class="btn option"><i class="material-icons md-30">volume_up</i></button>
+                                            </div>
+                                            <button class="btn back" name="1"><i class="material-icons md-24">chat</i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Call -->
+                </div>
+                <!-- End of Babble -->
+                <!-- Start of Babble -->
+                <div class="babble tab-pane fade" id="list-empty" role="tabpanel" aria-labelledby="list-empty-list">
+                    <!-- Start of Chat -->
+                    <div class="chat" id="chat2">
+                        <div class="top">
+                            <div class="container">
+                                <div class="col-md-12">
+                                    <div class="inside">
+                                        <a href="#"><img class="avatar-md" src="dist/img/avatars/avatar-female-2.jpg" data-toggle="tooltip" data-placement="top" title="Lean" alt="avatar"></a>
+                                        <div class="status">
+                                            <i class="material-icons offline">fiber_manual_record</i>
+                                        </div>
+                                        <div class="data">
+                                            <h5><a href="#">Lean Avent</a></h5>
+                                            <span>Inactive</span>
+                                        </div>
+                                        <button class="btn connect d-md-block d-none" name="2"><i class="material-icons md-30">phone_in_talk</i></button>
+                                        <button class="btn connect d-md-block d-none" name="2"><i class="material-icons md-36">videocam</i></button>
+                                        <button class="btn d-md-block d-none"><i class="material-icons md-30">info</i></button>
+                                        <div class="dropdown">
+                                            <button class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="material-icons md-30">more_vert</i></button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <button class="dropdown-item connect" name="2"><i class="material-icons">phone_in_talk</i>Voice Call</button>
+                                                <button class="dropdown-item connect" name="2"><i class="material-icons">videocam</i>Video Call</button>
+                                                <hr>
+                                                <button class="dropdown-item"><i class="material-icons">clear</i>Clear History</button>
+                                                <button class="dropdown-item"><i class="material-icons">block</i>Block Contact</button>
+                                                <button class="dropdown-item"><i class="material-icons">delete</i>Delete Contact</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content empty">
+                            <div class="container">
+                                <div class="col-md-12">
+                                    <div class="no-messages">
+                                        <i class="material-icons md-48">forum</i>
+                                        <p>Seems people are shy to start the chat. Break the ice send the first message.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="col-md-12">
+                                <div class="bottom">
+                                    <form class="position-relative w-100">
+                                        <textarea class="form-control" placeholder="Start typing for reply..." rows="1"></textarea>
+                                        <button class="btn emoticons"><i class="material-icons">insert_emoticon</i></button>
+                                        <button type="submit" class="btn send"><i class="material-icons">send</i></button>
+                                    </form>
+                                    <label>
+                                        <input type="file">
+                                        <span class="btn attach d-sm-block d-none"><i class="material-icons">attach_file</i></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Chat -->
+                    <!-- Start of Call -->
+                    <div class="call" id="call2">
+                        <div class="content">
+                            <div class="container">
+                                <div class="col-md-12">
+                                    <div class="inside">
+                                        <div class="panel">
+                                            <div class="participant">
+                                                <img class="avatar-xxl" src="dist/img/avatars/avatar-female-2.jpg" alt="avatar">
+                                                <span>Connecting</span>
+                                            </div>
+                                            <div class="options">
+                                                <button class="btn option"><i class="material-icons md-30">mic</i></button>
+                                                <button class="btn option"><i class="material-icons md-30">videocam</i></button>
+                                                <button class="btn option call-end"><i class="material-icons md-30">call_end</i></button>
+                                                <button class="btn option"><i class="material-icons md-30">person_add</i></button>
+                                                <button class="btn option"><i class="material-icons md-30">volume_up</i></button>
+                                            </div>
+                                            <button class="btn back" name="2"><i class="material-icons md-24">chat</i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Call -->
+                </div>
+                <!-- End of Babble -->
+                <!-- Start of Babble -->
+                <div class="babble tab-pane fade" id="list-request" role="tabpanel" aria-labelledby="list-request-list">
+                    <!-- Start of Chat -->
+                    <div class="chat" id="chat3">
+                        <div class="top">
+                            <div class="container">
+                                <div class="col-md-12">
+                                    <div class="inside">
+                                        <a href="#"><img class="avatar-md" src="dist/img/avatars/avatar-female-6.jpg" data-toggle="tooltip" data-placement="top" title="Louis" alt="avatar"></a>
+                                        <div class="status">
+                                            <i class="material-icons offline">fiber_manual_record</i>
+                                        </div>
+                                        <div class="data">
+                                            <h5><a href="#">Louis Martinez</a></h5>
+                                            <span>Inactive</span>
+                                        </div>
+                                        <button class="btn disabled d-md-block d-none" disabled><i class="material-icons md-30">phone_in_talk</i></button>
+                                        <button class="btn disabled d-md-block d-none" disabled><i class="material-icons md-36">videocam</i></button>
+                                        <button class="btn d-md-block disabled d-none" disabled><i class="material-icons md-30">info</i></button>
+                                        <div class="dropdown">
+                                            <button class="btn disabled" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled><i class="material-icons md-30">more_vert</i></button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <button class="dropdown-item"><i class="material-icons">phone_in_talk</i>Voice Call</button>
+                                                <button class="dropdown-item"><i class="material-icons">videocam</i>Video Call</button>
+                                                <hr>
+                                                <button class="dropdown-item"><i class="material-icons">clear</i>Clear History</button>
+                                                <button class="dropdown-item"><i class="material-icons">block</i>Block Contact</button>
+                                                <button class="dropdown-item"><i class="material-icons">delete</i>Delete Contact</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content empty">
+                            <div class="container">
+                                <div class="col-md-12">
+                                    <div class="no-messages request">
+                                        <a href="#"><img class="avatar-xl" src="dist/img/avatars/avatar-female-6.jpg" data-toggle="tooltip" data-placement="top" title="Louis" alt="avatar"></a>
+                                        <h5>Louis Martinez would like to add you as a contact. <span>Hi Keith, I'd like to add you as a contact.</span></h5>
+                                        <div class="options">
+                                            <button class="btn button"><i class="material-icons">check</i></button>
+                                            <button class="btn button"><i class="material-icons">close</i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <div class="col-md-12">
+                                <div class="bottom">
+                                    <form class="position-relative w-100">
+                                        <textarea class="form-control" placeholder="Messaging unavailable" rows="1" disabled></textarea>
+                                        <button class="btn emoticons disabled" disabled><i class="material-icons">insert_emoticon</i></button>
+                                        <button class="btn send disabled" disabled><i class="material-icons">send</i></button>
+                                    </form>
+                                    <label>
+                                        <input type="file" disabled>
+                                        <span class="btn attach disabled d-sm-block d-none"><i class="material-icons">attach_file</i></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Chat -->
+                </div>
+                <!-- End of Babble -->
             </div>
-          </li>
-          <li class="bg-white mb-3">
-            <div data-mdb-input-init class="form-outline">
-              <textarea class="form-control bg-body-tertiary" id="textAreaExample2" rows="4"></textarea>
-              <label class="form-label" for="textAreaExample2">Message</label>
-            </div>
-          </li>
-          <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-info btn-rounded float-end">Send</button>
-        </ul>
-
-      </div>
-
-    </div>
-
-  </div>
-</section>
+        </div>
+    </div> <!-- Layout -->
+</main>

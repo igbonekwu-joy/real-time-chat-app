@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Chats;
 use App\Livewire\Dashboard;
 use App\Livewire\Login;
 use App\Livewire\Register;
@@ -15,5 +16,5 @@ Route::get('/register', Register::class)->name('register');
 Route::middleware('auth')->group(function () {
     Route::get('groups', Dashboard::class)->name('dashboard');
 
-    Route::get('chats', Dashboard::class)->name('chats');
+    Route::get('chats', Chats::class)->name('chats');
 });
