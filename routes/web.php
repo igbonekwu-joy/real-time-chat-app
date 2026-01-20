@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GroupController;
 use App\Livewire\Chats;
 use App\Livewire\Dashboard;
 use App\Livewire\Login;
@@ -17,4 +18,6 @@ Route::middleware('auth')->group(function () {
     Route::get('groups', Dashboard::class)->name('dashboard');
 
     Route::get('chats', Chats::class)->name('chats');
+
+    Route::post('group/send-message', [GroupController::class, 'sendMessage'])->name('group.send-message');
 });

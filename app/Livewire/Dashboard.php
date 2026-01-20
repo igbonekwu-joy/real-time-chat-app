@@ -63,6 +63,11 @@ class Dashboard extends Component
 
     public function render()
     {
-        return view('livewire.dashboard');
+        $groupIds = GroupUser::where('user_id', Auth::id())
+            ->pluck('group_id');
+
+        $groups = Group::whereIn('id', $groupIds)->get();
+
+        return view('livewire.dashboard', compact('groups'));
     }
 }
