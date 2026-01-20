@@ -25,9 +25,9 @@ io.on('connection', (socket) => {
 
         if (!alreadyInRoom) {
             socket.join(group);
-            console.log(`${username} joined ${group} for the first time`);
+            // console.log(`${username} joined ${group} for the first time`);
 
-            socket.emit('message', formatMessage(bot, `Welcome to ${group}, ${username}`));
+            // socket.emit('message', formatMessage(bot, `Welcome to ${group}, ${username}`));
             // socket.broadcast.to(group).emit('userJoined', username);
         } else {
             console.log(`${username} already in ${group}`);
