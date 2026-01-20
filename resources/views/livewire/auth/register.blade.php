@@ -47,7 +47,10 @@
                                         <div class="error">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <button type="submit" class="btn button" formaction="index-2.html">Sign Up</button>
+                                <button type="submit" class="btn button" formaction="index-2.html">
+                                    Sign Up
+                                    <span wire:loading wire:target="register" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                </button>
                             </form>
                         </div>
                     </div>

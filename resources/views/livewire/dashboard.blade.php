@@ -15,7 +15,9 @@
                                     <input type="search" class="form-control" id="conversations" placeholder="Search for groups...">
                                     <button type="button" class="btn btn-link loop"><i class="material-icons">search</i></button>
                                 </form>
-                                <button class="btn create" data-toggle="modal" data-target="#startnewchat"><i class="material-icons">create</i></button>
+                                <button class="btn create" data-toggle="modal" data-target="#startnewchat">
+                                    <i class="material-icons">create</i>
+                                </button>
                             </div>
                             <div class="list-group sort">
                                 <button class="btn filterDiscussionsBtn active show" data-toggle="list" data-filter="all">All</button>
@@ -72,39 +74,70 @@
         </div>
         <!-- End of Add Friends -->
         <!-- Start of Create Chat -->
-        <div class="modal fade" id="startnewchat" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade" id="startnewchat" tabindex="-1" role="dialog" aria-labelledby="startnewchat" aria-hidden="true" wire:ignore.self>
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="requests">
                     <div class="title">
-                        <h1>Start new chat</h1>
+                        <h1>Create New Group</h1>
                         <button type="button" class="btn" data-dismiss="modal" aria-label="Close"><i class="material-icons">close</i></button>
                     </div>
                     <div class="content">
-                        <form>
+                        @if (session('success'))
+                            <div
+                                x-data
+                                x-init="
+                                    setTimeout(() => {
+                                        Livewire.navigate('/groups')
+                                    }, 3000)
+                                "
+                                class="bg-green-100 text-green-800 px-4 py-2 rounded mb-4">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        <form wire:submit.prevent="storeGroup" id="createGroupForm">
                             <div class="form-group">
-                                <label for="participant">Recipient:</label>
-                                <input type="text" class="form-control" id="participant" placeholder="Add recipient..." required>
-                                <div class="user" id="recipient">
-                                    <img class="avatar-sm" src="dist/img/avatars/avatar-female-5.jpg" alt="avatar">
-                                    <h5>Keith Morris</h5>
-                                    <button class="btn"><i class="material-icons">close</i></button>
+                                <label for="topic">Group Name:</label>
+                                <input type="text" class="form-control" id="topic" placeholder="What's the group name?" wire:model="groupName">
+
+                                @error('groupName')
+                                    <div class="error">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Group Description: (optional)</label>
+                                <textarea class="text-control" id="message" placeholder="Enter group description..." wire:model="groupDescription"></textarea>
+
+                                @error('groupDescription')
+                                    <div class="error">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="image">Group Image:</label>
+                                <input type="file" class="form-control" id="image" wire:model="groupImage">
+
+                                <div wire:loading wire:target="groupImage">
+                                    Uploading image...
                                 </div>
+
+                                @error('groupImage')
+                                    <div class="error">{{ $message }}</div>
+                                @enderror
+
+                                @if ($photo)
+                                    <img src="{{ asset('storage/' . $photo) }}" alt="Uploaded Image" width="200">
+                                @endif
                             </div>
-                            <div class="form-group">
-                                <label for="topic">Topic:</label>
-                                <input type="text" class="form-control" id="topic" placeholder="What's the topic?" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="message">Message:</label>
-                                <textarea class="text-control" id="message" placeholder="Send your welcome message...">Hmm, are you friendly?</textarea>
-                            </div>
-                            <button type="submit" class="btn button w-100">Start New Chat</button>
+                            <button type="submit" class="btn button w-100" id="createGroup">
+                                Create Group
+                                <span wire:loading wire:target="storeGroup" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
         <!-- End of Create Chat -->
+
         <div class="main">
             <div class="tab-content" id="nav-tabContent">
                 <!-- Start of Babble -->

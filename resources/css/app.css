@@ -20,3 +20,7 @@
     margin: auto;
     /* add any additional styles for the code block */
 }
+
+.error {
+    color: red;
+}
