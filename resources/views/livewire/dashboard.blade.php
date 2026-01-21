@@ -95,7 +95,9 @@
                                                     </button>
 
                                                     <button class="dropdown-item"><i class="material-icons">clear</i>Clear History</button>
-                                                    <button class="dropdown-item"><i class="material-icons">block</i>Leave Group</button>
+                                                    <button class="dropdown-item" id="leaveGroup">
+                                                        <i class="material-icons">block</i>Leave Group
+                                                    </button>
                                                     <button class="dropdown-item" id="deleteGroup">
                                                         <i class="material-icons">delete</i>Delete Group
                                                     </button>

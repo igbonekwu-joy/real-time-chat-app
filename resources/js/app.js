@@ -12,6 +12,7 @@ const sendBtn = $('.send-message');
 const group = $('.filterDiscussions');
 const addMemberForm = $('#addMember');
 var deleteGroupBtn = $('#deleteGroup');
+var leaveGroupBtn = $('#leaveGroup');
 var addMemberBtn = $('#addMemberBtn');
 
 var socket = io('http://localhost:3000'); //connect to server
@@ -49,7 +50,7 @@ socket.on('message', (message) => {
     $('.no-messages').hide();
     var messageContainer = $('.all-messages');
     if(message.username == 'System Bot') {
-        var message = ` <div style="text-align: center;">
+        var message = ` <div style="text-align: center;" class="bot-message m-3">
                             <p style="
                                 display: inline-block;
                                 background: #9abdda;
@@ -195,6 +196,33 @@ deleteGroupBtn.on('click', function (e) {
 
 })
 
+//leave group
+leaveGroupBtn.on('click', function (e) {
+    e.preventDefault();
+
+    var groupId = $('#group-id').val();
+    var groupName = $('.group-name').text();
+    var userId = user.id;
+    var username = user.name;
+
+    $.ajax({
+        url: '/group/leave-group',
+        type: 'POST',
+        data: {
+            groupId,
+            userId
+        },
+        success: function (data) {
+           // window.location.href = '/groups';
+           socket.emit('leaveGroup', { groupName, username });
+        },
+        error: function (error) {
+            console.log(error.responseJSON.message);
+            alert(error.responseJSON.message);
+        },
+    });
+})
+
 function formatTime(dateString) {
     const date = new Date(dateString);
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -264,7 +292,7 @@ function getMessages (groupId) {
 
                 if (msg.bot === 1) {
                     messagesContainer.append(`
-                        <div style="text-align: center;" class="bot-message">
+                        <div style="text-align: center;" class="bot-message m-3">
                             <p style="
                                 display: inline-block;
                                 background: #9abdda;

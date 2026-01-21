@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
         Route::post('send-message', [GroupController::class, 'sendMessage'])->name('group.send-message');
         Route::get('get-messages', [GroupController::class, 'getMessages'])->name('group.get-messages');
         Route::post('add-member', [GroupController::class, 'addMember'])->name('group.add-member');
+        Route::post('leave-group', [GroupController::class, 'leaveGroup'])->name('group.leave-group');
         Route::delete('delete-group', [GroupController::class, 'deleteGroup'])->name('group.delete-group');
     });
 

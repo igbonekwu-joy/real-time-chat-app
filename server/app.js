@@ -37,6 +37,10 @@ io.on('connection', (socket) => {
     socket.on('newGroupMessage', ({ groupName, message, username }) => {
         io.to(groupName).emit('message', formatMessage(username, message));
     });
+
+    socket.on('leaveGroup', ({ groupName, username }) => {
+        io.to(groupName).emit('message', formatMessage(bot, `${username} left the group`));
+    })
 });
 
 function formatMessage(username, text) {

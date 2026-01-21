@@ -77,6 +77,35 @@ class GroupController extends Controller
         ]);
     }
 
+    public function leaveGroup (Request $request) {
+        $groupId = $request->input('groupId');
+        $userId = $request->input('userId');
+
+        $user = User::where('id', $userId)->first();
+
+        $group = Group::where('id', $groupId)->first();
+        if($group->user_id == $userId) { //if the user is the creator
+            return response()->json([
+                'status' => false,
+                'message' => 'You cannot leave your own group. Delete instead.'
+            ], 409);
+        }
+
+        GroupUser::where('group_id', $groupId)->where('user_id', $userId)->delete();
+
+        GroupMessage::create([
+            'group_id' => $groupId,
+            'user_id' => $userId,
+            'message' => $user->name . ' left the group',
+            'bot' => 1
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Member left successfully'
+        ]);
+    }
+
     public function deleteGroup (Request $request) {
         $messages = GroupMessage::where('group_id', $request->groupId)->get();
 
