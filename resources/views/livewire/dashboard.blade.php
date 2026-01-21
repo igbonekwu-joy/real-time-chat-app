@@ -44,6 +44,12 @@
                                             wire:key="group-{{ $group->id }}"
                                         >
                                             <img class="avatar-md" src={{ asset('storage') . '/'. $group->image }} data-toggle="tooltip" data-placement="top" title="Janette" alt="avatar">
+                                            @if($group->unread_count > 0)
+                                                <div class="new bg-yellow">
+                                                    <span>+{{ $group->unread_count }}</span>
+                                                </div>
+                                            @endif
+
                                             <div class="data">
                                                 <h5>{{ $group->name }}</h5>
                                                 <p>{{ $group->description }}</p>

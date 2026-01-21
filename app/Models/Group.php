@@ -17,4 +17,8 @@ class Group extends Model
         return $this->belongsToMany(User::class, 'group_users')
                 ->withPivot('is_admin');
     }
+
+    public function messages() {
+        return $this->hasMany(GroupMessage::class);
+    }
 }
