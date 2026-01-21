@@ -123,10 +123,11 @@ sendBtn.on('click', function (e) {
             user_id: userId,
         },
         success: function (data) {
-            socket.emit('newGroupMessage', { groupName, message: message, username });
+            socket.emit('newGroupMessage', { groupName, message, username });
         },
         error: function (error) {
             console.log(error);
+            alert(error.responseJSON.message);
         },
     });
 

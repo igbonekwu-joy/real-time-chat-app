@@ -11,6 +11,16 @@ use Illuminate\Http\Request;
 class GroupController extends Controller
 {
     public function sendMessage (Request $request) {
+        $member = GroupUser::where('user_id', $request->user_id)
+                    ->where('group_id', $request->group_id)
+                    ->first();
+        if(!$member) {
+            return response()->json([
+                'status' => false,
+                'message' => 'You are not a member of this group'
+            ], 409);
+        }
+
         $message = GroupMessage::create([
             'group_id' => $request->group_id,
             'user_id' => $request->user_id,
