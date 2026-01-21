@@ -44,6 +44,9 @@ group.on('click', function () {
     $('.group-img').attr('src', groupImage);
     $('.group-name').text(group);
     $('#group-id').val(groupId);
+
+    //mark messages as read
+    $.post('/group/mark-as-read', { groupId });
 });
 
 socket.on('message', (message) => {

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Group;
 use App\Models\GroupMessage;
+use App\Models\GroupMessageRead;
 use App\Models\GroupUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
 {
@@ -21,11 +23,26 @@ class GroupController extends Controller
             ], 409);
         }
 
+        //save message
         $message = GroupMessage::create([
             'group_id' => $request->group_id,
             'user_id' => $request->user_id,
             'message' => $request->message
         ]);
+
+        //mark message as unread for everyone except the sender
+        $members = GroupUser::where('group_id', $request->group_id)->pluck('user_id');
+
+        foreach($members as $userId) {
+            if($userId !== Auth::user()->id) {
+                GroupMessageRead::create([
+                    'group_message_id' => $message->id,
+                    'user_id' => $userId,
+                    'read_at' => null
+                ]);
+            }
+        }
+
 
         return response()->json([
             'status' => true,
@@ -129,5 +146,16 @@ class GroupController extends Controller
             'status' => true,
             'message' => 'Group deleted successfully'
         ]);
+    }
+
+    public function markAsRead (Request $request) {
+        GroupMessageRead::where('user_id', Auth::user()->id)
+            ->whereHas('message', function ($q) use ($request) {
+                $q->where('group_id', $request->input('groupId'));
+            })
+            ->whereNull('read_at')
+            ->update(['read_at' => now()]);
+
+        return response()->json(['status' => 'ok']);
     }
 }
