@@ -10,7 +10,7 @@ use Livewire\Component;
 
 class Register extends Component
 {
-    #[Rule('required|string|min:5|max:25')]
+    #[Rule('required|string|min:5|max:25|unique:users')]
     public $name;
 
     #[Rule('required|string|min:5|max:25')]

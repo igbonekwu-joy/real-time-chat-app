@@ -9,6 +9,7 @@ class GroupMessage extends Model
     protected $fillable = [
         'group_id',
         'user_id',
-        'message'
+        'message',
+        'bot'
     ];
 }

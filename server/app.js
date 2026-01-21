@@ -30,7 +30,7 @@ io.on('connection', (socket) => {
             // socket.emit('message', formatMessage(bot, `Welcome to ${group}, ${username}`));
             // socket.broadcast.to(group).emit('userJoined', username);
         } else {
-            console.log(`${username} already in ${group}`);
+            //console.log(`${username} already in ${group}`);
         }
     });
 

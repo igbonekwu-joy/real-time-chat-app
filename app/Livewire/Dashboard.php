@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\View;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use App\Models\Group;
+use App\Models\GroupMessage;
 use App\Models\GroupUser;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -16,26 +17,18 @@ class Dashboard extends Component
 {
     use WithFileUploads;
 
-    public bool $showSidebar = false;
-
-    #[Rule('required|min:3|max:50|string')]
     public $groupName;
-
-    #[Rule('nullable|min:10|max:1000|string')]
     public $groupDescription;
-
-    #[Rule('required|image|mimes:jpeg,png,jpg,svg|max:2048')]
     public $groupImage;
-
     public $photo;
 
-    public function toggleSidebar()
-    {
-        $this->showSidebar = ! $this->showSidebar;
-    }
 
     public function storeGroup() {
-        $this->validate();
+        $this->validate([
+            'groupName' => 'required|min:3|max:50|string',
+            'groupDescription' => 'nullable|min:10|max:1000|string',
+            'groupImage' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
+        ]);
 
         $user = Auth::user();
 
@@ -54,6 +47,13 @@ class Dashboard extends Component
             'group_id' => $group->id,
             'user_id' => $user->id,
             'is_admin' => 1
+        ]);
+
+        GroupMessage::create([
+            'group_id' => $group->id,
+            'user_id' => $user->id,
+            'message' => $user->name . ' created ' . $this->groupName,
+            'bot' => true
         ]);
 
         session()->flash('success', 'Group Created Successfully');

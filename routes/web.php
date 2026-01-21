@@ -20,4 +20,6 @@ Route::middleware('auth')->group(function () {
     Route::get('chats', Chats::class)->name('chats');
 
     Route::post('group/send-message', [GroupController::class, 'sendMessage'])->name('group.send-message');
+    Route::get('group/get-messages', [GroupController::class, 'getMessages'])->name('group.get-messages');
+    Route::post('group/add-member', [GroupController::class, 'addMember'])->name('group.add-member');
 });

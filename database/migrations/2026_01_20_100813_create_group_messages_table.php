@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->text('message');
             $table->string('time');
+            $table->boolean('bot')->default(false);
             $table->timestamps();
         });
     }
