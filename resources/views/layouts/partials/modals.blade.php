@@ -103,18 +103,6 @@
                 <button type="button" class="btn" data-dismiss="modal" aria-label="Close"><i class="material-icons">close</i></button>
             </div>
             <div class="content">
-                {{-- @if (session('success'))
-                    <div
-                        x-data
-                        x-init="
-                            setTimeout(() => {
-                                window.location.href = '/groups'
-                            }, 3000)
-                        "
-                        class="bg-green-100 text-green-800 px-4 py-2 rounded mb-4">
-                        {{ session('success') }}
-                    </div>
-                @endif --}}
                 <form id="addMember">
                     <div class="form-group">
                         <label for="username">Username or Email:</label>

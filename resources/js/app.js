@@ -158,6 +158,9 @@ addMemberForm.on('submit', function (e) {
             //refresh the messages
             getMessages(groupId);
 
+            // close modal
+            $('#addMemberModal').modal('hide');
+
             //hide the load button
             loadBtn.hide();
         },
