@@ -11,6 +11,8 @@ const user = JSON.parse(rawUser.val());
 const sendBtn = $('.send-message');
 const group = $('.filterDiscussions');
 const addMemberForm = $('#addMember');
+var deleteGroupBtn = $('#deleteGroup');
+var addMemberBtn = $('#addMemberBtn');
 
 var socket = io('http://localhost:3000'); //connect to server
 
@@ -21,29 +23,30 @@ group.on('click', function () {
     const groupImage = $(this).data('image');
     const isAdmin = $(this).data('is-admin');
     const username = user.name;
-    var addMemberBtn = $('#addMemberBtn');
 
     //check if user is admin
     if (isAdmin == 1) {
         addMemberBtn.show();
+        deleteGroupBtn.show();
     } else {
         addMemberBtn.hide();
+        deleteGroupBtn.hide();
     }
 
     socket.emit('joinRoom', { username, group });
+
+    //get messages
+    getMessages(groupId);
 
     $('.no-message-container').hide();
     $('.chat-container').show();
     $('.group-img').attr('src', groupImage);
     $('.group-name').text(group);
     $('#group-id').val(groupId);
-
-    //get messages
-    getMessages(groupId);
 });
 
 socket.on('message', (message) => {
-    console.log(message)
+    $('.no-messages').hide();
     var messageContainer = $('.all-messages');
     if(message.username == 'System Bot') {
         var message = ` <div style="text-align: center;">
@@ -76,8 +79,8 @@ socket.on('message', (message) => {
         else{
             var messageContainer = $('.all-messages');
             var message = `<div class="message">
-                <img class="avatar-md" src="" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">
                 <div class="text-main">
+                    ${message.username}
                     <div class="text-group">
                         <div class="text">
                             <p>${message.text}</p>
@@ -151,6 +154,7 @@ addMemberForm.on('submit', function (e) {
             username,
         },
         success: function (data) {
+            $('.all-messages').empty();
             //refresh the messages
             getMessages(groupId);
 
@@ -159,8 +163,33 @@ addMemberForm.on('submit', function (e) {
         },
         error: function (error) {
             console.log(error.responseJSON.message);
+            alert(error.responseJSON.message);
+
+            //hide the load button
+            loadBtn.hide();
         },
     });
+});
+
+//delete group
+deleteGroupBtn.on('click', function (e) {
+    e.preventDefault();
+    var groupId = $('#group-id').val();
+
+    $.ajax({
+        url: '/group/delete-group',
+        type: 'DELETE',
+        data: {
+            groupId,
+        },
+        success: function (data) {
+            window.location.href = '/groups';
+        },
+        error: function (error) {
+            console.log(error.responseJSON.message);
+        },
+    });
+
 })
 
 function formatTime(dateString) {
@@ -202,14 +231,17 @@ function scrollToBottom() {
 }
 
 function getMessages (groupId) {
+    $('.loader-container').show();
+
     $.ajax({
         url: '/group/get-messages',
         type: 'GET',
         data: { group_id: groupId },
         success: function (data) {
+
             let lastRenderedDay = null;
             const messagesContainer = $('.all-messages');
-            messagesContainer.html('');
+            $('.loader').hide();
 
             data.messages.forEach((msg) => {
                 const messageDate = new Date(msg.created_at);
@@ -264,12 +296,8 @@ function getMessages (groupId) {
                 //members' messages
                 messagesContainer.append(`
                     <div class="message">
-                        <img class="avatar-md"
-                            src="${msg.user_image ?? '/images/default-avatar.png'}"
-                            title="${msg.user_name ?? 'User'}"
-                            alt="avatar">
-
                         <div class="text-main">
+                         ${msg.user.name}
                             <div class="text-group">
                                 <div class="text">
                                     <p>${msg.message}</p>
@@ -281,8 +309,21 @@ function getMessages (groupId) {
                 `);
             });
 
+            //if there are no messages in the group yet
+            if(data.messages.length == 0) {
+                messagesContainer.append(`<div class="no-messages">
+                                            <i class="material-icons md-48">forum</i>
+                                            <p>Seems people are shy to start the chat. Break the ice send the first message.</p>
+                                        </div>`);
+            }
+
             scrollToBottom();
         }
     });
 }
+
+                        // <img class="avatar-md"
+                        //     src="${msg.user_image ?? '/images/default-avatar.png'}"
+                        //     title="${msg.user.name ?? 'User'}"
+                        //     alt="avatar"></img>
 

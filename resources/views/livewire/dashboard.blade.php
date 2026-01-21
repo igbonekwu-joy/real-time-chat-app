@@ -8,7 +8,7 @@
             <div class="container">
                 <div class="col-md-12">
                     <div class="tab-content">
-                        <!-- Start of Discussions -->
+                        <!-- Start of Groups Discussions -->
                         <div id="discussions" class="tab-pane fade active show">
                             <div class="search">
                                 <form class="form-inline position-relative">
@@ -27,6 +27,10 @@
                             <div class="discussions">
                                 <h1>Groups</h1>
                                 <div class="list-group" id="chats" role="tablist">
+                                    @if(count($groups) == 0)
+                                        <p class="text-center">No groups found. Create groups to start a conversation</p>
+                                    @endif
+
                                     @foreach($groups as $group)
                                         <a
                                             href="#"
@@ -49,7 +53,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End of Discussions -->
+                        <!-- End of Groups Discussions -->
                     </div>
                 </div>
             </div>
@@ -92,7 +96,9 @@
 
                                                     <button class="dropdown-item"><i class="material-icons">clear</i>Clear History</button>
                                                     <button class="dropdown-item"><i class="material-icons">block</i>Leave Group</button>
-                                                    <button class="dropdown-item"><i class="material-icons">delete</i>Delete Group</button>
+                                                    <button class="dropdown-item" id="deleteGroup">
+                                                        <i class="material-icons">delete</i>Delete Group
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -102,7 +108,11 @@
                             <div class="content" id="content">
                                 <div class="container">
                                     <div class="col-md-12 all-messages">
-                                        
+                                        <div class="loader-container">
+                                            <div class="loader">
+                                                <span class="spinner-border spinner-border-sms" role="status"></span>
+                                            </div>
+                                        </div>
                                         {{-- messages go here --}}
 
                                     </div>

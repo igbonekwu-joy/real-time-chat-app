@@ -26,7 +26,7 @@ class Login extends Component
         ])) {
             $request->session()->regenerate();
 
-            $this->redirect('/groups', navigate: true);
+            $this->redirect('/groups');
         }
 
         $this->addError('invalid', 'Invalid login credentials');

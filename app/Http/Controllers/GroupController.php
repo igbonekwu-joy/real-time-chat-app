@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Group;
 use App\Models\GroupMessage;
 use App\Models\GroupUser;
 use App\Models\User;
@@ -23,7 +24,9 @@ class GroupController extends Controller
     }
 
     public function getMessages (Request $request) {
-        $messages = GroupMessage::where('group_id', $request->group_id)->get();
+        $messages = GroupMessage::with('user')
+                    ->where('group_id', $request->group_id)
+                    ->get();
 
         return response()->json([
             'status' => true,
@@ -47,6 +50,14 @@ class GroupController extends Controller
             ], 404);
         }
 
+        //if user is already a member
+        if(GroupUser::where('group_id', $groupId)->where('user_id', $user->id)->exists()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'User is already a member'
+            ], 409);
+        }
+
         GroupUser::create([
             'group_id' => $groupId,
             'user_id' => $user->id
@@ -63,6 +74,21 @@ class GroupController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Member added successfully'
+        ]);
+    }
+
+    public function deleteGroup (Request $request) {
+        $messages = GroupMessage::where('group_id', $request->groupId)->get();
+
+        foreach($messages as $message) {
+            $message->delete();
+        }
+
+        Group::where('id', $request->groupId)->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Group deleted successfully'
         ]);
     }
 }

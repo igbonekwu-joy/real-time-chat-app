@@ -12,4 +12,9 @@ class GroupMessage extends Model
         'message',
         'bot'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -9,14 +9,14 @@
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
-.no-message-container {
+.no-message-container, .loader-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-.no-message {
+.no-message, .loader {
     margin: auto;
     /* add any additional styles for the code block */
 }
