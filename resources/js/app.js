@@ -14,13 +14,14 @@ const addMemberForm = $('#addMember');
 var deleteGroupBtn = $('#deleteGroup');
 var leaveGroupBtn = $('#leaveGroup');
 var addMemberBtn = $('#addMemberBtn');
+let activeGroupId;
 
 var socket = io('http://localhost:3000'); //connect to server
 
 //get group details when a group is clicked
 group.on('click', function () {
     const group = $(this).data('room');
-    const groupId = $(this).data('group-id');
+    activeGroupId = $(this).data('group-id');
     const groupImage = $(this).data('image');
     const isAdmin = $(this).data('is-admin');
     const username = user.name;
@@ -37,21 +38,32 @@ group.on('click', function () {
     socket.emit('joinRoom', { username, group });
 
     //get messages
-    getMessages(groupId);
+    getMessages(activeGroupId);
 
     $('.no-message-container').hide();
     $('.chat-container').show();
     $('.group-img').attr('src', groupImage);
     $('.group-name').text(group);
-    $('#group-id').val(groupId);
+    $('#group-id').val(activeGroupId);
 
     //mark messages as read
-    $.post('/group/mark-as-read', { groupId });
+    $.post('/group/mark-as-read', { groupId: activeGroupId });
+
+    $(`.unread-div-${activeGroupId}`).hide(); //remove the unread message counter
+    $(`.filter-${activeGroupId}`).addClass('read');
+    $(`.filter-${activeGroupId}`).removeClass('unread');
 });
 
 socket.on('message', (message) => {
     $('.no-messages').hide();
     var messageContainer = $('.all-messages');
+    var groupId = message.groupId;
+
+    //check if message belongs to the active group
+    if(groupId != activeGroupId) {
+        return;
+    }
+
     if(message.username == 'System Bot') {
         var message = ` <div style="text-align: center;" class="bot-message m-3">
                             <p style="
@@ -101,11 +113,14 @@ socket.on('message', (message) => {
     scrollToBottom();
 });
 
+socket.on('incrementMessage', ({ groupId }) => {
+    incrementUnreadMessages(groupId);
+})
+
 //send group message
 sendBtn.on('click', function (e) {
     e.preventDefault();
     var groupName = $('.group-name').text();
-    var groupId = $('#group-id').val();
     var message = $('.message-content').val();
     var userId = user.id;
     var username = user.name;
@@ -121,12 +136,12 @@ sendBtn.on('click', function (e) {
         url: '/group/send-message',
         type: 'POST',
         data: {
-            group_id: groupId,
+            group_id: activeGroupId,
             message: message,
             user_id: userId,
         },
         success: function (data) {
-            socket.emit('newGroupMessage', { groupName, message, username });
+            socket.emit('newGroupMessage', { groupName, message, username, groupId: activeGroupId});
         },
         error: function (error) {
             console.log(error);
@@ -141,7 +156,6 @@ sendBtn.on('click', function (e) {
 addMemberForm.on('submit', function (e) {
     e.preventDefault();
 
-    var groupId = $('#group-id').val();
     var username = $('#member_username').val();
     var loadBtn = $('.submit-button');
 
@@ -155,13 +169,13 @@ addMemberForm.on('submit', function (e) {
         url: '/group/add-member',
         type: 'POST',
         data: {
-            groupId,
+            groupId: activeGroupId,
             username,
         },
         success: function (data) {
             $('.all-messages').empty();
             //refresh the messages
-            getMessages(groupId);
+            getMessages(activeGroupId);
 
             // close modal
             $('#addMemberModal').modal('hide');
@@ -182,13 +196,12 @@ addMemberForm.on('submit', function (e) {
 //delete group
 deleteGroupBtn.on('click', function (e) {
     e.preventDefault();
-    var groupId = $('#group-id').val();
 
     $.ajax({
         url: '/group/delete-group',
         type: 'DELETE',
         data: {
-            groupId,
+            groupId: activeGroupId,
         },
         success: function (data) {
             window.location.href = '/groups';
@@ -204,7 +217,6 @@ deleteGroupBtn.on('click', function (e) {
 leaveGroupBtn.on('click', function (e) {
     e.preventDefault();
 
-    var groupId = $('#group-id').val();
     var groupName = $('.group-name').text();
     var userId = user.id;
     var username = user.name;
@@ -213,12 +225,11 @@ leaveGroupBtn.on('click', function (e) {
         url: '/group/leave-group',
         type: 'POST',
         data: {
-            groupId,
+            groupId: activeGroupId,
             userId
         },
         success: function (data) {
-           // window.location.href = '/groups';
-           socket.emit('leaveGroup', { groupName, username });
+           socket.emit('leaveGroup', { groupName, username, groupId: activeGroupId});
         },
         error: function (error) {
             console.log(error.responseJSON.message);
@@ -276,6 +287,7 @@ function getMessages (groupId) {
 
             let lastRenderedDay = null;
             const messagesContainer = $('.all-messages');
+            messagesContainer.empty();
             $('.loader').hide();
 
             data.messages.forEach((msg) => {
@@ -355,6 +367,14 @@ function getMessages (groupId) {
             scrollToBottom();
         }
     });
+}
+
+function incrementUnreadMessages(groupId) {
+    $(`.unread-div-${groupId}`).show();
+    $(`.unread-count-${groupId}`).text(parseInt($(`.unread-count-${groupId}`).text()) + 1);
+
+    $(`.filter-${groupId}`).addClass('unread');
+    $(`.filter-${groupId}`).removeClass('read');
 }
 
                         // <img class="avatar-md"

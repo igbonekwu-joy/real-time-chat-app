@@ -25,28 +25,24 @@ io.on('connection', (socket) => {
 
         if (!alreadyInRoom) {
             socket.join(group);
-            // console.log(`${username} joined ${group} for the first time`);
-
-            // socket.emit('message', formatMessage(bot, `Welcome to ${group}, ${username}`));
-            // socket.broadcast.to(group).emit('userJoined', username);
-        } else {
-            //console.log(`${username} already in ${group}`);
         }
     });
 
-    socket.on('newGroupMessage', ({ groupName, message, username }) => {
-        io.to(groupName).emit('message', formatMessage(username, message));
+    socket.on('newGroupMessage', ({ groupName, message, username, groupId }) => {
+        socket.broadcast.emit('incrementMessage', { groupId });
+        io.to(groupName).emit('message', formatMessage(username, message, groupId));
     });
 
-    socket.on('leaveGroup', ({ groupName, username }) => {
-        io.to(groupName).emit('message', formatMessage(bot, `${username} left the group`));
+    socket.on('leaveGroup', ({ groupName, username, groupId }) => {
+        io.to(groupName).emit('message', formatMessage(bot, `${username} left the group`, groupId));
     })
 });
 
-function formatMessage(username, text) {
+function formatMessage(username, text, groupId) {
     return {
         username,
         text,
+        groupId,
         time: moment().format('h:mm a')
     }
 }

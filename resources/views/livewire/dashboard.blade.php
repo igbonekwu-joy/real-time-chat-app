@@ -34,7 +34,8 @@
                                     @foreach($groups as $group)
                                         <a
                                             href="#"
-                                            class="filterDiscussions all read single" id="list-chat-list"
+                                            class="filterDiscussions all {{ $group->unread_count > 0 ? 'unread' : 'read' }} single filter-{{ $group->id }}"
+                                            id="list-chat-list"
                                             data-room="{{ $group->name }}"
                                             data-is-admin="{{ $group->users->where('id', auth()->user()->id)->first()?->pivot->is_admin ?? 0 }}"
                                             data-group-id={{ $group->id }}
@@ -44,11 +45,13 @@
                                             wire:key="group-{{ $group->id }}"
                                         >
                                             <img class="avatar-md" src={{ asset('storage') . '/'. $group->image }} data-toggle="tooltip" data-placement="top" title="Janette" alt="avatar">
-                                            @if($group->unread_count > 0)
-                                                <div class="new bg-yellow">
-                                                    <span>+{{ $group->unread_count }}</span>
-                                                </div>
-                                            @endif
+
+                                            <div
+                                                class="new bg-yellow unread-div-{{ $group->id }}"
+                                                style="{{ $group->unread_count > 0 ? '' : 'display: none' }}"
+                                            >
+                                                <span>+<span class="unread-count-{{ $group->id }}">{{ $group->unread_count }}</span></span>
+                                            </div>
 
                                             <div class="data">
                                                 <h5>{{ $group->name }}</h5>
