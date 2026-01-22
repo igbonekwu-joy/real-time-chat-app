@@ -8,7 +8,7 @@
                         <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}" title="Groups">
                             <i class="material-icons {{ request()->routeIs('dashboard') ? 'active' : '' }}">account_circle</i>
                         </a>
-                        <a href="{{ route('chats') }}" class="{{ request()->routeIs('chats') ? 'active' : '' }}" title="Chats">
+                        <a href="{{ route('chats') }}" class="{{ request()->routeIs('chats') ? 'active' : '' }}" title="Chats" wire:navigate>
                             <i class="material-icons {{ request()->routeIs('chats') ? 'active' : '' }}">chat_bubble_outline</i>
                         </a>
                         <a href="#notifications" class="f-grow1">
@@ -22,7 +22,7 @@
                                 link
                             </i>
                         </a>
-                        <a href="{{ route('users') }}" title="Site Users">
+                        <a href="{{ route('users') }}" title="Site Users" wire:navigate>
                             <div style="border-radius: 50%; background: #2196f3; color: #fff; width: 20px;">
                                 <span>7</span>
                             </div>
