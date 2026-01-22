@@ -109,6 +109,23 @@
                                 <i class="fa fa-user-times"></i>
                                 Unfriend
                             </button>
+                        @elseif($this->checkFriendRequest($selectedUser->id))
+                            <button
+                                class="btn btn-primary loader"
+                                style="background: #2196f3; width: 40%;"
+                                wire:click.prevent="acceptRequest({{ $selectedUser->id }})"
+                            >
+                                <i class="fa fa-user-plus"></i>
+                                Accept
+                            </button>
+                            <button
+                                class="btn btn-primary loader"
+                                style="background: red; width: 40%;"
+                                wire:click.prevent="ignoreRequest({{ $selectedUser->id }})"
+                            >
+                                <i class="fa fa-user-times"></i>
+                                Ignore
+                            </button>
                         @elseif($this->isPending($selectedUser->id))
                             <button
                                 class="btn btn-primary loader"

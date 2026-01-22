@@ -26,11 +26,41 @@ class Users extends Component
         session()->flash('success', 'A friend request has been sent. You would be notified when they accept.');
     }
 
+    public function checkFriendRequest($userId) {
+        return UserFriend::where('user_id', $userId)
+                        ->where('friend_id', Auth::user()->id)
+                        ->where('accepted', false)
+                        ->exists();
+    }
+
+    public function ignoreRequest($userId) {
+        UserFriend::where('user_id', $userId)
+                    ->where('friend_id', Auth::user()->id)
+                    ->delete();
+
+        session()->flash('success', 'The friend request has been removed.');
+    }
+
+    public function acceptRequest($userId) {
+        UserFriend::where('user_id', $userId)
+                    ->where('friend_id', Auth::user()->id)
+                    ->update(['accepted' => true]);
+
+        session()->flash('success', 'The friend request has been accepted.');
+    }
+
     public function isFriend($userId) {
-        return UserFriend::where('user_id', Auth::user()->id)
+        $caseOne = UserFriend::where('user_id', Auth::user()->id)
                         ->where('friend_id', $userId)
                         ->where('accepted', true)
                         ->exists();
+
+        $caseTwo = UserFriend::where('user_id', $userId)
+                        ->where('friend_id', Auth::user()->id)
+                        ->where('accepted', true)
+                        ->exists();
+
+        return $caseOne || $caseTwo;
     }
 
     public function isPending($userId) {
