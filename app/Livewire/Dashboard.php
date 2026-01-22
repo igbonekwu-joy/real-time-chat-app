@@ -65,6 +65,20 @@ class Dashboard extends Component
 
     public function render()
     {
+        $groups = Group::whereIn(
+            'id',
+            GroupUser::where('user_id', Auth::id())->pluck('group_id')
+        )
+        ->withCount([
+            'messages as unread_count' => function ($q) {
+                $q->whereHas('reads', function ($r) {
+                    $r->where('user_id', Auth::id())
+                    ->whereNull('read_at');
+                });
+            }
+        ])
+        ->get();
+        
         //for searches
         if($this->group) {
             $groups = Group::whereIn(
@@ -83,19 +97,6 @@ class Dashboard extends Component
             ->get();
         }
 
-        $groups = Group::whereIn(
-            'id',
-            GroupUser::where('user_id', Auth::id())->pluck('group_id')
-        )
-        ->withCount([
-            'messages as unread_count' => function ($q) {
-                $q->whereHas('reads', function ($r) {
-                    $r->where('user_id', Auth::id())
-                    ->whereNull('read_at');
-                });
-            }
-        ])
-        ->get();
 
         return view('livewire.dashboard', compact('groups'));
     }

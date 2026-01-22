@@ -14,7 +14,7 @@
                     <div class="top">
                         <div class="container">
                             <div class="col-md-12">
-                                <div class="inside">
+                                <div class="inside"> 
                                     <a href="#">
                                         <img class="avatar-md group-img" src="" data-toggle="tooltip" data-placement="top" title="Group Image" alt="avatar">
                                     </a>
