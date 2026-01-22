@@ -14,6 +14,7 @@ const addMemberForm = $('#addMember');
 var deleteGroupBtn = $('#deleteGroup');
 var leaveGroupBtn = $('#leaveGroup');
 var addMemberBtn = $('#addMemberBtn');
+var message = $('.message-content');
 let activeGroupId;
 
 var socket = io('http://localhost:3000'); //connect to server
@@ -115,21 +116,69 @@ socket.on('message', (message) => {
 
 socket.on('incrementMessage', ({ groupId }) => {
     incrementUnreadMessages(groupId);
-})
+});
+
+socket.on('typing', ({ groupId, username }) => {
+    if(groupId != activeGroupId) {
+        return;
+    }
+
+    if ($(`.typing-indicator-${groupId}`).length) return; //ensure more than one typing indicator is not shown
+
+    var messageContainer = $('.all-messages');
+    var message = `<div class="message typing-indicator-${groupId}">
+                        <div class="text-main">
+                            ${username}
+                            <div class="text-group">
+                                <div class="text typing">
+                                    <div class="wave">
+                                        <span class="dot"></span>
+                                        <span class="dot"></span>
+                                        <span class="dot"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`
+
+    messageContainer.append(message);
+
+    scrollToBottom();
+});
+
+socket.on('stopTyping', ({ groupId, username }) => {
+    console.log('stopped')
+    $(`.typing-indicator-${groupId}`).remove();
+});
+
+//add typing indicator
+message.on('input', function () {
+    if (message.val() === '') {
+        socket.emit('stopTyping', {
+            username: user.name,
+            groupId: activeGroupId
+        });
+
+        return;
+    }
+
+    socket.emit('typing', { username: user.name, groupId: activeGroupId });
+});
 
 //send group message
 sendBtn.on('click', function (e) {
     e.preventDefault();
+    var userMessage = message.val();
     var groupName = $('.group-name').text();
-    var message = $('.message-content').val();
     var userId = user.id;
     var username = user.name;
-
-    if(message == '') {
+    if(userMessage == '') {
         return;
     }
 
-    $('.message-content').val('')
+    $('.message-content').val('');
+
+    socket.emit('stopTyping', { username, groupId: activeGroupId });
 
     //save message to database
     $.ajax({
@@ -137,11 +186,11 @@ sendBtn.on('click', function (e) {
         type: 'POST',
         data: {
             group_id: activeGroupId,
-            message: message,
+            message: userMessage,
             user_id: userId,
         },
         success: function (data) {
-            socket.emit('newGroupMessage', { groupName, message, username, groupId: activeGroupId});
+            socket.emit('newGroupMessage', { groupName, message: userMessage, username, groupId: activeGroupId});
         },
         error: function (error) {
             console.log(error);
@@ -376,9 +425,4 @@ function incrementUnreadMessages(groupId) {
     $(`.filter-${groupId}`).addClass('unread');
     $(`.filter-${groupId}`).removeClass('read');
 }
-
-                        // <img class="avatar-md"
-                        //     src="${msg.user_image ?? '/images/default-avatar.png'}"
-                        //     title="${msg.user.name ?? 'User'}"
-                        //     alt="avatar"></img>
 

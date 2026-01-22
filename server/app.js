@@ -28,6 +28,14 @@ io.on('connection', (socket) => {
         }
     });
 
+    socket.on('typing', ({ username, groupId }) => {
+        socket.broadcast.emit('typing', { groupId, username });
+    });
+
+    socket.on('stopTyping', ({ username, groupId }) => {
+        socket.broadcast.emit('stopTyping', { groupId, username });
+    });
+
     socket.on('newGroupMessage', ({ groupName, message, username, groupId }) => {
         socket.broadcast.emit('incrementMessage', { groupId });
         io.to(groupName).emit('message', formatMessage(username, message, groupId));

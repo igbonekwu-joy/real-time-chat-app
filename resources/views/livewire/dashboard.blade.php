@@ -124,6 +124,7 @@
                                                 <span class="spinner-border spinner-border-sms" role="status"></span>
                                             </div>
                                         </div>
+
                                         {{-- messages go here --}}
 
                                     </div>
