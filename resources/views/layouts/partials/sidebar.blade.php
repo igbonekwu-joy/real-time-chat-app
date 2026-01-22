@@ -5,20 +5,28 @@
                         <button class="btn">
                             <img class="avatar-xl" src="dist/img/avatars/avatar-male-1.jpg" alt="avatar">
                         </button>
-                        <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                        <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}" title="Groups">
                             <i class="material-icons {{ request()->routeIs('dashboard') ? 'active' : '' }}">account_circle</i>
                         </a>
-                        <a href="{{ route('chats') }}" class="{{ request()->routeIs('chats') ? 'active' : '' }}">
+                        <a href="{{ route('chats') }}" class="{{ request()->routeIs('chats') ? 'active' : '' }}" title="Chats">
                             <i class="material-icons {{ request()->routeIs('chats') ? 'active' : '' }}">chat_bubble_outline</i>
                         </a>
                         <a href="#notifications" class="f-grow1">
                             <i class="material-icons">notifications_none</i>
                         </a>
-                        <a href="#users">
+                        <a href="#friends" title="Friends">
                             <div style="border-radius: 50%; background: #2196f3; color: #fff; width: 20px;">
                                 <span>7</span>
                             </div>
                             <i class="material-icons">
+                                link
+                            </i>
+                        </a>
+                        <a href="{{ route('users') }}" title="Site Users">
+                            <div style="border-radius: 50%; background: #2196f3; color: #fff; width: 20px;">
+                                <span>7</span>
+                            </div>
+                            <i class="material-icons {{ request()->routeIs('users') ? 'active' : '' }}">
                                 people
                             </i>
                         </a>
