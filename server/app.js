@@ -41,6 +41,10 @@ io.on('connection', (socket) => {
         io.to(groupName).emit('message', formatMessage(username, message, groupId));
     });
 
+    socket.on('addMember', ({ groupName, groupId, username }) => {
+        io.to(groupName).emit('message', formatMessage(bot, `${username} was added`, groupId));
+    })
+
     socket.on('leaveGroup', ({ groupName, username, groupId }) => {
         io.to(groupName).emit('message', formatMessage(bot, `${username} left the group`, groupId));
     })

@@ -55,7 +55,9 @@
 
                                             <div class="data">
                                                 <h5>{{ $group->name }}</h5>
-                                                <p>{{ $group->description }}</p>
+                                                <p>
+                                                    {{ \Illuminate\Support\Str::limit($group->description ?? $group->messages->first()->message, 15, '...') }}
+                                                </p>
                                             </div>
                                         </a>
                                     @endforeach

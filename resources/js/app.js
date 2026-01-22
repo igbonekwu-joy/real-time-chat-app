@@ -59,9 +59,11 @@ socket.on('message', (message) => {
     $('.no-messages').hide();
     var messageContainer = $('.all-messages');
     var groupId = message.groupId;
+    console.log(message);
 
     //check if message belongs to the active group
     if(groupId != activeGroupId) {
+        console.log('not the active grp')
         return;
     }
 
@@ -123,10 +125,10 @@ socket.on('typing', ({ groupId, username }) => {
         return;
     }
 
-    if ($(`.typing-indicator-${groupId}`).length) return; //ensure more than one typing indicator is not shown
+    if ($(`.typing-indicator-${username}`).length) return; //ensure more than one typing indicator is not shown
 
     var messageContainer = $('.all-messages');
-    var message = `<div class="message typing-indicator-${groupId}">
+    var message = `<div class="message typing-indicator-${username}">
                         <div class="text-main">
                             ${username}
                             <div class="text-group">
@@ -148,7 +150,7 @@ socket.on('typing', ({ groupId, username }) => {
 
 socket.on('stopTyping', ({ groupId, username }) => {
     console.log('stopped')
-    $(`.typing-indicator-${groupId}`).remove();
+    $(`.typing-indicator-${username}`).remove();
 });
 
 //add typing indicator
@@ -207,6 +209,7 @@ addMemberForm.on('submit', function (e) {
 
     var username = $('#member_username').val();
     var loadBtn = $('.submit-button');
+    var groupName = $('.group-name').text();
 
     if(username == '') {
         return;
@@ -222,15 +225,13 @@ addMemberForm.on('submit', function (e) {
             username,
         },
         success: function (data) {
-            $('.all-messages').empty();
-            //refresh the messages
-            getMessages(activeGroupId);
-
-            // close modal
-            $('#addMemberModal').modal('hide');
+            socket.emit('addMember', { groupName, groupId: activeGroupId, username });
 
             //hide the load button
             loadBtn.hide();
+
+            // close modal
+            $('#addMemberModal').modal('hide');
         },
         error: function (error) {
             console.log(error.responseJSON.message);
