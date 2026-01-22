@@ -9,7 +9,6 @@ $.ajaxSetup({
 const rawUser = $('#user-details');
 const user = JSON.parse(rawUser.val());
 const sendBtn = $('.send-message');
-const group = $('.filterDiscussions');
 const addMemberForm = $('#addMember');
 var deleteGroupBtn = $('#deleteGroup');
 var leaveGroupBtn = $('#leaveGroup');
@@ -20,7 +19,7 @@ let activeGroupId;
 var socket = io('http://localhost:3000'); //connect to server
 
 //get group details when a group is clicked
-group.on('click', function () {
+$(document).on('click', '.filterDiscussions', function () {
     const group = $(this).data('room');
     activeGroupId = $(this).data('group-id');
     const groupImage = $(this).data('image');
@@ -239,6 +238,27 @@ addMemberForm.on('submit', function (e) {
 
             //hide the load button
             loadBtn.hide();
+        },
+    });
+});
+
+$(document).on('click', '#clearHistory', function () {
+    var userId = user.id;
+
+    $.ajax({
+        url: '/group/clear-history',
+        type: 'POST',
+        data: {
+            groupId: activeGroupId,
+            userId
+        },
+        success: function (data) {
+            $('.all-messages').empty();
+            getMessages(activeGroupId);
+        },
+        error: function (error) {
+            console.log(error.responseJSON.message);
+            alert(error.responseJSON.message);
         },
     });
 });

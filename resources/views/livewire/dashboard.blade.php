@@ -105,7 +105,9 @@
                                                         <i class="material-icons">person_add</i>Add Member
                                                     </button>
 
-                                                    <button class="dropdown-item"><i class="material-icons">clear</i>Clear History</button>
+                                                    <button class="dropdown-item" id="clearHistory">
+                                                        <i class="material-icons">clear</i>Clear History
+                                                    </button>
                                                     <button class="dropdown-item" id="leaveGroup">
                                                         <i class="material-icons">block</i>Leave Group
                                                     </button>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\GroupClear;
 use App\Models\GroupMessage;
 use App\Models\GroupMessageRead;
 use App\Models\GroupUser;
@@ -43,7 +44,6 @@ class GroupController extends Controller
             }
         }
 
-
         return response()->json([
             'status' => true,
             'message' => 'Message saved successfully'
@@ -51,9 +51,17 @@ class GroupController extends Controller
     }
 
     public function getMessages (Request $request) {
+        $clearedAt = GroupClear::where('group_id', $request->group_id)
+            ->where('user_id', Auth::user()->id)
+            ->value('cleared_at');
+
         $messages = GroupMessage::with('user')
-                    ->where('group_id', $request->group_id)
-                    ->get();
+            ->where('group_id', $request->group_id)
+            ->when($clearedAt, function ($q) use ($clearedAt) {
+                $q->where('created_at', '>', $clearedAt);
+            })
+            ->orderBy('created_at')
+            ->get();
 
         return response()->json([
             'status' => true,
@@ -101,6 +109,31 @@ class GroupController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Member added successfully'
+        ]);
+    }
+
+    public function clearHistory (Request $request) {
+        $groupId = $request->input('groupId');
+        $userId = $request->input('userId');
+
+        $request->validate([
+            'groupId' => 'required|exists:groups,id',
+            'userId' => 'required|exists:users,id'
+        ]);
+
+        GroupClear::updateOrCreate(
+            [
+                'group_id' => $groupId,
+                'user_id' => $userId
+            ],
+            [
+                'cleared_at' => now()
+            ]
+        );
+
+        return response()->json([
+            'status' => true,
+            'message' => 'History cleared successfully'
         ]);
     }
 

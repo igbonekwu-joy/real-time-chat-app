@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
         Route::get('get-messages', [GroupController::class, 'getMessages'])->name('group.get-messages');
         Route::post('add-member', [GroupController::class, 'addMember'])->name('group.add-member');
         Route::post('mark-as-read', [GroupController::class, 'markAsRead'])->name('group.mark-as-read');
+        Route::post('clear-history', [GroupController::class, 'clearHistory'])->name('group.clear-history');
         Route::post('leave-group', [GroupController::class, 'leaveGroup'])->name('group.leave-group');
         Route::delete('delete-group', [GroupController::class, 'deleteGroup'])->name('group.delete-group');
     });
