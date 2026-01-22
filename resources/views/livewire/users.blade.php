@@ -103,20 +103,25 @@
                         @if($this->isFriend($selectedUser->id))
                             <button
                                 class="btn btn-primary loader"
-                                style="background: #2196f3; width: 80%;"
-                                wire:click.prevent="addFriend({{ $selectedUser->id }})"
+                                style="background: red; width: 80%;"
+                                wire:click.prevent="unFriend({{ $selectedUser->id }})"
                             >
-                                <i class="fa fa-user-minus"></i>
+                                <i class="fa fa-user-times"></i>
                                 Unfriend
                             </button>
                         @elseif($this->isPending($selectedUser->id))
                             <button
                                 class="btn btn-primary loader"
-                                style="background: #2196f3; width: 80%;"
+                                style="background: #7d99b0; width: 80%;"
                                 wire:click.prevent="addFriend({{ $selectedUser->id }})"
+                                disabled
                             >
-                                <i class="fa fa-clock"></i>
+                                <i class="fa fa-clock-o"></i>
                                 Pending
+                            </button>
+                            <button class="btn btn-primary" style="background: red;" wire:click.prevent="unFriend({{ $selectedUser->id }})">
+                                <i class="fa fa-trash"></i>
+                                Remove
                             </button>
                         @else
                             <button

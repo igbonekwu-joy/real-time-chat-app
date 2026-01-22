@@ -40,6 +40,14 @@ class Users extends Component
                         ->exists();
     }
 
+    public function unFriend($userId) {
+        UserFriend::where('user_id', Auth::user()->id)
+                    ->where('friend_id', $userId)
+                    ->delete();
+
+        session()->flash('success', 'The friend request has been removed.');
+    }
+
     public function render()
     {
         $users = User::where('id', '!=', Auth::user()->id)->get();
