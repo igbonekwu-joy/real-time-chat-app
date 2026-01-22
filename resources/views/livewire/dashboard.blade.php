@@ -12,7 +12,7 @@
                         <div id="discussions" class="tab-pane fade active show">
                             <div class="search">
                                 <form class="form-inline position-relative">
-                                    <input type="search" class="form-control" id="conversations" placeholder="Search for groups...">
+                                    <input type="search" class="form-control" id="conversations" placeholder="Search for groups..." wire:model.live.debounce.300ms="group">
                                     <button type="button" class="btn btn-link loop"><i class="material-icons">search</i></button>
                                 </form>
                                 <button class="btn create" data-toggle="modal" data-target="#startnewchat">

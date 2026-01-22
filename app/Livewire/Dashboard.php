@@ -22,6 +22,8 @@ class Dashboard extends Component
     public $groupImage;
     public $photo;
 
+    public $group;
+
 
     public function storeGroup() {
         $this->validate([
@@ -63,6 +65,23 @@ class Dashboard extends Component
 
     public function render()
     {
+        if($this->group) {
+            $groups = Group::whereIn(
+                'id',
+                GroupUser::where('user_id', Auth::id())->pluck('group_id')
+            )
+            ->where('name', 'like', '%' . $this->group . '%')
+            ->withCount([
+                'messages as unread_count' => function ($q) {
+                    $q->whereHas('reads', function ($r) {
+                        $r->where('user_id', Auth::id())
+                        ->whereNull('read_at');
+                    });
+                }
+            ])
+            ->get();
+        }
+
         $groups = Group::whereIn(
             'id',
             GroupUser::where('user_id', Auth::id())->pluck('group_id')
