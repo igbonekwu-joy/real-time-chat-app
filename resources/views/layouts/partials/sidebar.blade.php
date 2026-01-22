@@ -23,9 +23,6 @@
                             </i>
                         </a>
                         <a href="{{ route('users') }}" title="Site Users" wire:navigate>
-                            <div style="border-radius: 50%; background: #2196f3; color: #fff; width: 20px;">
-                                <span>7</span>
-                            </div>
                             <i class="material-icons {{ request()->routeIs('users') ? 'active' : '' }}">
                                 people
                             </i>
