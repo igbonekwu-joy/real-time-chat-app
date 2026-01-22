@@ -65,6 +65,7 @@ class Dashboard extends Component
 
     public function render()
     {
+        //for searches
         if($this->group) {
             $groups = Group::whereIn(
                 'id',

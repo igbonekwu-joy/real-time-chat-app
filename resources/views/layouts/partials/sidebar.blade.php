@@ -14,10 +14,14 @@
                         <a href="#notifications" data-toggle="tab" class="f-grow1" wire:navigate>
                             <i class="material-icons">notifications_none</i>
                         </a>
-                        <button class="btn mode">
-                            <i class="material-icons">brightness_2</i>
-                        </button>
-                        <a href="#settings" data-toggle="tab"><i class="material-icons">settings</i></a>
+                        <a href="#users" data-toggle="tab">
+                            <div style="border-radius: 50%; background: #2196f3; color: #fff; width: 20px;">
+                                <span>7</span>
+                            </div>
+                            <i class="material-icons">
+                                people
+                            </i>
+                        </a>
                         <button class="btn power" onclick="visitPage();"><i class="material-icons">power_settings_new</i></button>
                     </div>
                 </div>
