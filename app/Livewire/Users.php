@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Notification;
 use App\Models\User;
 use App\Models\UserFriend;
+use App\Services\RequestsService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -32,7 +33,12 @@ class Users extends Component
         //notify the frontend of the friend request event
         $this->dispatch('friend-request-sent',
             toUserId: $userId,
-            fromUser: Auth::user()->name
+            fromUser: [
+                'id' => Auth::user()->id,
+                'name' => Auth::user()->name,
+                'email' => Auth::user()->email,
+                'image' => Auth::user()->image
+            ]
         );
 
         session()->flash('success', 'A friend request has been sent. You would be notified when they accept.');
@@ -46,17 +52,13 @@ class Users extends Component
     }
 
     public function ignoreRequest($userId) {
-        UserFriend::where('user_id', $userId)
-                    ->where('friend_id', Auth::user()->id)
-                    ->delete();
+        app(RequestsService::class)->ignoreRequest($userId);
 
         session()->flash('success', 'The friend request has been removed.');
     }
 
     public function acceptRequest($userId) {
-        UserFriend::where('user_id', $userId)
-                    ->where('friend_id', Auth::user()->id)
-                    ->update(['accepted' => true]);
+        app(RequestsService::class)->acceptRequest($userId);
 
         session()->flash('success', 'The friend request has been accepted.');
     }

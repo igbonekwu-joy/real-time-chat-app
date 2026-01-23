@@ -18,7 +18,7 @@
 
                             <div class="discussions">
                                 <h1>Friend Requests</h1>
-                                <div class="list-group" id="chats" role="tablist">
+                                <div class="list-group request-list-{{ auth()->user()->id }}" id="chats" role="tablist">
                                     @if(count($requests) == 0)
                                         <p class="text-center">No friend requests yet.</p>
                                     @endif

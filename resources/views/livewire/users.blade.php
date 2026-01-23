@@ -62,7 +62,9 @@
             <section class="section about-section gray-bg" id="about">
                 <div class="container">
                     @if(session('success'))
-                        <div class="bg-green-100 text-green-800 text-center px-4 py-2 rounded mb-4">
+                        <div
+                            class="bg-green-100 text-green-800 text-center px-4 py-2 rounded mb-4"
+                        >
                             {{ session('success') }}
                         </div>
                     @endif
@@ -145,7 +147,7 @@
                                 class="btn btn-primary loader"
                                 style="background: #2196f3; width: 80%;"
                                 wire:click.prevent="addFriend({{ $selectedUser->id }})"
-                            > 
+                            >
                                 <i class="fa fa-user-plus"></i>
                                 Add Friend
                             </button>
