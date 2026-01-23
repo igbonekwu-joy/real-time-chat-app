@@ -3,7 +3,7 @@
         <!-- Start of Navigation -->
         @include('layouts.partials.sidebar')
         <!-- End of Navigation -->
-        
+
         <!-- Start of Sidebar -->
         <div class="sidebar" id="sidebar">
             <div class="container">
@@ -24,7 +24,7 @@
                                 <button class="btn filterDiscussionsBtn active show" data-toggle="list" data-filter="all">All</button>
                                 <button class="btn filterDiscussionsBtn" data-toggle="list" data-filter="read">Read</button>
                                 <button class="btn filterDiscussionsBtn" data-toggle="list" data-filter="unread">Unread</button>
-                            </div>
+                            </div> 
                             <div class="discussions">
                                 <h1>Groups</h1>
                                 <div class="list-group" id="chats" role="tablist">

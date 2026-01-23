@@ -29,6 +29,12 @@ class Users extends Component
             'message' => Auth::user()->name . ' has sent you a friend request.'
         ]);
 
+        //notify the frontend of the friend request event
+        $this->dispatch('friend-request-sent',
+            toUserId: $userId,
+            fromUser: Auth::user()->name
+        );
+
         session()->flash('success', 'A friend request has been sent. You would be notified when they accept.');
     }
 

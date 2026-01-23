@@ -120,7 +120,7 @@
                             wire:click.prevent="ignoreRequest({{ $selectedUser->id }})"
                         >
                             <i class="fa fa-user-times"></i>
-                            Ignore
+                            Decline
                         </button>
                     </div>
                 </div>

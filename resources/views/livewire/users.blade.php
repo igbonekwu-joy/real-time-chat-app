@@ -145,7 +145,7 @@
                                 class="btn btn-primary loader"
                                 style="background: #2196f3; width: 80%;"
                                 wire:click.prevent="addFriend({{ $selectedUser->id }})"
-                            >
+                            > 
                                 <i class="fa fa-user-plus"></i>
                                 Add Friend
                             </button>

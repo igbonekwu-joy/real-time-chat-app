@@ -1,3 +1,5 @@
+import { socket } from './config';
+
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': document
@@ -15,8 +17,6 @@ var leaveGroupBtn = $('#leaveGroup');
 var addMemberBtn = $('#addMemberBtn');
 var message = $('.message-content');
 let activeGroupId;
-
-var socket = io('http://localhost:3000'); //connect to server
 
 //get group details when a group is clicked
 $(document).on('click', '.filterDiscussions', function () {

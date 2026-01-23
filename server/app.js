@@ -20,6 +20,7 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
+    /*Groups*/
     socket.on('joinRoom', ({ username, group}) => {
         const alreadyInRoom = socket.rooms.has(group);
 
@@ -48,6 +49,13 @@ io.on('connection', (socket) => {
     socket.on('leaveGroup', ({ groupName, username, groupId }) => {
         io.to(groupName).emit('message', formatMessage(bot, `${username} left the group`, groupId));
     })
+    /*End Groups*/
+
+    /*Friend Requests*/
+    socket.on('friendRequest', ({ toUserId, fromUser }) => {
+        socket.broadcast.emit('friendRequestNotification', { toUserId, fromUser });
+    });
+    /*End Friend Requests*/
 });
 
 function formatMessage(username, text, groupId) {
