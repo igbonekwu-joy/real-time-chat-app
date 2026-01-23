@@ -22,6 +22,11 @@
                                 link
                             </i>
                         </a>
+                        <a href="{{ route('requests') }}" title="Friend Requests" wire:navigate>
+                            <i class="material-icons {{ request()->routeIs('requests') ? 'active' : '' }}">
+                                group_add
+                            </i>
+                        </a>
                         <a href="{{ route('users') }}" title="Site Users" wire:navigate>
                             <i class="material-icons {{ request()->routeIs('users') ? 'active' : '' }}">
                                 people

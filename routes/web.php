@@ -5,6 +5,7 @@ use App\Livewire\Chats;
 use App\Livewire\Dashboard;
 use App\Livewire\Login;
 use App\Livewire\Register;
+use App\Livewire\Requests;
 use App\Livewire\Users;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,8 @@ Route::middleware('auth')->group(function () {
     Route::get('chats', Chats::class)->name('chats');
 
     Route::get('users', Users::class)->name('users');
+
+    Route::get('requests', Requests::class)->name('requests');
 
     Route::prefix('group')->group(function () {
         Route::post('send-message', [GroupController::class, 'sendMessage'])->name('group.send-message');

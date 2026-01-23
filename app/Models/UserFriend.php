@@ -11,4 +11,9 @@ class UserFriend extends Model
         'friend_id',
         'accepted',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

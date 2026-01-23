@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Notification;
 use App\Models\User;
 use App\Models\UserFriend;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +22,11 @@ class Users extends Component
         UserFriend::create([
             'user_id' => Auth::user()->id,
             'friend_id' => $userId
+        ]);
+
+        Notification::create([
+            'user_id' => $userId,
+            'message' => Auth::user()->name . ' has sent you a friend request.'
         ]);
 
         session()->flash('success', 'A friend request has been sent. You would be notified when they accept.');
@@ -71,8 +77,12 @@ class Users extends Component
     }
 
     public function unFriend($userId) {
-        UserFriend::where('user_id', Auth::user()->id)
+        $caseOne = UserFriend::where('user_id', Auth::user()->id)
                     ->where('friend_id', $userId)
+                    ->delete();
+
+        $caseTwo = UserFriend::where('user_id', $userId)
+                    ->where('friend_id', Auth::user()->id)
                     ->delete();
 
         session()->flash('success', 'The friend request has been removed.');

@@ -78,7 +78,7 @@ class Dashboard extends Component
             }
         ])
         ->get();
-        
+
         //for searches
         if($this->group) {
             $groups = Group::whereIn(
