@@ -113,6 +113,20 @@
                                             <span>Yesterday</span>
                                             <hr>
                                         </div>
+                                        @foreach($oldMessages as $message)
+                                            <div class="message {{ $message['sender_id'] === auth()->user()->id ? 'me' : '' }}">
+                                                <div class="text-main">
+                                                    <div class="text-group {{ $message['sender_id'] === auth()->user()->id ? 'me' : ''}}">
+                                                        <div class="text {{ $message['sender_id'] === auth()->user()->id ? 'me' : ''}}">
+                                                            <p>{{ $message['message'] }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <span>
+                                                        {{ \Carbon\Carbon::parse($message['created_at'])->setTimezone('Africa/Lagos')->format('g:i a') }}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        @endforeach
                                         @foreach($messages as $message)
                                             <div class="message {{ $message['sender_id'] === auth()->user()->id ? 'me' : '' }}">
                                                 <div class="text-main">
@@ -124,7 +138,6 @@
                                                     <span>{{ $message['time'] }}</span>
                                                 </div>
                                             </div>
-
                                         @endforeach
                                     </div>
                                 </div>

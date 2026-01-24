@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Message;
 use App\Models\User;
 use App\Models\UserFriend;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -12,13 +13,15 @@ class Chats extends Component
 {
     public $friend;
     public $selectedFriend;
-    public $selectedMessage;
     public $image;
     public $message;
+
     protected $listeners = ['receiveMessage'];
     public array $messages = [];
+    public $oldMessages;
 
     public function selectFriend($friendId) {
+        $this->messages = [];
         $this->selectedFriend = User::findOrFail($friendId);
 
         if($this->selectedFriend->image) {
@@ -30,16 +33,17 @@ class Chats extends Component
                     </div>';
         }
 
-        $this->selectedMessage = Message::where(function($query) use ($friendId) {
-            $query->where('receiver_id', Auth::user()->id)
-                  ->where('sender_id', $friendId);
-        })
-        ->orWhere(function ($query) use ($friendId) {
-            $query->where('receiver_id', $friendId)
-                    ->where('sender_id', Auth::user()->id);
-        })
-        ->orderBy('created_at')
-        ->get();
+        $this->oldMessages = Message::where(function ($q) use ($friendId) {
+                $q->where('sender_id', Auth::user()->id)
+                ->where('receiver_id', $friendId);
+            })
+            ->orWhere(function ($q) use ($friendId) {
+                $q->where('sender_id', $friendId)
+                ->where('receiver_id', Auth::user()->id);
+            })
+            ->orderBy('created_at')
+            ->get();
+
 
         $authId = Auth::user()->id;
         $roomName = 'chat_' . min($authId, $friendId) . '_' . max($authId, $friendId);
@@ -55,7 +59,8 @@ class Chats extends Component
         Message::create([
             'sender_id' => Auth::user()->id,
             'receiver_id' => $receiverId,
-            'message' => $this->message
+            'message' => $this->message,
+            'sent_at' => Carbon::now()
         ]);
 
         $authId = Auth::user()->id;
@@ -83,6 +88,8 @@ class Chats extends Component
             'time' => $time,
             'sender_id' => $senderId
         ];
+
+        $this->message = '';
     }
 
     public function render()
