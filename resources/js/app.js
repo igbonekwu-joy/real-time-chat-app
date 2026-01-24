@@ -35,7 +35,7 @@ $(document).on('click', '.filterDiscussions', function () {
         deleteGroupBtn.hide();
     }
 
-    socket.emit('joinRoom', { username, group });
+    socket.emit('joinRoom', { group });
 
     //get messages
     getMessages(activeGroupId);

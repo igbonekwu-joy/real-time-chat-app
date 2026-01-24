@@ -21,7 +21,7 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
     /*Groups*/
-    socket.on('joinRoom', ({ username, group}) => {
+    socket.on('joinRoom', ({ group }) => {
         const alreadyInRoom = socket.rooms.has(group);
 
         if (!alreadyInRoom) {
@@ -56,6 +56,12 @@ io.on('connection', (socket) => {
         socket.broadcast.emit('friendRequestNotification', { toUserId, fromUser });
     });
     /*End Friend Requests*/
+
+    /**Peer to Peer Chat */
+    socket.on('messageSent', ({ roomName, message, fromUser }) => {
+        io.to(roomName).emit('message', formatMessage(fromUser.name, message, fromUser.id));
+    });
+    /**End Peer to Peer Chat */
 });
 
 function formatMessage(username, text, groupId) {

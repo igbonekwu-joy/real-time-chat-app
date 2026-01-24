@@ -14,8 +14,9 @@ class Chats extends Component
     public $selectedFriend;
     public $selectedMessage;
     public $image;
-
     public $message;
+    protected $listeners = ['receiveMessage'];
+    public array $messages = [];
 
     public function selectFriend($friendId) {
         $this->selectedFriend = User::findOrFail($friendId);
@@ -39,27 +40,60 @@ class Chats extends Component
         })
         ->orderBy('created_at')
         ->get();
+
+        $authId = Auth::user()->id;
+        $roomName = 'chat_' . min($authId, $friendId) . '_' . max($authId, $friendId);
+
+        $this->dispatch('join-room',
+            group: $roomName
+        );
     }
 
     public function sendMessage($receiverId) {
+        $toUser = User::findOrFail($receiverId);
+
         Message::create([
             'sender_id' => Auth::user()->id,
             'receiver_id' => $receiverId,
             'message' => $this->message
         ]);
 
-        
+        $authId = Auth::user()->id;
+        $roomName = 'chat_' . min($authId, $receiverId) . '_' . max($authId, $receiverId);
+        $this->dispatch('send-message',
+            roomName: $roomName,
+            message: $this->message,
+            fromUser: [
+                'id' => Auth::user()->id,
+                'name' => Auth::user()->name,
+                'image' => Auth::user()->image
+            ]
+        );
+    }
+
+    public function receiveMessage($message) {
+        $senderUsername = $message['username'];
+        $senderId = $message['groupId'];
+        $receivedMessage = $message['text'];
+        $time = $message['time'];
+
+        $this->messages[] = [
+            'username' => $senderUsername,
+            'text' => $receivedMessage,
+            'time' => $time,
+            'sender_id' => $senderId
+        ];
     }
 
     public function render()
     {
-        $friends = UserFriend::with('user')
+        $friends = UserFriend::with(['user', 'friend'])
                     ->where('user_id', Auth::user()->id)
                     ->orWhere('friend_id', Auth::user()->id)
                     ->get();
 
         if($this->friend) {
-            $friends = UserFriend::with('user')
+            $friends = UserFriend::with(['user', 'friend'])
                         ->where('user_id', Auth::user()->id)
                         ->orWhere('friend_id', Auth::user()->id)
                         ->whereHas('user', function ($q) {
@@ -69,6 +103,12 @@ class Chats extends Component
                         ->get();
         }
 
-        return view('livewire.chats', compact('friends'));
+        $friendsList = $friends->map(function ($row) {
+            return $row->user_id == Auth::user()->id ?
+                                    $row->friend :
+                                    $row->user;
+        });
+
+        return view('livewire.chats', compact('friendsList'));
     }
 }

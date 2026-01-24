@@ -16,7 +16,7 @@ class Requests extends Component
 
     public function selectUser($userId) {
         $this->selectedUser = User::findOrFail($userId);
-    }
+    } 
 
     public function ignoreRequest($userId) {
         app(RequestsService::class)->ignoreRequest($userId);
