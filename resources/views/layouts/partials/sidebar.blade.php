@@ -14,17 +14,16 @@
                         <a href="#notifications" class="f-grow1">
                             <i class="material-icons">notifications_none</i>
                         </a>
-                        <a href="#friends" title="Friends">
-                            <div style="border-radius: 50%; background: #2196f3; color: #fff; width: 20px;">
-                                <span>7</span>
-                            </div>
-                            <i class="material-icons">
+                        <a href="{{ route('friends') }}" title="Friends" wire:navigate>
+                            <i class="material-icons {{ request()->routeIs('friends') ? 'active' : '' }}">
                                 link
                             </i>
                         </a>
                         <a href="{{ route('requests') }}" title="Friend Requests" wire:navigate>
                             <div class="requests-div-{{ auth()->user()->id }}" style="border-radius: 50%; background: #2196f3; color: #fff; width: 20px; {{ $friendRequestsCount == 0 ? 'display: none;' : '' }}">
-                                <span class="requests-count-{{ auth()->user()->id }}">{{ $friendRequestsCount }}</span>
+                                <span class="requests-count-{{ auth()->user()->id }}">
+                                    {{ $friendRequestsCount }}
+                                </span>
                             </div>
                             <i class="material-icons {{ request()->routeIs('requests') ? 'active' : '' }}">
                                 group_add
