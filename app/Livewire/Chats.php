@@ -156,6 +156,21 @@ class Chats extends Component
                 ]);
     }
 
+    public function deleteContact($friendId) {
+        $friend = UserFriend::where(function ($q) use ($friendId) {
+            $q->where('user_id', Auth::user()->id)
+            ->where('friend_id', $friendId);
+        })
+        ->orWhere(function ($q) use ($friendId) {
+            $q->where('user_id', $friendId)
+            ->where('friend_id', Auth::user()->id);
+        });
+
+        $friend->delete();
+
+        $this->redirect('/chats', navigate: true);
+    }
+
     public function render()
     {
         $friends = UserFriend::with(['user', 'friend'])
