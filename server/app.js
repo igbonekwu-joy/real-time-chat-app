@@ -59,6 +59,7 @@ io.on('connection', (socket) => {
 
     /**Peer to Peer Chat */
     socket.on('messageSent', ({ roomName, message, receiverId, fromUser }) => {
+        socket.broadcast.emit('incrementMessage', { receiverId, fromUser });
         io.to(roomName).emit('message', receiverId, formatMessage(fromUser.name, message, fromUser.id) );
     });
 

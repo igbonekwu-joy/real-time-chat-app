@@ -443,6 +443,6 @@ function incrementUnreadMessages(groupId) {
     $(`.unread-count-${groupId}`).text(parseInt($(`.unread-count-${groupId}`).text()) + 1);
 
     $(`.filter-${groupId}`).addClass('unread');
-    $(`.filter-${groupId}`).removeClass('read');
+    $(`.filter-${groupId}`).removeClass('read'); 
 }
 

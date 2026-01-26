@@ -32,7 +32,7 @@
                                     @foreach($friendsList as $friend)
                                         <a
                                             href="#"
-                                            class="filterDiscussions all read single"
+                                            class="filterDiscussions all read single filter-{{ auth()->user()->id }}-{{ $friend->id }}"
                                             id="user-list"
                                             wire:click.prevent="selectFriend({{ $friend->id }})"
                                             wire:key="user-{{ $friend->id }}"
@@ -49,8 +49,16 @@
                                                 <i class="material-icons online">fiber_manual_record</i>
                                             </div>
 
-                                            <div class="new bg-pink {{  $friend->unreadCount == 0 ? 'd-none' : ''}}">
-                                                <span>+{{ $friend->unreadCount }}</span>
+                                            <div
+                                                class="new bg-pink {{  $friend->unreadCount == 0 ? 'd-none' : ''}} unread-div-{{ auth()->user()->id }}-{{ $friend->id }}"
+                                            >
+                                                <span>+
+                                                    <span
+                                                        class="unread-count-{{ auth()->user()->id }}-{{ $friend->id }}"
+                                                    >
+                                                        {{ $friend->unreadCount }}
+                                                    </span>
+                                                </span>
                                             </div>
 
                                             <div class="data">

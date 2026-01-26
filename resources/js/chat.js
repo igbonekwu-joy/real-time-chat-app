@@ -36,6 +36,20 @@ socket.on('message', (receiverId, message) => {
     Livewire.dispatch('receiveMessage', { receiverId, message });
 });
 
+socket.on('incrementMessage', ({ receiverId, fromUser }) => {
+    const unreadSpan = $(`.unread-count-${receiverId}-${fromUser.id}`);
+    unreadSpan.text(parseInt(unreadSpan.text()) + 1);
+
+    const unreadDiv = $(`.unread-div-${receiverId}-${fromUser.id}`);
+    unreadDiv.show();
+
+    console.log(receiverId, fromUser.id);
+
+    const filter = $(`.filter-${receiverId}-${fromUser.id}`);
+    filter.addClass('unread');
+    filter.removeClass('read');
+});
+
 socket.on('typing', ({ username, senderId }) => {
     Livewire.dispatch('typing', { username, senderId });
 });

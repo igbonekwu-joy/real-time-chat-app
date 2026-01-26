@@ -35,25 +35,10 @@ class Chats extends Component
                     </div>';
         }
 
-        $getMessages = Message::where(function ($q) use ($friendId) {
-                    $q->where('sender_id', Auth::user()->id)
-                    ->where('receiver_id', $friendId);
-                })
-                ->orWhere(function ($q) use ($friendId) {
-                    $q->where('sender_id', $friendId)
-                    ->where('receiver_id', Auth::user()->id);
-                })
-                ->orderBy('created_at');
-
-        $this->oldMessages = $getMessages->get();
-
-        $getMessages->update([
-            'is_read' => true
-        ]);
+        $this->loadMessages($friendId);
 
         $authId = Auth::user()->id;
         $roomName = 'chat_' . min($authId, $friendId) . '_' . max($authId, $friendId);
-
         $this->dispatch('join-room',
             group: $roomName
         );
@@ -145,6 +130,30 @@ class Chats extends Component
         }
 
         $this->isTyping = false;
+    }
+
+    public function loadMessages($friendId) {
+        $messages = Message::where(function ($q) use ($friendId) {
+                    $q->where('sender_id', Auth::user()->id)
+                    ->where('receiver_id', $friendId);
+                })
+                ->orWhere(function ($q) use ($friendId) {
+                    $q->where('sender_id', $friendId)
+                    ->where('receiver_id', Auth::user()->id);
+                })
+                ->orderBy('created_at')
+                ->get();
+
+        //get old messages
+        $this->oldMessages = $messages;
+
+        //update read status
+        Message::where('sender_id', $friendId)
+                ->where('receiver_id', Auth::user()->id)
+                ->where('is_read', false)
+                ->update([
+                    'is_read' => true
+                ]);
     }
 
     public function render()
