@@ -43,8 +43,6 @@ socket.on('incrementMessage', ({ receiverId, fromUser }) => {
     const unreadDiv = $(`.unread-div-${receiverId}-${fromUser.id}`);
     unreadDiv.show();
 
-    console.log(receiverId, fromUser.id);
-
     const filter = $(`.filter-${receiverId}-${fromUser.id}`);
     filter.addClass('unread');
     filter.removeClass('read');

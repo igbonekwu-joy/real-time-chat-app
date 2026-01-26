@@ -63,7 +63,7 @@
 
                                             <div class="data">
                                                 <h5>{{ $friend->name }}</h5>
-                                                <span>Mon</span>
+                                                <span>{{ \Carbon\Carbon::parse($friend->lastMessage)->format('D') }}</span>
                                                 <p>
                                                     {{ $friend->email }}
                                                 </p>

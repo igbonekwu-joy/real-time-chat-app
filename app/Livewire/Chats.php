@@ -184,6 +184,11 @@ class Chats extends Component
                                             ->where('is_read', false)
                                             ->count();
 
+            $friend->lastMessage = Message::where('sender_id', $friend->id)
+                                ->where('receiver_id', Auth::id())
+                                ->latest('created_at')
+                                ->value('created_at');
+
             return $friend;
         });
 
