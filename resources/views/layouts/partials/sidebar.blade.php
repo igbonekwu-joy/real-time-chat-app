@@ -34,7 +34,12 @@
                                 people
                             </i>
                         </a>
-                        <button class="btn power" onclick="visitPage();"><i class="material-icons">power_settings_new</i></button>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button class="btn power" type="submit" onclick="visitPage();">
+                                <i class="material-icons">power_settings_new</i>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

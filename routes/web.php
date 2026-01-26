@@ -38,4 +38,6 @@ Route::middleware('auth')->group(function () {
         Route::delete('delete-group', [GroupController::class, 'deleteGroup'])->name('group.delete-group');
     });
 
+    Route::post('logout', [Login::class, 'logout'])->name('logout');
+
 });

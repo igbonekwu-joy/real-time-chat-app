@@ -32,6 +32,12 @@ class Login extends Component
         $this->addError('invalid', 'Invalid login credentials');
     }
 
+    public function logout(Request $request) {
+        Auth::logout();
+
+        return redirect('/login');
+    }
+
     public function render()
     {
         return view('livewire.auth.login');
