@@ -21,4 +21,4 @@ class Group extends Model
     public function messages() {
         return $this->hasMany(GroupMessage::class);
     }
-}
+} 

@@ -23,6 +23,7 @@ class Chats extends Component
 
     public function selectFriend($friendId) {
         $this->messages = [];
+        $this->isTyping = false;
         $this->selectedFriend = User::findOrFail($friendId);
 
         if($this->selectedFriend->image) {
@@ -34,17 +35,21 @@ class Chats extends Component
                     </div>';
         }
 
-        $this->oldMessages = Message::where(function ($q) use ($friendId) {
-                $q->where('sender_id', Auth::user()->id)
-                ->where('receiver_id', $friendId);
-            })
-            ->orWhere(function ($q) use ($friendId) {
-                $q->where('sender_id', $friendId)
-                ->where('receiver_id', Auth::user()->id);
-            })
-            ->orderBy('created_at')
-            ->get();
+        $getMessages = Message::where(function ($q) use ($friendId) {
+                    $q->where('sender_id', Auth::user()->id)
+                    ->where('receiver_id', $friendId);
+                })
+                ->orWhere(function ($q) use ($friendId) {
+                    $q->where('sender_id', $friendId)
+                    ->where('receiver_id', Auth::user()->id);
+                })
+                ->orderBy('created_at');
 
+        $this->oldMessages = $getMessages->get();
+
+        $getMessages->update([
+            'is_read' => true
+        ]);
 
         $authId = Auth::user()->id;
         $roomName = 'chat_' . min($authId, $friendId) . '_' . max($authId, $friendId);
@@ -75,6 +80,7 @@ class Chats extends Component
         $this->dispatch('send-message',
             roomName: $roomName,
             message: $this->message,
+            receiverId: $receiverId,
             fromUser: [
                 'id' => Auth::user()->id,
                 'name' => Auth::user()->name,
@@ -87,34 +93,38 @@ class Chats extends Component
         $this->dispatch('scroll-to-bottom');
     }
 
-    public function receiveMessage($message) {
-        $senderUsername = $message['username'];
-        $senderId = $message['groupId'];
-        $receivedMessage = $message['text'];
-        $time = $message['time'];
+    public function receiveMessage($receiverId, $message) {
+        if($this->selectedFriend->id !== $receiverId) {
+            return;
+        }
 
         $this->messages[] = [
-            'username' => $senderUsername,
-            'text' => $receivedMessage,
-            'time' => $time,
-            'sender_id' => $senderId
+            'username' => $message['username'],
+            'text' => $message['text'],
+            'time' => $message['time'],
+            'sender_id' =>  $message['groupId']
         ];
 
         $this->message = '';
     }
 
-    public function startTyping($friendId)
+    public function startTyping($friendId, $senderId)
     {
         if($this->message !== '') {
             $this->dispatch('typing',
                 username: Auth::user()->name,
+                senderId: $senderId,
                 room: 'chat_' . min(Auth::user()->id, $friendId) . '_' . max(Auth::user()->id, $friendId)
             );
         }
     }
 
-    public function typing($username) {
+    public function typing($username, $senderId) {
         if($username === Auth::user()->name) {
+            return;
+        }
+
+        if($this->selectedFriend->id !== $senderId) {
             return;
         }
 
@@ -156,10 +166,19 @@ class Chats extends Component
         }
 
         $friendsList = $friends->map(function ($row) {
-            return $row->user_id == Auth::user()->id ?
+            $friend = $row->user_id == Auth::user()->id ?
                                     $row->friend :
                                     $row->user;
+
+            $friend->unreadCount = Message::where('sender_id', $friend->id)
+                                            ->where('receiver_id', Auth::user()->id)
+                                            ->where('is_read', false)
+                                            ->count();
+
+            return $friend;
         });
+
+
 
         return view('livewire.chats', compact('friendsList'));
     }

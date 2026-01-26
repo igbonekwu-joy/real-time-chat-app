@@ -5,16 +5,17 @@ document.addEventListener('livewire:initialized', () => {
         socket.emit('joinRoom', { group });
     });
 
-    Livewire.on('send-message', ({ roomName, message, fromUser }) => {
+    Livewire.on('send-message', ({ roomName, message, receiverId, fromUser }) => {
         socket.emit('messageSent', {
             roomName,
             message,
+            receiverId,
             fromUser
         });
     });
 
-    Livewire.on('typing', ({ username, room }) => {
-        socket.emit('userTyping', ({ username, room }));
+    Livewire.on('typing', ({ username, senderId, room }) => {
+        socket.emit('userTyping', ({ username, senderId, room }));
     });
 
     Livewire.on('stopTyping', ({ username, room }) => {
@@ -31,12 +32,12 @@ document.addEventListener('livewire:initialized', () => {
     });
 });
 
-socket.on('message', (message) => {
-    Livewire.dispatch('receiveMessage', { message });
+socket.on('message', (receiverId, message) => {
+    Livewire.dispatch('receiveMessage', { receiverId, message });
 });
 
-socket.on('typing', ({ username }) => {
-    Livewire.dispatch('typing', { username });
+socket.on('typing', ({ username, senderId }) => {
+    Livewire.dispatch('typing', { username, senderId });
 });
 
 socket.on('stopTyping', ({ groupId, username }) => {

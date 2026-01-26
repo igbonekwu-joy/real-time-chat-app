@@ -58,7 +58,6 @@ socket.on('message', (message) => {
     $('.no-messages').hide();
     var messageContainer = $('.all-messages');
     var groupId = message.groupId;
-    console.log(message);
 
     //check if message belongs to the active group
     if(groupId != activeGroupId) {

@@ -48,8 +48,9 @@
                                             <div class="status">
                                                 <i class="material-icons online">fiber_manual_record</i>
                                             </div>
-                                            <div class="new bg-yellow">
-                                                <span>+7</span>
+
+                                            <div class="new bg-pink {{  $friend->unreadCount == 0 ? 'd-none' : ''}}">
+                                                <span>+{{ $friend->unreadCount }}</span>
                                             </div>
 
                                             <div class="data">
@@ -105,6 +106,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="content" id="content">
                                 <div class="container">
                                     <div class="col-md-12">
@@ -172,7 +174,7 @@
                                                 placeholder="Start typing for reply..."
                                                 rows="1"
                                                 wire:model.live="message"
-                                                wire:keydown="startTyping({{ $selectedFriend->id }})"
+                                                wire:keydown="startTyping({{ $selectedFriend->id }}, {{ auth()->user()->id }})"
                                                 wire:keydown.enter.prevent="sendMessage({{ $selectedFriend->id }})"
                                                 wire:keydown.shift.enter.stop
                                             >

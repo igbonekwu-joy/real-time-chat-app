@@ -995,7 +995,7 @@
                                                         <span class="dot"></span>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

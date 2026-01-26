@@ -24,7 +24,7 @@
                                 <button class="btn filterDiscussionsBtn active show" data-toggle="list" data-filter="all">All</button>
                                 <button class="btn filterDiscussionsBtn" data-toggle="list" data-filter="read">Read</button>
                                 <button class="btn filterDiscussionsBtn" data-toggle="list" data-filter="unread">Unread</button>
-                            </div> 
+                            </div>
                             <div class="discussions">
                                 <h1>Groups</h1>
                                 <div class="list-group" id="chats" role="tablist">
@@ -50,7 +50,7 @@
                                             <div
                                                 class="new bg-yellow unread-div-{{ $group->id }}"
                                                 style="{{ $group->unread_count > 0 ? '' : 'display: none' }}"
-                                            >
+                                            > 
                                                 <span>+<span class="unread-count-{{ $group->id }}">{{ $group->unread_count }}</span></span>
                                             </div>
 

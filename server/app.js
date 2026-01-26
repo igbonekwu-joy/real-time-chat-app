@@ -58,12 +58,12 @@ io.on('connection', (socket) => {
     /*End Friend Requests*/
 
     /**Peer to Peer Chat */
-    socket.on('messageSent', ({ roomName, message, fromUser }) => {
-        io.to(roomName).emit('message', formatMessage(fromUser.name, message, fromUser.id));
+    socket.on('messageSent', ({ roomName, message, receiverId, fromUser }) => {
+        io.to(roomName).emit('message', receiverId, formatMessage(fromUser.name, message, fromUser.id) );
     });
 
-    socket.on('userTyping', ({ username, room }) => {
-        io.to(room).emit('typing', { username });
+    socket.on('userTyping', ({ username, senderId, room }) => {
+        io.to(room).emit('typing', { username, senderId });
     });
 
     socket.on('stopUserTyping', ({ username, room }) => {
