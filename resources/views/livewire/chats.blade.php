@@ -107,38 +107,59 @@
                             </div>
                             <div class="content" id="content">
                                 <div class="container">
-                                    <div class="col-md-12" id="chat-messages">
-                                        <div class="date">
-                                            <hr>
-                                            <span>Yesterday</span>
-                                            <hr>
+                                    <div class="col-md-12">
+                                        <div
+                                            class="chat-messages"
+                                        >
+                                            <div class="date">
+                                                <hr>
+                                                <span>Yesterday</span>
+                                                <hr>
+                                            </div>
+                                            @foreach($oldMessages as $msg)
+                                                <div class="message {{ $msg['sender_id'] === auth()->user()->id ? 'me' : '' }}">
+                                                    <div class="text-main">
+                                                        <div class="text-group {{ $msg['sender_id'] === auth()->user()->id ? 'me' : ''}}">
+                                                            <div class="text {{ $msg['sender_id'] === auth()->user()->id ? 'me' : ''}}">
+                                                                <p>{{ $msg['message'] }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <span>
+                                                            {{ \Carbon\Carbon::parse($msg['created_at'])->setTimezone('Africa/Lagos')->format('g:i a') }}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+
+                                            @foreach($messages as $message)
+                                                <div class="message {{ $message['sender_id'] === auth()->user()->id ? 'me' : '' }}">
+                                                    <div class="text-main">
+                                                        <div class="text-group {{ $message['sender_id'] === auth()->user()->id ? 'me' : ''}}">
+                                                            <div class="text {{ $message['sender_id'] === auth()->user()->id ? 'me' : ''}}">
+                                                                <p>{{ $message['text'] }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <span>{{ $message['time'] }}</span>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+
+                                            @if($isTyping)
+                                                <div class="message">
+                                                    <div class="text-main">
+                                                        <div class="text-group">
+                                                            <div class="text typing">
+                                                                <div class="wave">
+                                                                    <span class="dot"></span>
+                                                                    <span class="dot"></span>
+                                                                    <span class="dot"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </div>
-                                        @foreach($oldMessages as $message)
-                                            <div class="message {{ $message['sender_id'] === auth()->user()->id ? 'me' : '' }}">
-                                                <div class="text-main">
-                                                    <div class="text-group {{ $message['sender_id'] === auth()->user()->id ? 'me' : ''}}">
-                                                        <div class="text {{ $message['sender_id'] === auth()->user()->id ? 'me' : ''}}">
-                                                            <p>{{ $message['message'] }}</p>
-                                                        </div>
-                                                    </div>
-                                                    <span>
-                                                        {{ \Carbon\Carbon::parse($message['created_at'])->setTimezone('Africa/Lagos')->format('g:i a') }}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                        @foreach($messages as $message)
-                                            <div class="message {{ $message['sender_id'] === auth()->user()->id ? 'me' : '' }}">
-                                                <div class="text-main">
-                                                    <div class="text-group {{ $message['sender_id'] === auth()->user()->id ? 'me' : ''}}">
-                                                        <div class="text {{ $message['sender_id'] === auth()->user()->id ? 'me' : ''}}">
-                                                            <p>{{ $message['text'] }}</p>
-                                                        </div>
-                                                    </div>
-                                                    <span>{{ $message['time'] }}</span>
-                                                </div>
-                                            </div>
-                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -146,9 +167,23 @@
                                 <div class="col-md-12">
                                     <div class="bottom">
                                         <form class="position-relative w-100" wire:submit="sendMessage({{ $selectedFriend->id }})">
-                                            <textarea class="form-control" placeholder="Start typing for reply..." rows="1" wire:model="message"></textarea>
+                                            <textarea
+                                                class="form-control"
+                                                placeholder="Start typing for reply..."
+                                                rows="1"
+                                                wire:model.live="message"
+                                                wire:keydown="startTyping({{ $selectedFriend->id }})"
+                                                wire:keydown.enter.prevent="sendMessage({{ $selectedFriend->id }})"
+                                                wire:keydown.shift.enter.stop
+                                            >
+                                            </textarea>
                                             <button class="btn emoticons"><i class="material-icons">insert_emoticon</i></button>
-                                            <button type="submit" class="btn send"><i class="material-icons">send</i></button>
+                                            <button
+                                                type="submit"
+                                                class="btn send"
+                                            >
+                                                <i class="material-icons">send</i>
+                                            </button>
                                         </form>
                                         <label>
                                             <input type="file">

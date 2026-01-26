@@ -61,6 +61,14 @@ io.on('connection', (socket) => {
     socket.on('messageSent', ({ roomName, message, fromUser }) => {
         io.to(roomName).emit('message', formatMessage(fromUser.name, message, fromUser.id));
     });
+
+    socket.on('userTyping', ({ username, room }) => {
+        io.to(room).emit('typing', { username });
+    });
+
+    socket.on('stopUserTyping', ({ username, room }) => {
+        io.to(room).emit('stopTyping', { username });
+    })
     /**End Peer to Peer Chat */
 });
 

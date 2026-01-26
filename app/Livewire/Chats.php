@@ -16,9 +16,10 @@ class Chats extends Component
     public $image;
     public $message;
 
-    protected $listeners = ['receiveMessage'];
+    protected $listeners = ['receiveMessage', 'typing', 'endTyping'];
     public array $messages = [];
     public $oldMessages;
+    public bool $isTyping = false;
 
     public function selectFriend($friendId) {
         $this->messages = [];
@@ -51,9 +52,15 @@ class Chats extends Component
         $this->dispatch('join-room',
             group: $roomName
         );
+
+        $this->dispatch('scroll-to-bottom');
     }
 
     public function sendMessage($receiverId) {
+        $this->validate([
+            'message' => 'required|string'
+        ]);
+
         $toUser = User::findOrFail($receiverId);
 
         Message::create([
@@ -74,6 +81,10 @@ class Chats extends Component
                 'image' => Auth::user()->image
             ]
         );
+
+        $this->stopTyping($receiverId);
+
+        $this->dispatch('scroll-to-bottom');
     }
 
     public function receiveMessage($message) {
@@ -90,6 +101,40 @@ class Chats extends Component
         ];
 
         $this->message = '';
+    }
+
+    public function startTyping($friendId)
+    {
+        if($this->message !== '') {
+            $this->dispatch('typing',
+                username: Auth::user()->name,
+                room: 'chat_' . min(Auth::user()->id, $friendId) . '_' . max(Auth::user()->id, $friendId)
+            );
+        }
+    }
+
+    public function typing($username) {
+        if($username === Auth::user()->name) {
+            return;
+        }
+
+        $this->isTyping = true;
+    }
+
+    public function stopTyping($friendId)
+    {
+        $this->dispatch('stopTyping',
+            username: Auth::user()->name,
+            room: 'chat_' . min(Auth::user()->id, $friendId) . '_' . max(Auth::user()->id, $friendId)
+        );
+    }
+
+    public function endTyping($username) {
+        if($username === Auth::user()->name) {
+            return;
+        }
+
+        $this->isTyping = false;
     }
 
     public function render()
