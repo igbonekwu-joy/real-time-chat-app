@@ -11,9 +11,9 @@
                         <a href="{{ route('chats') }}" class="{{ request()->routeIs('chats') ? 'active' : '' }}" title="Chats" wire:navigate>
                             <i class="material-icons {{ request()->routeIs('chats') ? 'active' : '' }}">chat_bubble_outline</i>
                         </a>
-                        <a href="#notifications" class="f-grow1">
+                        {{-- <a href="#notifications" class="f-grow1">
                             <i class="material-icons">notifications_none</i>
-                        </a>
+                        </a> --}}
                         <a href="{{ route('friends') }}" title="Friends" wire:navigate>
                             <i class="material-icons {{ request()->routeIs('friends') ? 'active' : '' }}">
                                 link

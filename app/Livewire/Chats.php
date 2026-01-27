@@ -79,7 +79,9 @@ class Chats extends Component
     }
 
     public function receiveMessage($receiverId, $message) {
-        if($this->selectedFriend->id !== $receiverId) {
+        $senderId = $message['groupId'];
+
+        if($this->selectedFriend->id !== $senderId && $this->selectedFriend->id !== $receiverId) {
             return;
         }
 
@@ -87,7 +89,7 @@ class Chats extends Component
             'username' => $message['username'],
             'text' => $message['text'],
             'time' => $message['time'],
-            'sender_id' =>  $message['groupId']
+            'sender_id' =>  $senderId
         ];
 
         $this->message = '';

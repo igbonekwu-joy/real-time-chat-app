@@ -122,12 +122,44 @@
                                         <div
                                             class="chat-messages"
                                         >
-                                            <div class="date">
-                                                <hr>
-                                                <span>Yesterday</span>
-                                                <hr>
-                                            </div>
+                                            @php
+                                                $previousDate = null;
+                                            @endphp
+
+                                            @if(count($oldMessages) == 0 && count($messages) == 0)
+                                                <div class="no-messages">
+                                                    <i class="material-icons md-48">forum</i>
+                                                    <p>Seems your friend is shy to start the chat. Break the ice send the first message.</p>
+                                                </div>
+                                            @endif
+
                                             @foreach($oldMessages as $msg)
+                                                @php
+                                                    $messageDate = \Carbon\Carbon::parse(
+                                                        $msg['created_at'] ?? now()
+                                                    )->startOfDay();
+                                                @endphp
+
+                                                @if(!$previousDate || !$messageDate->equalTo($previousDate))
+                                                    <div class="date">
+                                                        <hr>
+                                                        <span>
+                                                            @if($messageDate->isToday())
+                                                                Today
+                                                            @elseif($messageDate->isYesterday())
+                                                                Yesterday
+                                                            @else
+                                                                {{ $messageDate->format('F j, Y') }}
+                                                            @endif
+                                                        </span>
+                                                        <hr>
+                                                    </div>
+
+                                                    @php
+                                                        $previousDate = $messageDate;
+                                                    @endphp
+                                                @endif
+
                                                 <div class="message {{ $msg['sender_id'] === auth()->user()->id ? 'me' : '' }}">
                                                     <div class="text-main">
                                                         <div class="text-group {{ $msg['sender_id'] === auth()->user()->id ? 'me' : ''}}">
@@ -143,6 +175,32 @@
                                             @endforeach
 
                                             @foreach($messages as $message)
+                                                @php
+                                                    $messageDate = \Carbon\Carbon::parse(
+                                                        $message['created_at'] ?? now()
+                                                    )->startOfDay();
+                                                @endphp
+
+                                                @if(!$previousDate || !$messageDate->equalTo($previousDate))
+                                                    <div class="date">
+                                                        <hr>
+                                                        <span>
+                                                            @if($messageDate->isToday())
+                                                                Today
+                                                            @elseif($messageDate->isYesterday())
+                                                                Yesterday
+                                                            @else
+                                                                {{ $messageDate->format('F j, Y') }}
+                                                            @endif
+                                                        </span>
+                                                        <hr>
+                                                    </div>
+
+                                                    @php
+                                                        $previousDate = $messageDate;
+                                                    @endphp
+                                                @endif
+
                                                 <div class="message {{ $message['sender_id'] === auth()->user()->id ? 'me' : '' }}">
                                                     <div class="text-main">
                                                         <div class="text-group {{ $message['sender_id'] === auth()->user()->id ? 'me' : ''}}">

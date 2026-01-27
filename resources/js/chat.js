@@ -33,6 +33,7 @@ document.addEventListener('livewire:initialized', () => {
 });
 
 socket.on('message', (receiverId, message) => {
+    console.log(message, receiverId)
     Livewire.dispatch('receiveMessage', { receiverId, message });
 });
 
