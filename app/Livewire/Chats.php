@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Message;
+use App\Models\MessageClear;
 use App\Models\User;
 use App\Models\UserFriend;
 use Carbon\Carbon;
@@ -32,6 +33,7 @@ class Chats extends Component
                                 ->first();
 
         if($friend->blocked == Auth::user()->id) {
+            //the authenticated user did the blocking
             $this->selectedFriend->blocked = 'self';
         }
         else if($friend->blocked == $friendId) {
@@ -47,6 +49,7 @@ class Chats extends Component
                     </div>';
         }
 
+        //load messages
         $this->loadMessages($friendId);
 
         $authId = Auth::user()->id;
@@ -147,13 +150,26 @@ class Chats extends Component
     }
 
     public function loadMessages($friendId) {
-        $messages = Message::where(function ($q) use ($friendId) {
+        $clears = MessageClear::where('user_id', Auth::user()->id)
+                                ->where('friend_id', $friendId)
+                                ->value('cleared_at');
+
+        $messages = Message::where(function ($q) use ($friendId, $clears) {
                     $q->where('sender_id', Auth::user()->id)
-                    ->where('receiver_id', $friendId);
+                    ->where('receiver_id', $friendId)
+                    ->when($clears, function ($q) use ($clears) {
+                        $q->where('created_at', '>', $clears);
+                    });
                 })
-                ->orWhere(function ($q) use ($friendId) {
+                ->orWhere(function ($q) use ($friendId, $clears) {
                     $q->where('sender_id', $friendId)
-                    ->where('receiver_id', Auth::user()->id);
+                    ->where('receiver_id', Auth::user()->id)
+                    ->when($clears, function ($q) use ($clears) {
+                        $q->where('created_at', '>', $clears);
+                    });
+                })
+                ->when($clears, function ($q) use ($clears) {
+
                 })
                 ->orderBy('created_at')
                 ->get();
@@ -206,6 +222,20 @@ class Chats extends Component
                 'blocked' => Auth::user()->id
             ]);
         }
+
+        $this->redirect('/chats', navigate: true);
+    }
+
+    public function clearHistory($friendId) {
+        MessageClear::updateOrCreate(
+            [
+                'user_id' => Auth::user()->id,
+            ],
+            [
+            'friend_id' => $friendId,
+            'cleared_at' => Carbon::now()
+            ]
+        );
 
         $this->redirect('/chats', navigate: true);
     }

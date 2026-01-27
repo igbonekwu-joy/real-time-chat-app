@@ -112,7 +112,9 @@
                                             <div class="dropdown">
                                                 <button class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="material-icons md-30">more_vert</i></button>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <button class="dropdown-item"><i class="material-icons">clear</i>Clear History</button>
+                                                    <button class="dropdown-item" wire:click="clearHistory({{ $selectedFriend->id }})">
+                                                        <i class="material-icons">clear</i>Clear History
+                                                    </button>
                                                     <button
                                                         class="dropdown-item"
                                                         wire:click="blockContact({{ $selectedFriend->id }})"
