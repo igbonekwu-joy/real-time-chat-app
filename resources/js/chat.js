@@ -40,6 +40,7 @@ socket.on('message', (receiverId, message) => {
 socket.on('incrementMessage', ({ receiverId, fromUser }) => {
     const unreadSpan = $(`.unread-count-${receiverId}-${fromUser.id}`);
     unreadSpan.text(parseInt(unreadSpan.text()) + 1);
+    console.log('increment')
 
     const unreadDiv = $(`.unread-div-${receiverId}-${fromUser.id}`);
     unreadDiv.show();

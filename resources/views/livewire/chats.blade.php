@@ -56,7 +56,7 @@
                                             <div
                                                 class="new bg-pink {{  $friend['unreadCount'] == 0 ? 'd-none' : ''}} unread-div-{{ auth()->user()->id }}-{{ $friend['id'] }}"
                                             >
-                                                <span>+
+                                                <span>+ 
                                                     <span
                                                         class="unread-count-{{ auth()->user()->id }}-{{ $friend['id'] }}"
                                                     >

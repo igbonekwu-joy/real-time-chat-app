@@ -23,7 +23,7 @@ class Chats extends Component
     public array $messages = [];
     public $oldMessages;
     public bool $isTyping = false;
-    public $blockedStatus;
+    public $blockedStatus = null;
 
     public function mount() {
         $this->markOnline();
@@ -55,6 +55,9 @@ class Chats extends Component
         else if($friend->blocked == $friendId) {
             $this->blockedStatus = 'friend';
         }
+        else{
+            $this->blockedStatus = null;
+        }
 
         if($this->selectedFriend->image) {
             $this->image = '<img class="avatar-md" src="asset(\'storage\')/'.$this->selectedFriend->image.'" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">';
@@ -84,12 +87,13 @@ class Chats extends Component
 
         $isBlocked = UserFriend::where(function ($q) use ($receiverId) {
                         $q->where('user_id', Auth::user()->id)
-                            ->where('friend_id', $receiverId);
+                            ->where('friend_id', $receiverId)
+                            ->where('blocked', '!=', null);
                     })->orWhere(function ($q) use ($receiverId) {
                         $q->where('user_id', $receiverId)
-                            ->where('friend_id', Auth::user()->id);
+                            ->where('friend_id', Auth::user()->id)
+                            ->where('blocked', '!=', null);
                     })
-                    ->where('blocked', '!=', null)
                     ->exists();
 
         if ($isBlocked) {
@@ -321,30 +325,6 @@ class Chats extends Component
                                 })
                                 ->value('blocked')
             ];
-
-            // $friend->unreadCount = Message::where('sender_id', $friend->id)
-            //                                 ->where('receiver_id', Auth::user()->id)
-            //                                 ->where('is_read', false)
-            //                                 ->count();
-
-            // $friend->isOnline = Cache::has('user-online-' . $friend->id);
-
-            // $friend->lastMessage = Message::where('sender_id', $friend->id)
-            //                     ->where('receiver_id', Auth::id())
-            //                     ->latest('created_at')
-            //                     ->value('created_at');
-
-            // $friend->blocked_by = UserFriend::where(function ($q) use ($friend) {
-            //                         $q->where('user_id', Auth::user()->id)
-            //                         ->where('friend_id', $friend->id);
-            //                     })
-            //                     ->orWhere(function ($q) use ($friend) {
-            //                         $q->where('user_id', $friend->id)
-            //                         ->where('friend_id', Auth::user()->id);
-            //                     })
-            //                     ->value('blocked');
-
-            // return $friend;
         });
 
         $this->friendsList = $friendsList;
