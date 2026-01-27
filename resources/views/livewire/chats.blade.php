@@ -32,12 +32,12 @@
                                     @foreach($friendsList as $friend)
                                         <a
                                             href="#"
-                                            class="filterDiscussions all read single filter-{{ auth()->user()->id }}-{{ $friend->id }}"
+                                            class="filterDiscussions all read single filter-{{ auth()->user()->id }}-{{ $friend['id'] }}"
                                             id="user-list"
-                                            wire:click.prevent="selectFriend({{ $friend->id }})"
-                                            wire:key="user-{{ $friend->id }}"
+                                            wire:click.prevent="selectFriend({{ $friend['id'] }})"
+                                            wire:key="user-{{ $friend['id'] }}"
                                         >
-                                            @if($friend->image)
+                                            @if($friend['image'])
                                                 <img class="avatar-md" src={{ asset('storage') . '/'. $friend->image }} data-toggle="tooltip" data-placement="top" title="Janette" alt="avatar">
                                             @else
                                                 <div class="avatar-md">
@@ -46,7 +46,7 @@
                                             @endif
 
                                             <div class="status">
-                                                @if($friend->isOnline)
+                                                @if($friend['isOnline'])
                                                     <i class="material-icons online">fiber_manual_record</i>
                                                 @else
                                                     <i class="material-icons offline">fiber_manual_record</i>
@@ -54,28 +54,28 @@
                                             </div>
 
                                             <div
-                                                class="new bg-pink {{  $friend->unreadCount == 0 ? 'd-none' : ''}} unread-div-{{ auth()->user()->id }}-{{ $friend->id }}"
+                                                class="new bg-pink {{  $friend['unreadCount'] == 0 ? 'd-none' : ''}} unread-div-{{ auth()->user()->id }}-{{ $friend['id'] }}"
                                             >
                                                 <span>+
                                                     <span
-                                                        class="unread-count-{{ auth()->user()->id }}-{{ $friend->id }}"
+                                                        class="unread-count-{{ auth()->user()->id }}-{{ $friend['id'] }}"
                                                     >
-                                                        {{ $friend->unreadCount }}
+                                                        {{ $friend['unreadCount'] }}
                                                     </span>
                                                 </span>
                                             </div>
 
                                             <div class="data">
-                                                <h5>{{ $friend->name }}</h5>
+                                                <h5>{{ $friend['name'] }}</h5>
 
-                                                @if($friend->blocked == auth()->user()->id)
+                                                @if($friend['blocked_by'] == auth()->user()->id)
                                                     <span>Blocked</span>
                                                 @else
-                                                    <span>{{ \Carbon\Carbon::parse($friend->lastMessage)->format('D') }}</span>
+                                                    <span>{{ \Carbon\Carbon::parse($friend['lastMessage'])->format('D') }}</span>
                                                 @endif
 
                                                 <p>
-                                                    {{ $friend->email }}
+                                                    {{ $friend['email'] }}
                                                 </p>
                                             </div>
                                         </a>
@@ -124,9 +124,9 @@
                                                         wire:click="blockContact({{ $selectedFriend->id }})"
                                                     >
                                                         <i class="material-icons">block</i>
-                                                        @if($selectedFriend->blocked == 'self')
+                                                        @if($blockedStatus == 'self')
                                                             Unblock
-                                                        @elseif($selectedFriend->blocked == 'friend')
+                                                        @elseif($blockedStatus == 'friend')
                                                             Blocked
                                                         @else
                                                             Block Contact
@@ -241,8 +241,18 @@
                                                 </div>
                                             @endforeach
 
-                                            @if($selectedFriend->blocked == 'self')
-
+                                            @if($blockedStatus == 'self')
+                                                <div style="text-align: center;" class="bot-message m-3">
+                                                    <p style="
+                                                        display: inline-block;
+                                                        background: #9abdda;
+                                                        color: #fff;
+                                                        padding: 3px 8px;
+                                                        border-radius: 3px;
+                                                    ">
+                                                        You blocked this contact
+                                                    </p>
+                                                </div>
                                             @endif
 
                                             @if($isTyping)

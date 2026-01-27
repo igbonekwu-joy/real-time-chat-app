@@ -23,6 +23,7 @@ class Chats extends Component
     public array $messages = [];
     public $oldMessages;
     public bool $isTyping = false;
+    public $blockedStatus;
 
     public function mount() {
         $this->markOnline();
@@ -49,10 +50,10 @@ class Chats extends Component
 
         if($friend->blocked == Auth::user()->id) {
             //the authenticated user did the blocking
-            $this->selectedFriend->blocked = 'self';
+            $this->blockedStatus = 'self';
         }
         else if($friend->blocked == $friendId) {
-            $this->selectedFriend->blocked = 'friend';
+            $this->blockedStatus = 'friend';
         }
 
         if($this->selectedFriend->image) {
@@ -80,6 +81,20 @@ class Chats extends Component
         $this->validate([
             'message' => 'required|string'
         ]);
+
+        $isBlocked = UserFriend::where(function ($q) use ($receiverId) {
+                        $q->where('user_id', Auth::user()->id)
+                            ->where('friend_id', $receiverId);
+                    })->orWhere(function ($q) use ($receiverId) {
+                        $q->where('user_id', $receiverId)
+                            ->where('friend_id', Auth::user()->id);
+                    })
+                    ->where('blocked', '!=', null)
+                    ->exists();
+
+        if ($isBlocked) {
+            return;
+        }
 
         $toUser = User::findOrFail($receiverId);
 
@@ -278,19 +293,25 @@ class Chats extends Component
                                     $row->friend :
                                     $row->user;
 
-            $friend->unreadCount = Message::where('sender_id', $friend->id)
+            return [
+                'id' => $friend->id,
+                'name' => $friend->name,
+                'image' => $friend->image,
+                'email' => $friend->email,
+
+                'unreadCount' => Message::where('sender_id', $friend->id)
                                             ->where('receiver_id', Auth::user()->id)
                                             ->where('is_read', false)
-                                            ->count();
+                                            ->count(),
 
-            $friend->isOnline = Cache::has('user-online-' . $friend->id);
+                'isOnline' => Cache::has('user-online-' . $friend->id),
 
-            $friend->lastMessage = Message::where('sender_id', $friend->id)
+                'lastMessage' => Message::where('sender_id', $friend->id)
                                 ->where('receiver_id', Auth::id())
                                 ->latest('created_at')
-                                ->value('created_at');
+                                ->value('created_at'),
 
-            $friend->blocked = UserFriend::where(function ($q) use ($friend) {
+                'blocked_by' => UserFriend::where(function ($q) use ($friend) {
                                     $q->where('user_id', Auth::user()->id)
                                     ->where('friend_id', $friend->id);
                                 })
@@ -298,10 +319,32 @@ class Chats extends Component
                                     $q->where('user_id', $friend->id)
                                     ->where('friend_id', Auth::user()->id);
                                 })
-                                ->first()
-                                ->blocked;
+                                ->value('blocked')
+            ];
 
-            return $friend;
+            // $friend->unreadCount = Message::where('sender_id', $friend->id)
+            //                                 ->where('receiver_id', Auth::user()->id)
+            //                                 ->where('is_read', false)
+            //                                 ->count();
+
+            // $friend->isOnline = Cache::has('user-online-' . $friend->id);
+
+            // $friend->lastMessage = Message::where('sender_id', $friend->id)
+            //                     ->where('receiver_id', Auth::id())
+            //                     ->latest('created_at')
+            //                     ->value('created_at');
+
+            // $friend->blocked_by = UserFriend::where(function ($q) use ($friend) {
+            //                         $q->where('user_id', Auth::user()->id)
+            //                         ->where('friend_id', $friend->id);
+            //                     })
+            //                     ->orWhere(function ($q) use ($friend) {
+            //                         $q->where('user_id', $friend->id)
+            //                         ->where('friend_id', Auth::user()->id);
+            //                     })
+            //                     ->value('blocked');
+
+            // return $friend;
         });
 
         $this->friendsList = $friendsList;
