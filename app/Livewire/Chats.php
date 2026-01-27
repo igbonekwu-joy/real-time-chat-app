@@ -173,6 +173,23 @@ class Chats extends Component
         $this->redirect('/chats', navigate: true);
     }
 
+    public function blockContact($friendId) {
+        $friend = UserFriend::where(function ($q) use ($friendId) {
+            $q->where('user_id', Auth::user()->id)
+            ->where('friend_id', $friendId);
+        })
+        ->orWhere(function ($q) use ($friendId) {
+            $q->where('user_id', $friendId)
+            ->where('friend_id', Auth::user()->id);
+        });
+
+        $friend->update([
+            'blocked' => Auth::user()->id
+        ]);
+
+        $this->redirect('/chats', navigate: true);
+    }
+
     public function render()
     {
         $friends = UserFriend::with(['user', 'friend'])
@@ -205,6 +222,17 @@ class Chats extends Component
                                 ->where('receiver_id', Auth::id())
                                 ->latest('created_at')
                                 ->value('created_at');
+
+            $friend->blocked = UserFriend::where(function ($q) use ($friend) {
+                                    $q->where('user_id', Auth::user()->id)
+                                    ->where('friend_id', $friend->id);
+                                })
+                                ->orWhere(function ($q) use ($friend) {
+                                    $q->where('user_id', $friend->id)
+                                    ->where('friend_id', Auth::user()->id);
+                                })
+                                ->first()
+                                ->blocked;
 
             return $friend;
         });

@@ -63,7 +63,13 @@
 
                                             <div class="data">
                                                 <h5>{{ $friend->name }}</h5>
-                                                <span>{{ \Carbon\Carbon::parse($friend->lastMessage)->format('D') }}</span>
+
+                                                @if($friend->blocked)
+                                                    <span>Blocked</span>
+                                                @else
+                                                    <span>{{ \Carbon\Carbon::parse($friend->lastMessage)->format('D') }}</span>
+                                                @endif
+
                                                 <p>
                                                     {{ $friend->email }}
                                                 </p>
@@ -107,8 +113,17 @@
                                                 <button class="btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="material-icons md-30">more_vert</i></button>
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                     <button class="dropdown-item"><i class="material-icons">clear</i>Clear History</button>
-                                                    <button class="dropdown-item"><i class="material-icons">block</i>Block Contact</button>
-                                                    <button class="dropdown-item" wire:click="deleteContact({{ $selectedFriend->id }})"><i class="material-icons">delete</i>Delete Contact</button>
+                                                    <button
+                                                        class="dropdown-item"
+                                                        wire:click="blockContact({{ $selectedFriend->id }})"
+                                                    >
+                                                        <i class="material-icons">block</i>Block Contact
+                                                    </button>
+                                                    <button
+                                                        class="dropdown-item" wire:click="deleteContact({{ $selectedFriend->id }})"
+                                                    >
+                                                        <i class="material-icons">delete</i>Delete Contact
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
