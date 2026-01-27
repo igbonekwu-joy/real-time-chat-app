@@ -8,10 +8,12 @@ use App\Models\User;
 use App\Models\UserFriend;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
 
 class Chats extends Component
 {
+    public $friendsList = [];
     public $friend;
     public $selectedFriend;
     public $image;
@@ -21,6 +23,19 @@ class Chats extends Component
     public array $messages = [];
     public $oldMessages;
     public bool $isTyping = false;
+
+    public function mount() {
+        $this->markOnline();
+        $this->loadFriends();
+    }
+
+    public function markOnline() {
+        Cache::put(
+            'user-online-' . Auth::id(),
+            true,
+            now()->addMinutes(2) // 2 minutes
+        );
+    }
 
     public function selectFriend($friendId) {
         $this->messages = [];
@@ -149,43 +164,6 @@ class Chats extends Component
         $this->isTyping = false;
     }
 
-    public function loadMessages($friendId) {
-        $clears = MessageClear::where('user_id', Auth::user()->id)
-                                ->where('friend_id', $friendId)
-                                ->value('cleared_at');
-
-        $messages = Message::where(function ($q) use ($friendId, $clears) {
-                    $q->where('sender_id', Auth::user()->id)
-                    ->where('receiver_id', $friendId)
-                    ->when($clears, function ($q) use ($clears) {
-                        $q->where('created_at', '>', $clears);
-                    });
-                })
-                ->orWhere(function ($q) use ($friendId, $clears) {
-                    $q->where('sender_id', $friendId)
-                    ->where('receiver_id', Auth::user()->id)
-                    ->when($clears, function ($q) use ($clears) {
-                        $q->where('created_at', '>', $clears);
-                    });
-                })
-                ->when($clears, function ($q) use ($clears) {
-
-                })
-                ->orderBy('created_at')
-                ->get();
-
-        //get old messages
-        $this->oldMessages = $messages;
-
-        //update read status
-        Message::where('sender_id', $friendId)
-                ->where('receiver_id', Auth::user()->id)
-                ->where('is_read', false)
-                ->update([
-                    'is_read' => true
-                ]);
-    }
-
     public function deleteContact($friendId) {
         $friend = UserFriend::where(function ($q) use ($friendId) {
             $q->where('user_id', Auth::user()->id)
@@ -240,8 +218,44 @@ class Chats extends Component
         $this->redirect('/chats', navigate: true);
     }
 
-    public function render()
-    {
+    public function loadMessages($friendId) {
+        $clears = MessageClear::where('user_id', Auth::user()->id)
+                                ->where('friend_id', $friendId)
+                                ->value('cleared_at');
+
+        $messages = Message::where(function ($q) use ($friendId, $clears) {
+                    $q->where('sender_id', Auth::user()->id)
+                    ->where('receiver_id', $friendId)
+                    ->when($clears, function ($q) use ($clears) {
+                        $q->where('created_at', '>', $clears);
+                    });
+                })
+                ->orWhere(function ($q) use ($friendId, $clears) {
+                    $q->where('sender_id', $friendId)
+                    ->where('receiver_id', Auth::user()->id)
+                    ->when($clears, function ($q) use ($clears) {
+                        $q->where('created_at', '>', $clears);
+                    });
+                })
+                ->when($clears, function ($q) use ($clears) {
+
+                })
+                ->orderBy('created_at')
+                ->get();
+
+        //get old messages
+        $this->oldMessages = $messages;
+
+        //update read status
+        Message::where('sender_id', $friendId)
+                ->where('receiver_id', Auth::user()->id)
+                ->where('is_read', false)
+                ->update([
+                    'is_read' => true
+                ]);
+    }
+
+    public function loadFriends() {
         $friends = UserFriend::with(['user', 'friend'])
                     ->where('user_id', Auth::user()->id)
                     ->orWhere('friend_id', Auth::user()->id)
@@ -269,6 +283,8 @@ class Chats extends Component
                                             ->where('is_read', false)
                                             ->count();
 
+            $friend->isOnline = Cache::has('user-online-' . $friend->id);
+
             $friend->lastMessage = Message::where('sender_id', $friend->id)
                                 ->where('receiver_id', Auth::id())
                                 ->latest('created_at')
@@ -288,6 +304,11 @@ class Chats extends Component
             return $friend;
         });
 
-        return view('livewire.chats', compact('friendsList'));
+        $this->friendsList = $friendsList;
+    }
+
+    public function render()
+    {
+        return view('livewire.chats');
     }
 }

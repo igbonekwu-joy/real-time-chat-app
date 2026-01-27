@@ -46,7 +46,11 @@
                                             @endif
 
                                             <div class="status">
-                                                <i class="material-icons online">fiber_manual_record</i>
+                                                @if($friend->isOnline)
+                                                    <i class="material-icons online">fiber_manual_record</i>
+                                                @else
+                                                    <i class="material-icons offline">fiber_manual_record</i>
+                                                @endif
                                             </div>
 
                                             <div
@@ -236,6 +240,10 @@
                                                     </div>
                                                 </div>
                                             @endforeach
+
+                                            @if($selectedFriend->blocked == 'self')
+
+                                            @endif
 
                                             @if($isTyping)
                                                 <div class="message">
