@@ -10,6 +10,7 @@ class UserFriend extends Model
         'user_id',
         'friend_id',
         'accepted',
+        'blocked'
     ];
 
     public function user()

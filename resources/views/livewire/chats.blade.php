@@ -64,7 +64,7 @@
                                             <div class="data">
                                                 <h5>{{ $friend->name }}</h5>
 
-                                                @if($friend->blocked)
+                                                @if($friend->blocked == auth()->user()->id)
                                                     <span>Blocked</span>
                                                 @else
                                                     <span>{{ \Carbon\Carbon::parse($friend->lastMessage)->format('D') }}</span>
@@ -117,7 +117,14 @@
                                                         class="dropdown-item"
                                                         wire:click="blockContact({{ $selectedFriend->id }})"
                                                     >
-                                                        <i class="material-icons">block</i>Block Contact
+                                                        <i class="material-icons">block</i>
+                                                        @if($selectedFriend->blocked == 'self')
+                                                            Unblock
+                                                        @elseif($selectedFriend->blocked == 'friend')
+                                                            Blocked
+                                                        @else
+                                                            Block Contact
+                                                        @endif
                                                     </button>
                                                     <button
                                                         class="dropdown-item" wire:click="deleteContact({{ $selectedFriend->id }})"

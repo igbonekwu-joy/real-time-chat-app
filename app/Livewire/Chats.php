@@ -24,7 +24,19 @@ class Chats extends Component
     public function selectFriend($friendId) {
         $this->messages = [];
         $this->isTyping = false;
+
         $this->selectedFriend = User::findOrFail($friendId);
+
+        $friend = UserFriend::where('user_id', $friendId)
+                                ->orWhere('friend_id', $friendId)
+                                ->first();
+
+        if($friend->blocked == Auth::user()->id) {
+            $this->selectedFriend->blocked = 'self';
+        }
+        else if($friend->blocked == $friendId) {
+            $this->selectedFriend->blocked = 'friend';
+        }
 
         if($this->selectedFriend->image) {
             $this->image = '<img class="avatar-md" src="asset(\'storage\')/'.$this->selectedFriend->image.'" data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar">';
@@ -175,17 +187,25 @@ class Chats extends Component
 
     public function blockContact($friendId) {
         $friend = UserFriend::where(function ($q) use ($friendId) {
-            $q->where('user_id', Auth::user()->id)
-            ->where('friend_id', $friendId);
-        })
-        ->orWhere(function ($q) use ($friendId) {
-            $q->where('user_id', $friendId)
-            ->where('friend_id', Auth::user()->id);
-        });
+                            $q->where('user_id', Auth::user()->id)
+                            ->where('friend_id', $friendId);
+                        })
+                        ->orWhere(function ($q) use ($friendId) {
+                            $q->where('user_id', $friendId)
+                            ->where('friend_id', Auth::user()->id);
+                        })
+                        ->first();
 
-        $friend->update([
-            'blocked' => Auth::user()->id
-        ]);
+        if($friend->blocked == Auth::user()->id) {
+            $friend->update([
+                'blocked' => null
+            ]);
+        }
+        else{
+            $friend->update([
+                'blocked' => Auth::user()->id
+            ]);
+        }
 
         $this->redirect('/chats', navigate: true);
     }
@@ -197,6 +217,7 @@ class Chats extends Component
                     ->orWhere('friend_id', Auth::user()->id)
                     ->get();
 
+        //for search
         if($this->friend) {
             $friends = UserFriend::with(['user', 'friend'])
                         ->where('user_id', Auth::user()->id)
@@ -236,8 +257,6 @@ class Chats extends Component
 
             return $friend;
         });
-
-
 
         return view('livewire.chats', compact('friendsList'));
     }
