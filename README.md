@@ -1,13 +1,14 @@
 <h1>Getting Started<h1>
-<h6>First, run the development server</h6>
+First, run the development server
 
-npm install
+<h6>npm install</h6>
 
-<p>Change directory to server (cd server)<p>
+Change directory to server (cd server)
+
 <p>then: </p>
 <p>npm install</p>
 
-<p>Change directory back to root</p>
+Change directory back to root
 
 <p>then:</p>
 <p>npm run dev</>
