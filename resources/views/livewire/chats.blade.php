@@ -250,6 +250,27 @@
                                                     @endphp
                                                 @endif
 
+                                                @if($message['attachment'])
+                                                    <div class="message {{ $message['sender_id'] === auth()->user()->id ? 'me' : '' }}">
+                                                        <div class="text-main">
+                                                            <div class="text-group {{ $message['sender_id'] === auth()->user()->id ? 'me' : ''}}">
+                                                                @if($message['attachment_type'] == 'png' || $message['attachment_type'] == 'jpg' || $message['attachment_type'] == 'jpeg' || $message['attachment_type'] == 'svg')
+                                                                    <img src="{{ asset('storage/' . $message['attachment']) }}" class="preview-image">
+                                                                @else
+                                                                    <div class="text">
+                                                                        <div class="attachment">
+                                                                            <button class="btn attach"><i class="material-icons md-18">insert_drive_file</i></button>
+                                                                            <div class="file">
+                                                                                <h5><a href="{{ asset('storage/' . $message['attachment']) }}">{{ $message['attachment_name'] }}</a></h5>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+
                                                 <div class="message {{ $message['sender_id'] === auth()->user()->id ? 'me' : '' }}">
                                                     <div class="text-main">
                                                         <div class="text-group {{ $message['sender_id'] === auth()->user()->id ? 'me' : ''}}">

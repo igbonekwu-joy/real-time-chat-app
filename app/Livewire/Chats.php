@@ -140,6 +140,9 @@ class Chats extends Component
         $this->dispatch('send-message',
             roomName: $roomName,
             message: $this->message,
+            attachment: $filePath,
+            attachmentName: $fileName,
+            attachmentType: $fileType,
             receiverId: $receiverId,
             fromUser: [
                 'id' => Auth::user()->id,
@@ -153,7 +156,7 @@ class Chats extends Component
         $this->dispatch('scroll-to-bottom');
     }
 
-    public function receiveMessage($receiverId, $message) {
+    public function receiveMessage($receiverId, $message, $attachment, $attachmentName, $attachmentType) {
         $senderId = $message['groupId'];
 
         if($this->selectedFriend->id !== $senderId && $this->selectedFriend->id !== $receiverId) {
@@ -163,6 +166,9 @@ class Chats extends Component
         $this->messages[] = [
             'username' => $message['username'],
             'text' => $message['text'],
+            'attachment' => $attachment ?? null,
+            'attachment_name' => $attachmentName ?? null,
+            'attachment_type' => $attachmentType ?? null,
             'time' => $message['time'],
             'sender_id' =>  $senderId
         ];

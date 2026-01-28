@@ -5,10 +5,13 @@ document.addEventListener('livewire:initialized', () => {
         socket.emit('joinRoom', { group });
     });
 
-    Livewire.on('send-message', ({ roomName, message, receiverId, fromUser }) => {
+    Livewire.on('send-message', ({ roomName, message, attachment, attachmentName, attachmentType, receiverId, fromUser }) => {
         socket.emit('messageSent', {
             roomName,
             message,
+            attachment,
+            attachmentName,
+            attachmentType,
             receiverId,
             fromUser
         });
@@ -32,9 +35,8 @@ document.addEventListener('livewire:initialized', () => {
     });
 });
 
-socket.on('message', (receiverId, message) => {
-    console.log(message, receiverId)
-    Livewire.dispatch('receiveMessage', { receiverId, message });
+socket.on('message', (attachment, attachmentName, attachmentType, receiverId, message) => {
+    Livewire.dispatch('receiveMessage', { receiverId, message, attachment, attachmentName, attachmentType });
 });
 
 socket.on('incrementMessage', ({ receiverId, fromUser }) => {

@@ -58,9 +58,9 @@ io.on('connection', (socket) => {
     /*End Friend Requests*/
 
     /**Peer to Peer Chat */
-    socket.on('messageSent', ({ roomName, message, receiverId, fromUser }) => {
+    socket.on('messageSent', ({ roomName, message, attachment, attachmentName, attachmentType, receiverId, fromUser }) => {
         socket.broadcast.emit('incrementMessage', { receiverId, fromUser });
-        io.to(roomName).emit('message', receiverId, formatMessage(fromUser.name, message, fromUser.id) );
+        io.to(roomName).emit('message', attachment, attachmentName, attachmentType, receiverId, formatMessage(fromUser.name, message, fromUser.id) );
     });
 
     socket.on('userTyping', ({ username, senderId, room }) => {
