@@ -134,7 +134,9 @@ Start the Node.js realtime server with Nodemon
 
 In another terminal, run Laravel:
 
+```bash
 php artisan serve
+```
 
 🌐 Access the App
 
