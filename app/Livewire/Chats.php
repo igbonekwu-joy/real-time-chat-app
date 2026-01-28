@@ -117,10 +117,12 @@ class Chats extends Component
 
         $filePath = null;
         $fileType = null;
+        $fileName = null;
 
         if ($this->attachment) {
             $filePath = $this->attachment->store('chat-attachments', 'public');
             $fileType = $this->attachment->getClientOriginalExtension();
+            $fileName = $this->attachment->getClientOriginalName();
         }
 
         Message::create([
@@ -129,6 +131,7 @@ class Chats extends Component
             'message' => $this->message,
             'attachment' => $filePath,
             'attachment_type' => $fileType,
+            'attachment_name' => $fileName,
             'sent_at' => Carbon::now()
         ]);
 

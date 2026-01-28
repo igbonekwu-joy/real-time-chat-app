@@ -188,17 +188,26 @@
                                                     @endphp
                                                 @endif
 
-                                                                                                <div class="message {{ $msg['sender_id'] === auth()->user()->id ? 'me' : '' }}">
-                                                    <div class="text-main">
-                                                        <div class="text-group {{ $msg['sender_id'] === auth()->user()->id ? 'me' : ''}}">
-                                                            @if($msg->attachment_type == 'png' || $msg->attachment_type == 'jpg' || $msg->attachment_type == 'jpeg' || $msg->attachment_type == 'svg')
-                                                                <img src="{{ asset('storage/' . $msg->attachment) }}" class="preview-image">
-                                                            @else
-                                                                {{ $msg->attachment }}
-                                                            @endif
+                                                @if($msg->attachment)
+                                                    <div class="message {{ $msg['sender_id'] === auth()->user()->id ? 'me' : '' }}">
+                                                        <div class="text-main">
+                                                            <div class="text-group {{ $msg['sender_id'] === auth()->user()->id ? 'me' : ''}}">
+                                                                @if($msg->attachment_type == 'png' || $msg->attachment_type == 'jpg' || $msg->attachment_type == 'jpeg' || $msg->attachment_type == 'svg')
+                                                                    <img src="{{ asset('storage/' . $msg->attachment) }}" class="preview-image">
+                                                                @else
+                                                                    <div class="text">
+                                                                        <div class="attachment">
+                                                                            <button class="btn attach"><i class="material-icons md-18">insert_drive_file</i></button>
+                                                                            <div class="file">
+                                                                                <h5><a href="{{ asset('storage/' . $msg->attachment) }}">{{ $msg->attachment_name }}</a></h5>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                @endif
 
                                                 <div class="message {{ $msg['sender_id'] === auth()->user()->id ? 'me' : '' }}">
                                                     <div class="text-main">

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->longText('message');
             $table->longText('attachment')->nullable();
             $table->string('attachment_type')->nullable();
+            $table->longText('attachment_name')->nullable();
             $table->boolean('is_read')->default(false);
             $table->timestamps();
         });
