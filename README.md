@@ -1,1 +1,2 @@
-Laravel-livewire-node app
+<h1>Getting Started<h1>
+
