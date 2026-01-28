@@ -4,7 +4,7 @@ A realtime chat application built with **Laravel**, **Livewire**, **Vite**, **No
 
 ---
 
-## 🚀 Features
+## Features
 
 - Realtime messaging
 - Typing indicators
@@ -19,7 +19,7 @@ A realtime chat application built with **Laravel**, **Livewire**, **Vite**, **No
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 - **Backend:** Laravel (PHP)  
 - **Frontend:** Blade, Livewire, Vite  
@@ -29,7 +29,7 @@ A realtime chat application built with **Laravel**, **Livewire**, **Vite**, **No
 
 ---
 
-## 📦 Requirements
+## Requirements
 
 Make sure you have the following installed:
 
@@ -42,7 +42,7 @@ Make sure you have the following installed:
 
 ---
 
-## ⚙️ Installation & Setup
+## Installation & Setup
 
 Follow these steps carefully.
 
@@ -50,26 +50,31 @@ Follow these steps carefully.
 ```bash
 git clone https://github.com/your-username/your-repo-name.git
 cd your-repo-name
+```
 
 
-2️⃣ Install Laravel Dependencies (Vendor Files)
+### 2️⃣ Install Laravel Dependencies (Vendor Files)
 ```bash
 composer install
+```
 
 
-If .env does not exist:
-
+## If .env does not exist:
+``` bash
 cp .env.example .env
+```
 
 
-Generate app key:
-
+## Generate app key:
+```bash
 php artisan key:generate
+```
 
-3️⃣ Configure Environment Variables
+### 3️⃣ Configure Environment Variables
 
 Update your .env file:
 
+```bash
 APP_NAME=ChatApp
 APP_ENV=local
 APP_KEY=base64:generated-key
@@ -79,35 +84,46 @@ APP_URL=http://localhost
 DB_DATABASE=your_database
 DB_USERNAME=your_db_user
 DB_PASSWORD=your_db_password
+```
 
-4️⃣ Run Database Migrations
+### 4️⃣ Run Database Migrations
+```bash
 php artisan migrate
+```
 
 
 (Optional seed data)
 
+```bash
 php artisan db:seed
+```
 
-5️⃣ Install Frontend Dependencies (Root)
+### 5️⃣ Install Frontend Dependencies (Root)
+```bash
 npm install
+```
 
-6️⃣ Setup the Realtime Server
+### 6️⃣ Setup the Realtime Server
 
 Move into the server directory:
 
+```bash
 cd server
 npm install
+```
 
 
 Move back to the root directory:
 
 cd ..
 
-7️⃣ Start the Application
+### 7️⃣ Start the Application
 
 Run both Laravel + Vite + Node server together:
 
+```bash
 npm run dev
+```
 
 
 This will:
