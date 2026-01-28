@@ -50,7 +50,7 @@
                                             <div
                                                 class="new bg-yellow unread-div-{{ $group->id }}"
                                                 style="{{ $group->unread_count > 0 ? '' : 'display: none' }}"
-                                            > 
+                                            >
                                                 <span>+<span class="unread-count-{{ $group->id }}">{{ $group->unread_count }}</span></span>
                                             </div>
 
@@ -72,7 +72,7 @@
         </div>
         <!-- End of Sidebar -->
 
-        @include('layouts.partials.chat-area')
+        @include('layouts.partials.group.chat-area')
 
         @include('layouts.partials.modals')
 
