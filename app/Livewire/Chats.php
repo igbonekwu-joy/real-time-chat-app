@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Chats extends Component
 {
@@ -18,12 +19,16 @@ class Chats extends Component
     public $selectedFriend;
     public $image;
     public $message;
+    public $attachment;
+    public bool $showEmoji = false;
 
     protected $listeners = ['receiveMessage', 'typing', 'endTyping'];
     public array $messages = [];
     public $oldMessages;
     public bool $isTyping = false;
     public $blockedStatus = null;
+
+    use WithFileUploads;
 
     public function mount() {
         $this->markOnline();
@@ -80,9 +85,14 @@ class Chats extends Component
         $this->dispatch('scroll-to-bottom');
     }
 
+    public function toggleEmoji() {
+        $this->showEmoji = !$this->showEmoji;
+    }
+
     public function sendMessage($receiverId) {
         $this->validate([
-            'message' => 'required|string'
+            'message' => 'required|string',
+            'attachment' => 'nullable|max:10240|mimes:jpeg,png,jpg,svg,pdf,doc,docx,ppt,pptx',
         ]);
 
         $isBlocked = UserFriend::where(function ($q) use ($receiverId) {
@@ -100,12 +110,20 @@ class Chats extends Component
             return;
         }
 
-        $toUser = User::findOrFail($receiverId);
+        $filePath = null;
+        $fileType = null;
+
+        if ($this->attachment) {
+            $filePath = $this->attachment->store('chat-attachments', 'public');
+            $fileType = $this->attachment->getClientOriginalExtension();
+        }
 
         Message::create([
             'sender_id' => Auth::user()->id,
             'receiver_id' => $receiverId,
             'message' => $this->message,
+            'attachment' => $filePath,
+            'attachment_type' => $fileType,
             'sent_at' => Carbon::now()
         ]);
 

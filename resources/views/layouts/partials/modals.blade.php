@@ -74,7 +74,7 @@
                         <div wire:loading wire:target="groupImage">
                             Uploading image...
                         </div>
-
+ 
                         @error('groupImage')
                             <div class="error">{{ $message }}</div>
                         @enderror

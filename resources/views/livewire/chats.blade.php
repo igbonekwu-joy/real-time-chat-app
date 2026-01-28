@@ -56,7 +56,7 @@
                                             <div
                                                 class="new bg-pink {{  $friend['unreadCount'] == 0 ? 'd-none' : ''}} unread-div-{{ auth()->user()->id }}-{{ $friend['id'] }}"
                                             >
-                                                <span>+ 
+                                                <span>+
                                                     <span
                                                         class="unread-count-{{ auth()->user()->id }}-{{ $friend['id'] }}"
                                                     >
@@ -188,6 +188,18 @@
                                                     @endphp
                                                 @endif
 
+                                                                                                <div class="message {{ $msg['sender_id'] === auth()->user()->id ? 'me' : '' }}">
+                                                    <div class="text-main">
+                                                        <div class="text-group {{ $msg['sender_id'] === auth()->user()->id ? 'me' : ''}}">
+                                                            @if($msg->attachment_type == 'png' || $msg->attachment_type == 'jpg' || $msg->attachment_type == 'jpeg' || $msg->attachment_type == 'svg')
+                                                                <img src="{{ asset('storage/' . $msg->attachment) }}" class="preview-image">
+                                                            @else
+                                                                {{ $msg->attachment }}
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <div class="message {{ $msg['sender_id'] === auth()->user()->id ? 'me' : '' }}">
                                                     <div class="text-main">
                                                         <div class="text-group {{ $msg['sender_id'] === auth()->user()->id ? 'me' : ''}}">
@@ -270,36 +282,65 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+                                            {{-- Preview uploaded image immediately if there is any --}}
+                                            @if ($attachment)
+                                                <div class="attachment-preview">
+                                                    @if (str_starts_with($attachment->getMimeType(), 'image/'))
+                                                        <img src="{{ $attachment->temporaryUrl() }}" class="preview-image">
+                                                    @else
+                                                        <p>{{ $attachment->getClientOriginalName() }}</p>
+                                                    @endif
+                                                </div>
+                                            @endif
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="container">
                                 <div class="col-md-12">
-                                    <div class="bottom">
-                                        <form class="position-relative w-100" wire:submit="sendMessage({{ $selectedFriend->id }})">
-                                            <textarea
-                                                class="form-control"
-                                                placeholder="Start typing for reply..."
-                                                rows="1"
-                                                wire:model.live="message"
-                                                wire:keydown="startTyping({{ $selectedFriend->id }}, {{ auth()->user()->id }})"
-                                                wire:keydown.enter.prevent="sendMessage({{ $selectedFriend->id }})"
-                                                wire:keydown.shift.enter.stop
-                                            >
-                                            </textarea>
-                                            <button class="btn emoticons"><i class="material-icons">insert_emoticon</i></button>
-                                            <button
-                                                type="submit"
-                                                class="btn send"
-                                            >
-                                                <i class="material-icons">send</i>
-                                            </button>
-                                        </form>
-                                        <label>
-                                            <input type="file">
-                                            <span class="btn attach d-sm-block d-none"><i class="material-icons">attach_file</i></span>
-                                        </label>
+                                    <div class="chat-input-wrapper position-relative">
+
+                                        <!-- Emoji panel (hidden by default) -->
+                                        @if($showEmoji)
+                                            <div class="emoji-wrapper">
+                                                @include('layouts.partials.emoji')
+                                            </div>
+                                        @endif
+                                        <div class="bottom">
+                                            <form class="position-relative w-100" wire:submit="sendMessage({{ $selectedFriend->id }})">
+                                                <textarea
+                                                    class="form-control"
+                                                    placeholder="Start typing for reply..."
+                                                    rows="1"
+                                                    wire:model.live="message"
+                                                    wire:keydown="startTyping({{ $selectedFriend->id }}, {{ auth()->user()->id }})"
+                                                    wire:keydown.enter.prevent="sendMessage({{ $selectedFriend->id }})"
+                                                    wire:keydown.shift.enter.stop
+                                                >
+                                                </textarea>
+                                                <button
+                                                    class="btn emoticons"
+                                                    wire:click="toggleEmoji"
+                                                >
+                                                    <i class="material-icons">insert_emoticon</i>
+                                                </button>
+                                                <button
+                                                    type="submit"
+                                                    class="btn send"
+                                                >
+                                                    <i class="material-icons">send</i>
+                                                </button>
+                                            </form>
+                                            <label>
+                                                <input
+                                                    wire:model="attachment"
+                                                    type="file"
+                                                >
+                                                <span class="btn attach d-sm-block d-none"><i class="material-icons">attach_file</i></span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
