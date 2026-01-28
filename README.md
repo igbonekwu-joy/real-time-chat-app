@@ -1,7 +1,7 @@
 <h1>Getting Started<h1>
-First, run the development server
+<h4>First, run the development server</h4>
 
-<h6>npm install</h6>
+<p>npm install</p>
 
 Change directory to server (cd server)
 
