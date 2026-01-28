@@ -89,11 +89,6 @@ class Chats extends Component
         $this->showEmoji = !$this->showEmoji;
     }
 
-    public function addEmoji($emoji)
-    {
-        $this->message .= $emoji;
-    }
-
     public function sendMessage($receiverId) {
         $this->validate([
             'message' => 'required|string',

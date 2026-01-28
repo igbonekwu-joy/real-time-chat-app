@@ -90,71 +90,7 @@
         </div>
         <!-- End of Sidebar -->
 
-        @if($selectedFriend)
-            <div class="main">
-                <div class="tab-content" id="nav-tabContent">
-                    <!-- Start of Babble -->
-                    <div class="babble tab-pane fade active show" id="list-chat" role="tabpanel" aria-labelledby="list-chat-list">
-                        <!-- Start of Chat -->
-                        <div class="chat" id="chat1">
-
-                            @include('layouts.partials.chat.chat-area')
-
-                            <div class="container">
-                                <div class="col-md-12">
-                                    <div class="chat-input-wrapper position-relative">
-
-                                        <!-- Emoji panel -->
-                                        @if($showEmoji)
-                                            <div class="emoji-wrapper">
-                                                @include('layouts.partials.emoji')
-                                            </div>
-                                        @endif
-                                        <div class="bottom">
-                                            <form class="position-relative w-100" wire:submit="sendMessage({{ $selectedFriend->id }})">
-                                                <textarea
-                                                    class="form-control"
-                                                    placeholder="Start typing for reply..."
-                                                    rows="1"
-                                                    wire:model.defer="message"
-                                                    wire:keydown="startTyping({{ $selectedFriend->id }}, {{ auth()->user()->id }})"
-                                                    wire:keydown.enter.prevent="sendMessage({{ $selectedFriend->id }})"
-                                                    wire:keydown.shift.enter.stop
-                                                    id="messageBox"
-                                                >
-                                                </textarea>
-                                                <button
-                                                    type="button"
-                                                    class="btn emoticons"
-                                                    wire:click="toggleEmoji"
-                                                >
-                                                    <i class="material-icons">insert_emoticon</i>
-                                                </button>
-                                                <button
-                                                    type="submit"
-                                                    class="btn send"
-                                                >
-                                                    <i class="material-icons">send</i>
-                                                </button>
-                                            </form>
-                                            <label>
-                                                <input
-                                                    wire:model="attachment"
-                                                    type="file"
-                                                >
-                                                <span class="btn attach d-sm-block d-none"><i class="material-icons">attach_file</i></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End of Chat -->
-                    </div>
-                    <!-- End of Babble -->
-                </div>
-            </div>
-        @endif
+        @include('layouts.partials.chat.chat-area')
 
     </div> <!-- Layout -->
 </main>

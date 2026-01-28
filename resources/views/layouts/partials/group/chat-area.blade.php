@@ -14,7 +14,7 @@
                     <div class="top">
                         <div class="container">
                             <div class="col-md-12">
-                                <div class="inside"> 
+                                <div class="inside">
                                     <a href="#">
                                         <img class="avatar-md group-img" src="" data-toggle="tooltip" data-placement="top" title="Group Image" alt="avatar">
                                     </a>
@@ -47,6 +47,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="content" id="content">
                         <div class="container">
                             <div class="col-md-12 all-messages">
@@ -61,18 +62,16 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="container">
                         <div class="col-md-12">
-                            <div class="bottom">
-                                <form class="position-relative w-100">
-                                    <textarea class="form-control message-content" placeholder="Start typing for reply..." rows="1"></textarea>
-                                    <button class="btn emoticons"><i class="material-icons">insert_emoticon</i></button>
-                                    <button type="submit" class="btn send send-message"><i class="material-icons">send</i></button>
-                                </form>
-                                <label>
-                                    <input type="file">
-                                    <span class="btn attach d-sm-block d-none"><i class="material-icons">attach_file</i></span>
-                                </label>
+                            <div class="chat-input-wrapper position-relative">
+                                <div class="bottom">
+                                    <form class="position-relative w-100">
+                                        <textarea class="form-control message-content" placeholder="Start typing for reply..." rows="1"></textarea>
+                                        <button type="submit" class="btn send send-message"><i class="material-icons">send</i></button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

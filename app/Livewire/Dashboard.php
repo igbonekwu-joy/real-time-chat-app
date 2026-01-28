@@ -21,9 +21,13 @@ class Dashboard extends Component
     public $groupDescription;
     public $groupImage;
     public $photo;
+    public bool $showEmoji = false;
 
     public $group;
 
+    public function toggleEmoji() {
+        $this->showEmoji = !$this->showEmoji;
+    }
 
     public function storeGroup() {
         $this->validate([
