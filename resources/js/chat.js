@@ -57,3 +57,28 @@ socket.on('typing', ({ username, senderId }) => {
 socket.on('stopTyping', ({ groupId, username }) => {
     Livewire.dispatch('endTyping', { username });
 });
+
+
+//add emoji to message
+$(document).on('click', '.emoji', function () {
+    const emoji = $(this).data('emoji');
+    const textarea = $('#messageBox')[0];
+
+    textarea.focus();
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const text = textarea.value;
+
+    textarea.value =
+        text.substring(0, start) +
+        emoji +
+        text.substring(end);
+
+    const cursorPos = start + emoji.length;
+    textarea.selectionStart = cursorPos;
+    textarea.selectionEnd = cursorPos;
+
+    // Notify Livewire
+    textarea.dispatchEvent(new Event('input'));
+});

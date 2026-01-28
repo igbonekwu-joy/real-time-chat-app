@@ -314,10 +314,11 @@
                                                     class="form-control"
                                                     placeholder="Start typing for reply..."
                                                     rows="1"
-                                                    wire:model.live="message"
+                                                    wire:model.defer="message"
                                                     wire:keydown="startTyping({{ $selectedFriend->id }}, {{ auth()->user()->id }})"
                                                     wire:keydown.enter.prevent="sendMessage({{ $selectedFriend->id }})"
                                                     wire:keydown.shift.enter.stop
+                                                    id="messageBox"
                                                 >
                                                 </textarea>
                                                 <button
