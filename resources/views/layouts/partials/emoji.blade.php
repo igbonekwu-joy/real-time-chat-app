@@ -83,6 +83,53 @@
         <span class="emoji" data-emoji="🤮">🤮</span>
         <span class="emoji" data-emoji="🥵">🥵</span>
         <span class="emoji" data-emoji="🥶">🥶</span>
+
+        <!-- People & Actions -->
+        <span class="emoji" data-emoji="💃">💃</span>
+        <span class="emoji" data-emoji="🕺">🕺</span>
+        <span class="emoji" data-emoji="🚶">🚶</span>
+        <span class="emoji" data-emoji="🚶‍♀️">🚶‍♀️</span>
+        <span class="emoji" data-emoji="🚶‍♂️">🚶‍♂️</span>
+        <span class="emoji" data-emoji="🧑‍🦽">🧑‍🦽</span>
+        <span class="emoji" data-emoji="🧑‍🦼">🧑‍🦼</span>
+        <span class="emoji" data-emoji="🧍">🧍</span>
+        <span class="emoji" data-emoji="🧎">🧎</span>
+
+        <!-- Family & Love -->
+        <span class="emoji" data-emoji="👩‍❤️‍👨">👩‍❤️‍👨</span>
+        <span class="emoji" data-emoji="👩‍❤️‍👩">👩‍❤️‍👩</span>
+        <span class="emoji" data-emoji="👨‍❤️‍👨">👨‍❤️‍👨</span>
+        <span class="emoji" data-emoji="💑">💑</span>
+        <span class="emoji" data-emoji="💏">💏</span>
+
+        <!-- Objects -->
+        <span class="emoji" data-emoji="🪡">🪡</span>
+        <span class="emoji" data-emoji="🧶">🧶</span>
+        <span class="emoji" data-emoji="🧵">🧵</span>
+        <span class="emoji" data-emoji="🔗">🔗</span>
+
+        <!-- Clothing -->
+        <span class="emoji" data-emoji="👕">👕</span>
+        <span class="emoji" data-emoji="👚">👚</span>
+        <span class="emoji" data-emoji="👖">👖</span>
+        <span class="emoji" data-emoji="🩳">🩳</span>
+        <span class="emoji" data-emoji="👔">👔</span>
+        <span class="emoji" data-emoji="👗">👗</span>
+        <span class="emoji" data-emoji="🩱">🩱</span>
+        <span class="emoji" data-emoji="🧥">🧥</span>
+        <span class="emoji" data-emoji="🥼">🥼</span>
+        <span class="emoji" data-emoji="🦺">🦺</span>
+
+        <!-- Shoes & Accessories -->
+        <span class="emoji" data-emoji="👠">👠</span>
+        <span class="emoji" data-emoji="👡">👡</span>
+        <span class="emoji" data-emoji="👢">👢</span>
+        <span class="emoji" data-emoji="👞">👞</span>
+        <span class="emoji" data-emoji="👟">👟</span>
+        <span class="emoji" data-emoji="🧦">🧦</span>
+        <span class="emoji" data-emoji="🧤">🧤</span>
+        <span class="emoji" data-emoji="🧣">🧣</span>
+        <span class="emoji" data-emoji="🎩">🎩</span>
     </div>
 
 </div>

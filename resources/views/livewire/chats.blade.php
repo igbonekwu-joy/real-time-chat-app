@@ -322,6 +322,7 @@
                                                 >
                                                 </textarea>
                                                 <button
+                                                    type="button"
                                                     class="btn emoticons"
                                                     wire:click="toggleEmoji"
                                                 >
