@@ -115,7 +115,9 @@ npm install
 
 Move back to the root directory:
 
+```bash
 cd ..
+```
 
 ### 7️⃣ Start the Application
 
@@ -137,11 +139,3 @@ In another terminal, run Laravel:
 ```bash
 php artisan serve
 ```
-
-🌐 Access the App
-
-Laravel app:
-http://localhost:8000
-
-Vite dev server (if separate):
-http://localhost:5173
