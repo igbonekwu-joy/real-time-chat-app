@@ -1,66 +1,59 @@
-Realtime Chat Application
+# Realtime Chat Application
 
-A realtime chat application built with Laravel, Livewire, Vite, Node.js, and WebSockets, featuring typing indicators, emoji support, file attachments, online presence, and unread message counts.
+A realtime chat application built with **Laravel**, **Livewire**, **Vite**, **Node.js**, and **WebSockets**, featuring typing indicators, emoji support, file attachments, online presence, and unread message counts.
 
-🚀 Features
+---
 
-Realtime messaging
+## 🚀 Features
 
-Typing indicators
+- Realtime messaging
+- Typing indicators
+- Emoji picker
+- File & document attachments
+- Online / offline status
+- Unread message count
+- Message timestamps
+- Friend blocking
+- Laravel + Livewire frontend
+- Node.js server for realtime events
 
-Emoji picker
+---
 
-File & document attachments
+## 🛠 Tech Stack
 
-Online / offline status
+- **Backend:** Laravel (PHP)  
+- **Frontend:** Blade, Livewire, Vite  
+- **Realtime Server:** Node.js + WebSockets  
+- **Database:** MySQL  
+- **Package Managers:** Composer, NPM  
 
-Unread message count
+---
 
-Message timestamps
-
-Friend blocking
-
-Laravel + Livewire frontend
-
-Node.js server for realtime events
-
-🛠 Tech Stack
-
-Backend: Laravel (PHP)
-
-Frontend: Blade, Livewire, Vite
-
-Realtime Server: Node.js + WebSockets
-
-Database: MySQL
-
-Package Managers: Composer, NPM
-
-📦 Requirements
+## 📦 Requirements
 
 Make sure you have the following installed:
 
-PHP ≥ 8.1
+- PHP ≥ 8.1  
+- Composer  
+- Node.js ≥ 18  
+- NPM  
+- MySQL  
+- Git  
 
-Composer
+---
 
-Node.js ≥ 18
-
-NPM
-
-MySQL
-
-Git
-
-⚙️ Installation & Setup
+## ⚙️ Installation & Setup
 
 Follow these steps carefully.
 
-1️⃣ Clone the Repository
+### 1️⃣ Clone the Repository
+```bash
 git clone https://github.com/your-username/your-repo-name.git
 cd your-repo-name
 
+
 2️⃣ Install Laravel Dependencies (Vendor Files)
+```bash
 composer install
 
 
