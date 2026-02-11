@@ -48,8 +48,8 @@ Follow these steps carefully.
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/igbonekwu-joy/real-time-chat-app.git
+cd real-time-chat-app
 ```
 
 
@@ -89,13 +89,6 @@ DB_PASSWORD=your_db_password
 ### 4️⃣ Run Database Migrations
 ```bash
 php artisan migrate
-```
-
-
-(Optional seed data)
-
-```bash
-php artisan db:seed
 ```
 
 ### 5️⃣ Install Frontend Dependencies (Root)
